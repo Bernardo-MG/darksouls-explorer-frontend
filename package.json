@@ -1,7 +1,7 @@
 {
    "name": "darksouls-explorer-frontend",
    "version": "0.0.1",
-   "description": "Example combining Spring, Angular and d3",
+   "description": "Frontend for the Dark Souls Explorer web service",
    "author": "Bernardo Martínez Garrido",
    "homepage": "https://github.com/bernardo-mg/darksouls-explorer",
    "license": "MIT",
