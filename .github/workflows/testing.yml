@@ -23,7 +23,7 @@ jobs:
     - name: Install Angular CLI
       run: npm install -g @angular/cli
     - name: Run linter
-      run: npm test -- --configuration=ci
+      run: npm run lint
     - name: Run unit tests
       run: npm test -- --configuration=ci
 
