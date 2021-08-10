@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
-import { NamedValue } from 'app/models/namedValue';
+import { NamedValue } from '@app/models/namedValue';
 
 @Component({
   selector: 'filter',

@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { GraphService } from 'app/services/graph.service';
-import { Graph } from 'app/models/graph';
-import { NamedValue } from 'app/models/namedValue';
-import { Item } from 'app/models/item';
+import { GraphService } from '@app/services/graph.service';
+import { Graph } from '@app/models/graph';
+import { NamedValue } from '@app/models/namedValue';
+import { Item } from '@app/models/item';
 
 @Component({
   selector: 'app-relationship',
