@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { NamedValue } from '@app/models/namedValue';
+import { Tuple } from '@app/models/tuple';
 
 @Component({
   selector: 'filter',
@@ -11,9 +12,9 @@ export class FilterComponent {
 
   @Output() applyFilter = new EventEmitter<any>();
 
-  @Input() options: NamedValue[];
+  @Input() options: NamedValue[] = [];
 
-  selections = [];
+  selections: Tuple[] = [];
 
   constructor() { }
 
@@ -22,7 +23,7 @@ export class FilterComponent {
   }
 
   onAddSelection() {
-    this.selections.push({ value: "" });
+    this.selections.push({ value: "", key: '' });
   }
 
   onRemoveSelection(index: number) {

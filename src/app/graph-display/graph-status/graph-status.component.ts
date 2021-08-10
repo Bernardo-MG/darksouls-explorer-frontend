@@ -8,7 +8,7 @@ import { Graph } from '@app/models/graph';
 })
 export class GraphStatusComponent {
 
-  @Input() graph: Graph;
+  @Input() graph: Graph = { nodes: [], links: [], types: [] };
 
   constructor() { }
 

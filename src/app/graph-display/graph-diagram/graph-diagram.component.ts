@@ -5,6 +5,7 @@ import { GraphNode } from '../models/graphNode';
 import * as d3 from 'd3';
 import { Link } from '@app/models/link';
 import { Node } from '@app/models/node';
+import { Simulation, SimulationNodeDatum } from 'd3';
 
 @Component({
   selector: 'graph-diagram',
@@ -14,7 +15,7 @@ import { Node } from '@app/models/node';
 })
 export class GraphDiagramComponent implements OnInit, OnChanges {
 
-  @Input() graph: Graph;
+  @Input() graph: Graph = { nodes: [], links: [], types: [] };
 
   @Output() selectNode = new EventEmitter<Number>();
 
@@ -66,7 +67,7 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
     const color = d3.scaleOrdinal(types, d3.schemeCategory10)
 
     // Graph simulation
-    const simulation = d3.forceSimulation(nodes)
+    const simulation: Simulation<GraphNode, undefined> = d3.forceSimulation(nodes)
       .force("link", d3.forceLink(links).id((d: any) => d.id))
       .force("charge", d3.forceManyBody())
       .force("center", d3.forceRadial(width / 2, height / 2));
@@ -122,30 +123,30 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
       .text(d => d.name as string);
 
     // Adds zoom
-    mainView.call(d3.zoom()
-      .extent([[0, 0], [width, height]])
-      .scaleExtent([0.5, 5])
-      .on("zoom", (event) => {
-        link.attr('transform', event.transform);
-        nodeRoot.attr('transform', event.transform);
-      })
-    );
+     mainView.call(d3.zoom()
+       .extent([[0, 0], [width, height]])
+       .scaleExtent([0.5, 5])
+       .on("zoom", (event) => {
+         link.attr('transform', event.transform);
+         nodeRoot.attr('transform', event.transform);
+       }) as any
+     );
 
     // Runs simulation
     simulation.on("tick", () => {
       link.attr("d", this.linkArc);
 
       node
-        .attr("cx", d => d.x)
-        .attr("cy", d => d.y);
+        .attr("cx", (d: any) => d.x)
+        .attr("cy", (d: any) => d.y);
 
       nodeLabel
-        .attr("x", d => d.x)
-        .attr("y", d => d.y);
+        .attr("x", (d: any) => d.x)
+        .attr("y", (d: any) => d.y);
     });
   }
 
-  private linkArc(d) {
+  private linkArc(d: any) {
     const r = Math.hypot(d.target.x - d.source.x, d.target.y - d.source.y);
     return `
       M${d.source.x},${d.source.y}
@@ -153,19 +154,19 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
     `;
   }
 
-  private drag(simulation) {
-    function dragstarted(event) {
+  private drag(simulation: Simulation<GraphNode, undefined>) {
+    function dragstarted(event: any) {
       if (!event.active) simulation.alphaTarget(0.3).restart();
       event.subject.fx = event.subject.x;
       event.subject.fy = event.subject.y;
     }
 
-    function dragged(event) {
+    function dragged(event: any) {
       event.subject.fx = event.x;
       event.subject.fy = event.y;
     }
 
-    function dragended(event) {
+    function dragended(event: any) {
       if (!event.active) simulation.alphaTarget(0);
       event.subject.fx = null;
       event.subject.fy = null;
@@ -177,13 +178,13 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
       .on("end", dragended)
   }
 
-  private mouseoverButton(event, i) {
+  private mouseoverButton(event: any, d: GraphNode) {
     d3.select(event.target)
       .style("cursor", "pointer")
       .classed("graph_node_selected", true);
   }
 
-  private mouseoutButton(event, i) {
+  private mouseoutButton(event: any, d: GraphNode) {
     d3.select(event.target)
       .style("cursor", "default")
       .classed("graph_node_selected", false);

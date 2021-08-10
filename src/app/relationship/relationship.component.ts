@@ -15,7 +15,7 @@ export class RelationshipComponent implements OnInit {
 
   graph: Graph = { nodes: [], links: [], types: [] };
 
-  @Input() info: Item;
+  @Input() info: Item = { id: 0, name: '', description: [] };
 
   constructor(
     private graphService: GraphService

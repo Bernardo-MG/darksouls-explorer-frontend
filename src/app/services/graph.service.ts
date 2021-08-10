@@ -20,7 +20,7 @@ export class GraphService {
   getGraph(relationships: String[]): Observable<Graph> {
     const relArg = relationships.map((v) => '"' + v + '"').join(',');
     return this.apollo
-      .watchQuery({
+      .watchQuery<GraphResponse>({
         query: gql`
           {
             graph(type: [${relArg}]) {
@@ -45,7 +45,7 @@ export class GraphService {
 
   getAllTypes(): Observable<String[]> {
     return this.apollo
-      .watchQuery({
+      .watchQuery<GraphResponse>({
         query: gql`
           {
             graph {
@@ -59,7 +59,7 @@ export class GraphService {
 
   getOne(id: Number): Observable<Item> {
     return this.apollo
-      .watchQuery({
+      .watchQuery<InfoResponse>({
         query: gql`
           {
             info(id: ${id}) {
