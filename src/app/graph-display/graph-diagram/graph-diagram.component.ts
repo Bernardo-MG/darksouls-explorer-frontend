@@ -28,16 +28,23 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit(): void {
-    this.cleanGraph();
-    if (this.graph) {
-      this.displayGraph(this.graph.links, this.graph.nodes, this.graph.types, this.width, this.height);
-    }
+    this.reload();
   }
 
   ngOnChanges(): void {
+    this.reload();
+  }
+
+  private reload(): void {
     this.cleanGraph();
     if (this.graph) {
-      this.displayGraph(this.graph.links, this.graph.nodes, this.graph.types, this.width, this.height);
+      // Graph simulation
+      const simulation: Simulation<DisplayGraphNode, undefined> = d3.forceSimulation(this.graph.nodes)
+        .force("link", d3.forceLink(this.graph.links).id((d: any) => d.id))
+        .force("charge", d3.forceManyBody())
+        .force("center", d3.forceRadial(this.width / 2, this.height / 2));
+
+      this.displayGraph(this.graph.links, this.graph.nodes, this.graph.types, this.width, this.height, simulation);
     }
   }
 
@@ -45,14 +52,8 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
     d3.select("figure#graph_view").select("#graph").remove();
   }
 
-  private displayGraph(links: DisplayGraphLink[], nodes: DisplayGraphNode[], types: String[], width: number, height: number) {
+  private displayGraph(links: DisplayGraphLink[], nodes: DisplayGraphNode[], types: String[], width: number, height: number, simulation: Simulation<DisplayGraphNode, undefined>) {
     const color = d3.scaleOrdinal(types, d3.schemeCategory10)
-
-    // Graph simulation
-    const simulation: Simulation<DisplayGraphNode, undefined> = d3.forceSimulation(nodes)
-      .force("link", d3.forceLink(links).id((d: any) => d.id))
-      .force("charge", d3.forceManyBody())
-      .force("center", d3.forceRadial(width / 2, height / 2));
 
     // Main view container
     var mainView = d3.select("figure#graph_view")
@@ -113,7 +114,7 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
         nodeRoot.attr('transform', event.transform);
       });
     mainView.call(zoom as any);
-    mainView.call(zoom.transform as any, d3.zoomIdentity.translate(100, 50).scale(this.minZoom));
+    mainView.call(zoom.transform as any, d3.zoomIdentity.translate(width / 2, height / 2).scale(this.minZoom));
 
     // Runs simulation
     simulation.on("tick", () => {
