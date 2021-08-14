@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Graph } from '@app/api/models/graph';
 import { NamedValue } from '@app/models/namedValue';
-import { Item } from '@app/models/item';
+import { Item } from '@app/api/models/item';
 
 @Injectable({
   providedIn: 'root'

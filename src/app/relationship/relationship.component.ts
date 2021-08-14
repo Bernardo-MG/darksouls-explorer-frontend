@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Graph } from '@app/api/models/graph';
 import { NamedValue } from '@app/models/namedValue';
-import { Item } from '@app/models/item';
+import { Item } from '@app/api/models/item';
 import { RelationshipService } from '@app/services/relationship.service';
 
 @Component({
