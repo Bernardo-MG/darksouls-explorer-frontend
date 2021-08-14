@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { GraphService } from './graph.service';
+import { GraphService } from '../api/services/graph.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { Graph } from '@app/models/graph';
+import { Graph } from '@app/api/models/graph';
 import { NamedValue } from '@app/models/namedValue';
 import { Item } from '@app/models/item';
 

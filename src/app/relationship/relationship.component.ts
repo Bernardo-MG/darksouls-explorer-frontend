@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Graph } from '@app/models/graph';
+import { Graph } from '@app/api/models/graph';
 import { NamedValue } from '@app/models/namedValue';
 import { Item } from '@app/models/item';
 import { RelationshipService } from '@app/services/relationship.service';

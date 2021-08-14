@@ -3,9 +3,9 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { Observable, of } from 'rxjs';
 
-import { GraphService } from '@app/services/graph.service';
+import { GraphService } from '@app/api/services/graph.service';
 import { RelationshipComponent } from './relationship.component';
-import { Graph } from '@app/models/graph';
+import { Graph } from '@app/api/models/graph';
 
 class MockedGraphService {
 

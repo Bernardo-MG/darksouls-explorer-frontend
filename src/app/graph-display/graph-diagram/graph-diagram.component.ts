@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { Graph } from '@app/models/graph';
+import { Graph } from '@app/api/models/graph';
 import { GraphLink } from '../models/graphLink';
 import { GraphNode } from '../models/graphNode';
 import * as d3 from 'd3';
-import { Link } from '@app/models/link';
-import { Node } from '@app/models/node';
+import { Link } from '@app/api/models/link';
+import { Node } from '@app/api/models/node';
 import { Simulation, SimulationNodeDatum } from 'd3';
 
 @Component({
@@ -28,9 +28,9 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.cleanGraph();
     if (this.graph) {
-      const links = this.graph.links.map(this.toGraphLink);
-      const nodes = this.graph.nodes.map(this.toGraphNode);
-      const types = this.graph.types;
+      const links: GraphLink[] = this.graph.links.map(this.toGraphLink);
+      const nodes: GraphNode[] = this.graph.nodes.map(this.toGraphNode);
+      const types: String[] = this.graph.types;
 
       // const rect: DOMRect = (d3.select("figure#graph_view").node() as Element).getBoundingClientRect();
       // this.height = rect.height
