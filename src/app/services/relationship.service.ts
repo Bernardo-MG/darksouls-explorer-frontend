@@ -7,8 +7,8 @@ import { Item } from '@app/api/models/item';
 import { DisplayGraph } from '@app/graph-display/models/displayGraph';
 import { Link } from '@app/api/models/link';
 import { Node } from '@app/api/models/node';
-import { GraphLink } from '@app/graph-display/models/graphLink';
-import { GraphNode } from '@app/graph-display/models/graphNode';
+import { DisplayGraphLink } from '@app/graph-display/models/displayGraphLink';
+import { DisplayGraphNode } from '@app/graph-display/models/displayGraphNode';
 import { Graph } from '@app/api/models/graph';
 
 @Injectable({
@@ -33,18 +33,18 @@ export class RelationshipService {
   }
 
   private toDisplayGraph(graph: Graph): DisplayGraph {
-    const links: GraphLink[] = graph.links.map(this.toGraphLink);
-    const nodes: GraphNode[] = graph.nodes.map(this.toGraphNode);
+    const links: DisplayGraphLink[] = graph.links.map(this.toGraphLink);
+    const nodes: DisplayGraphNode[] = graph.nodes.map(this.toGraphNode);
     const types: String[] = graph.types;
 
     return { nodes, links, types };
   }
 
-  private toGraphLink(data: Link): GraphLink {
+  private toGraphLink(data: Link): DisplayGraphLink {
     return { source: data.sourceId, target: data.targetId, type: data.type };
   }
 
-  private toGraphNode(data: Node): GraphNode {
+  private toGraphNode(data: Node): DisplayGraphNode {
     return { id: data.id, name: data.name, x: 0, y: 0 };
   }
 

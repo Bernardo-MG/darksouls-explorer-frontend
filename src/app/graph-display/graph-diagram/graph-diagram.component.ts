@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { GraphLink } from '../models/graphLink';
-import { GraphNode } from '../models/graphNode';
+import { DisplayGraphLink } from '../models/displayGraphLink';
+import { DisplayGraphNode } from '../models/displayGraphNode';
 import * as d3 from 'd3';
 import { Simulation, SimulationNodeDatum } from 'd3';
 import { DisplayGraph } from '../models/displayGraph';
@@ -45,11 +45,11 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
     d3.select("figure#graph_view").select("#graph").remove();
   }
 
-  private displayGraph(links: GraphLink[], nodes: GraphNode[], types: String[], width: number, height: number) {
+  private displayGraph(links: DisplayGraphLink[], nodes: DisplayGraphNode[], types: String[], width: number, height: number) {
     const color = d3.scaleOrdinal(types, d3.schemeCategory10)
 
     // Graph simulation
-    const simulation: Simulation<GraphNode, undefined> = d3.forceSimulation(nodes)
+    const simulation: Simulation<DisplayGraphNode, undefined> = d3.forceSimulation(nodes)
       .force("link", d3.forceLink(links).id((d: any) => d.id))
       .force("charge", d3.forceManyBody())
       .force("center", d3.forceRadial(width / 2, height / 2));
@@ -136,7 +136,7 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
     `;
   }
 
-  private drag(simulation: Simulation<GraphNode, undefined>) {
+  private drag(simulation: Simulation<DisplayGraphNode, undefined>) {
     function dragstarted(event: any) {
       if (!event.active) simulation.alphaTarget(0.3).restart();
       event.subject.fx = event.subject.x;
@@ -160,13 +160,13 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
       .on("end", dragended)
   }
 
-  private mouseoverButton(event: any, d: GraphNode) {
+  private mouseoverButton(event: any, d: DisplayGraphNode) {
     d3.select(event.target)
       .style("cursor", "pointer")
       .classed("graph_node_selected", true);
   }
 
-  private mouseoutButton(event: any, d: GraphNode) {
+  private mouseoutButton(event: any, d: DisplayGraphNode) {
     d3.select(event.target)
       .style("cursor", "default")
       .classed("graph_node_selected", false);

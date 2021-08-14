@@ -1,8 +1,8 @@
-import { GraphLink } from "./graphLink";
-import { GraphNode } from "./graphNode";
+import { DisplayGraphLink } from "./displayGraphLink";
+import { DisplayGraphNode } from "./displayGraphNode";
 
 export interface DisplayGraph {
-    nodes: GraphNode[],
-    links: GraphLink[],
+    nodes: DisplayGraphNode[],
+    links: DisplayGraphLink[],
     types: String[]
 }
