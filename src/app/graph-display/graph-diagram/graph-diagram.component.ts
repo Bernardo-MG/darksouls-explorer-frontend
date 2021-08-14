@@ -25,6 +25,8 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
 
   maxZoom: number = 5;
 
+  currentZoom: number = 0.75;
+
   constructor() { }
 
   ngOnInit(): void {
@@ -38,7 +40,7 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
   private reload(): void {
     this.cleanGraph();
     if (this.graph) {
-      const color: ScaleOrdinal<String, string, never> = d3.scaleOrdinal(this.graph.types, d3.schemeCategory10)
+      const color = d3.scaleOrdinal(this.graph.types, d3.schemeCategory10)
 
       // Graph simulation
       const simulation = this.buildSimulation();
@@ -51,7 +53,7 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
 
       // Builds nodes
       // Added after the links so they are drawn over them
-      const nodeRoot: Selection<BaseType | SVGGElement, DisplayGraphNode, SVGGElement, unknown> = mainView.append("g")
+      const nodeRoot = mainView.append("g")
         .selectAll("g")
         .data(this.graph.nodes)
         .join("g")
@@ -142,7 +144,7 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
         nodeRoot.attr('transform', event.transform);
       });
     mainView.call(zoom as any);
-    mainView.call(zoom.transform as any, d3.zoomIdentity.translate(this.width / 2, this.height / 2).scale(this.minZoom));
+    mainView.call(zoom.transform as any, d3.zoomIdentity.translate(this.width / 2, this.height / 2).scale(this.currentZoom));
   }
 
   private cleanGraph() {
