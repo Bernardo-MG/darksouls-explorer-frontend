@@ -1,19 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LayoutModule } from '@angular/cdk/layout';
-
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatTableModule } from '@angular/material/table';
-import { MatToolbarModule } from '@angular/material/toolbar';
-
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,20 +18,9 @@ import { NavigationModule } from './navigation/navigation.module';
   ],
   imports: [
     AppRoutingModule,
-    BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,
-    FlexLayoutModule,
     GraphDisplayModule,
-    LayoutModule,
-    MatButtonModule,
-    MatCardModule,
-    MatGridListModule,
-    MatIconModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatTableModule,
-    MatToolbarModule,
     NavigationModule
   ],
   providers: [
