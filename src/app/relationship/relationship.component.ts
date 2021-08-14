@@ -27,18 +27,14 @@ export class RelationshipComponent implements OnInit {
     this.relationshipService.getOptions().subscribe(options => this.filterOptions = options);
   }
 
-  runQuery(options: String[]) {
-    if (options.length > 0) {
-      this.graphService.getGraph(options).subscribe(data => this.graph = data);
-    }
-  }
-
   onSelectNode(id: Number) {
     this.graphService.getOne(id).subscribe(data => this.info = data);
   }
 
   onApplyFilter(options: String[]) {
-    this.runQuery(options);
+    if (options.length > 0) {
+      this.graphService.getGraph(options).subscribe(data => this.graph = data);
+    }
   }
 
 }
