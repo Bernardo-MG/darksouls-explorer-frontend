@@ -10,10 +10,9 @@ import { Node } from '@app/api/models/node';
 import { DisplayGraphLink } from '@app/graph-display/models/displayGraphLink';
 import { DisplayGraphNode } from '@app/graph-display/models/displayGraphNode';
 import { Graph } from '@app/api/models/graph';
+import { GraphDisplayModule } from '../graph-display.module';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class GraphService {
 
   constructor(

@@ -9,6 +9,7 @@ import { GraphStatusComponent } from './graph-status/graph-status.component';
 import { GraphDiagramComponent } from './graph-diagram/graph-diagram.component';
 import { GraphViewComponent } from './graph-view/graph-view.component';
 import { FilterModule } from '@app/filter/filter.module';
+import { GraphService } from './services/graph.service';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,9 @@ import { FilterModule } from '@app/filter/filter.module';
   ],
   exports: [
     GraphViewComponent
+  ],
+  providers: [
+    GraphService
   ]
 })
 export class GraphDisplayModule { }
