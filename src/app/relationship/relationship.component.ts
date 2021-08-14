@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Graph } from '@app/api/models/graph';
 import { NamedValue } from '@app/models/namedValue';
 import { Item } from '@app/api/models/item';
 import { RelationshipService } from '@app/services/relationship.service';
+import { DisplayGraph } from '@app/graph-display/models/displayGraph';
 
 @Component({
   selector: 'app-relationship',
@@ -13,7 +13,7 @@ export class RelationshipComponent implements OnInit {
 
   filterOptions: NamedValue[] = [];
 
-  graph: Graph = { nodes: [], links: [], types: [] };
+  graph: DisplayGraph = { nodes: [], links: [], types: [] };
 
   @Input() info: Item = { id: 0, name: '', description: [] };
 

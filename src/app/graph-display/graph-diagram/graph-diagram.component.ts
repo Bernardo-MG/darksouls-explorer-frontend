@@ -6,6 +6,7 @@ import * as d3 from 'd3';
 import { Link } from '@app/api/models/link';
 import { Node } from '@app/api/models/node';
 import { Simulation, SimulationNodeDatum } from 'd3';
+import { DisplayGraph } from '../models/displayGraph';
 
 @Component({
   selector: 'graph-diagram',
@@ -15,7 +16,7 @@ import { Simulation, SimulationNodeDatum } from 'd3';
 })
 export class GraphDiagramComponent implements OnInit, OnChanges {
 
-  @Input() graph: Graph = { nodes: [], links: [], types: [] };
+  @Input() graph: DisplayGraph = { nodes: [], links: [], types: [] };
 
   @Output() selectNode = new EventEmitter<Number>();
 
@@ -28,35 +29,19 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.cleanGraph();
     if (this.graph) {
-      const links: GraphLink[] = this.graph.links.map(this.toGraphLink);
-      const nodes: GraphNode[] = this.graph.nodes.map(this.toGraphNode);
-      const types: String[] = this.graph.types;
-
       // const rect: DOMRect = (d3.select("figure#graph_view").node() as Element).getBoundingClientRect();
       // this.height = rect.height
       // this.width = rect.width
 
-      this.displayGraph(links, nodes, types, this.width, this.height);
+      this.displayGraph(this.graph.links, this.graph.nodes, this.graph.types, this.width, this.height);
     }
   }
 
   ngOnChanges(): void {
     this.cleanGraph();
     if (this.graph) {
-      const links = this.graph.links.map(this.toGraphLink);
-      const nodes = this.graph.nodes.map(this.toGraphNode);
-      const types = this.graph.types;
-
-      this.displayGraph(links, nodes, types, this.width, this.height);
+      this.displayGraph(this.graph.links, this.graph.nodes, this.graph.types, this.width, this.height);
     }
-  }
-
-  private toGraphLink(data: Link): GraphLink {
-    return { source: data.sourceId, target: data.targetId, type: data.type };
-  }
-
-  private toGraphNode(data: Node): GraphNode {
-    return { id: data.id, name: data.name, x: 0, y: 0 };
   }
 
   private cleanGraph() {
