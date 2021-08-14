@@ -17,9 +17,13 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
 
   @Output() selectNode = new EventEmitter<Number>();
 
-  height = 400;
+  height: number = 400;
 
-  width = 400;
+  width: number = 400;
+
+  minZoom: number = 0.5;
+
+  maxZoom: number = 5;
 
   constructor() { }
 
@@ -103,13 +107,13 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
     // Adds zoom
     const zoom: ZoomBehavior<Element, any> = d3.zoom()
       .extent([[0, 0], [width, height]])
-      .scaleExtent([0.5, 5])
+      .scaleExtent([this.minZoom, this.maxZoom])
       .on("zoom", (event) => {
         link.attr('transform', event.transform);
         nodeRoot.attr('transform', event.transform);
       });
     mainView.call(zoom as any);
-    mainView.call(zoom.transform as any, d3.zoomIdentity.translate(100, 50).scale(0.5));
+    mainView.call(zoom.transform as any, d3.zoomIdentity.translate(100, 50).scale(this.minZoom));
 
     // Runs simulation
     simulation.on("tick", () => {
