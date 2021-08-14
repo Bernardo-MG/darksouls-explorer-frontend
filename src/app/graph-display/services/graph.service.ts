@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { GraphService } from '../api/services/graph.service';
+import { GraphQueryService } from '../../api/services/graph-query.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { NamedValue } from '@app/models/namedValue';
@@ -14,22 +14,22 @@ import { Graph } from '@app/api/models/graph';
 @Injectable({
   providedIn: 'root'
 })
-export class RelationshipService {
+export class GraphService {
 
   constructor(
-    private graphService: GraphService
+    private graphQueryService: GraphQueryService
   ) { }
 
   getOptions(): Observable<NamedValue[]> {
-    return this.graphService.getAllTypes().pipe(map((types) => types.map((type) => { return { name: type, value: type } as NamedValue })));
+    return this.graphQueryService.getAllTypes().pipe(map((types) => types.map((type) => { return { name: type, value: type } as NamedValue })));
   }
 
   getInfo(id: Number): Observable<Item> {
-    return this.graphService.getOne(id)
+    return this.graphQueryService.getOne(id)
   }
 
   getGraph(options: String[]): Observable<DisplayGraph> {
-    return this.graphService.getGraph(options).pipe(map((graph) => this.toDisplayGraph(graph)));
+    return this.graphQueryService.getGraph(options).pipe(map((graph) => this.toDisplayGraph(graph)));
   }
 
   private toDisplayGraph(graph: Graph): DisplayGraph {

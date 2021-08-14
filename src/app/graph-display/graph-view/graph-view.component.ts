@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NamedValue } from '@app/models/namedValue';
 import { Item } from '@app/api/models/item';
-import { RelationshipService } from '@app/services/relationship.service';
+import { GraphService } from '@app/graph-display/services/graph.service';
 import { DisplayGraph } from '@app/graph-display/models/displayGraph';
 
 @Component({
@@ -18,20 +18,20 @@ export class GraphViewComponent implements OnInit {
   @Input() info: Item = { id: 0, name: '', description: [] };
 
   constructor(
-    private relationshipService: RelationshipService
+    private graphService: GraphService
   ) { }
 
   ngOnInit(): void {
-    this.relationshipService.getOptions().subscribe(options => this.filterOptions = options);
+    this.graphService.getOptions().subscribe(options => this.filterOptions = options);
   }
 
   onSelectNode(id: Number) {
-    this.relationshipService.getInfo(id).subscribe(data => this.info = data);
+    this.graphService.getInfo(id).subscribe(data => this.info = data);
   }
 
   onApplyFilter(options: String[]) {
     if (options.length > 0) {
-      this.relationshipService.getGraph(options).subscribe(data => this.graph = data);
+      this.graphService.getGraph(options).subscribe(data => this.graph = data);
     }
   }
 

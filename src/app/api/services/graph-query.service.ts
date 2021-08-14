@@ -11,7 +11,7 @@ import { ApolloQueryResult } from '@apollo/client/core';
 @Injectable({
   providedIn: 'root'
 })
-export class GraphService {
+export class GraphQueryService {
 
   constructor(
     private apollo: Apollo
