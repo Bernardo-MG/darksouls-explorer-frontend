@@ -23,6 +23,7 @@ import { HttpLink } from 'apollo-angular/http';
 import { InMemoryCache } from '@apollo/client/core';
 
 import { GraphDisplayModule } from './graph-display/graph-display.module';
+import { NavigationModule } from './navigation/navigation.module';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { GraphDisplayModule } from './graph-display/graph-display.module';
     MatSidenavModule,
     MatTableModule,
     MatToolbarModule,
+    NavigationModule
   ],
   providers: [
     {

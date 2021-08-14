@@ -1,0 +1,21 @@
+<mat-sidenav-container>
+  <mat-sidenav #drawer fixedInViewport>
+    <mat-toolbar>
+      <mat-toolbar-row>Menu</mat-toolbar-row>
+      <mat-toolbar-row>
+        <mat-action-list>
+          <button *ngFor="let link of links" mat-button routerLink="{{link.path}}">{{link.name}}</button>
+        </mat-action-list>
+      </mat-toolbar-row>
+    </mat-toolbar>
+  </mat-sidenav>
+  <mat-toolbar color="primary">
+    <button aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
+    <span>{{title}}</span>
+  </mat-toolbar>
+  <main>
+    <ng-content></ng-content>
+  </main>
+</mat-sidenav-container>
