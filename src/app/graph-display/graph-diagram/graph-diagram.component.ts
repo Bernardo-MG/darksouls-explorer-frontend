@@ -26,10 +26,6 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.cleanGraph();
     if (this.graph) {
-      // const rect: DOMRect = (d3.select("figure#graph_view").node() as Element).getBoundingClientRect();
-      // this.height = rect.height
-      // this.width = rect.width
-
       this.displayGraph(this.graph.links, this.graph.nodes, this.graph.types, this.width, this.height);
     }
   }
