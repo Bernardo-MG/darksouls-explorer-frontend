@@ -5,11 +5,11 @@ import { RelationshipService } from '@app/services/relationship.service';
 import { DisplayGraph } from '@app/graph-display/models/displayGraph';
 
 @Component({
-  selector: 'app-relationship',
-  templateUrl: './relationship.component.html',
-  styleUrls: ['./relationship.component.sass']
+  selector: 'graph-view',
+  templateUrl: './graph-view.component.html',
+  styleUrls: ['./graph-view.component.sass']
 })
-export class RelationshipComponent implements OnInit {
+export class GraphViewComponent implements OnInit {
 
   filterOptions: NamedValue[] = [];
 

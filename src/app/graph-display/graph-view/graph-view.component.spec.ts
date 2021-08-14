@@ -4,7 +4,7 @@ import { ApolloTestingModule } from 'apollo-angular/testing';
 import { Observable, of } from 'rxjs';
 
 import { GraphService } from '@app/api/services/graph.service';
-import { RelationshipComponent } from './relationship.component';
+import { GraphViewComponent } from './graph-view.component';
 import { Graph } from '@app/api/models/graph';
 
 class MockedGraphService {
@@ -16,12 +16,12 @@ class MockedGraphService {
 }
 
 describe('GraphComponent', () => {
-  let component: RelationshipComponent;
-  let fixture: ComponentFixture<RelationshipComponent>;
+  let component: GraphViewComponent;
+  let fixture: ComponentFixture<GraphViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RelationshipComponent],
+      declarations: [GraphViewComponent],
       imports: [RouterTestingModule, ApolloTestingModule],
       providers: [
         { provides: GraphService, useClass: MockedGraphService }
@@ -31,7 +31,7 @@ describe('GraphComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RelationshipComponent);
+    fixture = TestBed.createComponent(GraphViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

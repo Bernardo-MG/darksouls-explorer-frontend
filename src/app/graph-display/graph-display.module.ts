@@ -1,21 +1,29 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { FlexLayoutModule } from '@angular/flex-layout';
+
+import { MatCardModule } from '@angular/material/card';
+
 import { GraphStatusComponent } from './graph-status/graph-status.component';
 import { GraphDiagramComponent } from './graph-diagram/graph-diagram.component';
+import { GraphViewComponent } from './graph-view/graph-view.component';
+import { FilterModule } from '@app/filter/filter.module';
 
 @NgModule({
   declarations: [
     GraphStatusComponent,
-    GraphDiagramComponent
+    GraphDiagramComponent,
+    GraphViewComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FilterModule,
+    FlexLayoutModule,
+    MatCardModule
   ],
   exports: [
-    CommonModule,
-    GraphStatusComponent,
-    GraphDiagramComponent
+    GraphViewComponent
   ]
 })
 export class GraphDisplayModule { }

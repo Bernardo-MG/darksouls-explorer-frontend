@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { RelationshipComponent } from './relationship/relationship.component';
+import { GraphViewComponent } from './graph-display/graph-view/graph-view.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/relationships', pathMatch: 'full' },
-  { path: 'relationships', component: RelationshipComponent }
+  { path: 'relationships', component: GraphViewComponent }
 ];
 
 @NgModule({

@@ -22,15 +22,11 @@ import { APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { InMemoryCache } from '@apollo/client/core';
 
-import { RelationshipComponent } from './relationship/relationship.component';
 import { GraphDisplayModule } from './graph-display/graph-display.module';
-import { FilterComponent } from './filter/filter.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    RelationshipComponent,
-    FilterComponent
+    AppComponent
   ],
   imports: [
     AppRoutingModule,
