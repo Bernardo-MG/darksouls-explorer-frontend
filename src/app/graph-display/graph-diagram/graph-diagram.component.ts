@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewEncapsul
 import { DisplayGraphLink } from '../models/displayGraphLink';
 import { DisplayGraphNode } from '../models/displayGraphNode';
 import * as d3 from 'd3';
-import { Simulation, SimulationNodeDatum, ZoomBehavior } from 'd3';
+import { Simulation, ZoomBehavior, Selection, BaseType, ScaleOrdinal } from 'd3';
 import { DisplayGraph } from '../models/displayGraph';
 
 @Component({
@@ -38,13 +38,63 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
   private reload(): void {
     this.cleanGraph();
     if (this.graph) {
+      const color: ScaleOrdinal<String, string, never> = d3.scaleOrdinal(this.graph.types, d3.schemeCategory10)
+
       // Graph simulation
       const simulation: Simulation<DisplayGraphNode, undefined> = d3.forceSimulation(this.graph.nodes)
         .force("link", d3.forceLink(this.graph.links).id((d: any) => d.id))
         .force("charge", d3.forceManyBody())
         .force("center", d3.forceRadial(this.width / 2, this.height / 2));
 
-      this.displayGraph(this.graph.links, this.graph.nodes, this.graph.types, this.width, this.height, simulation);
+      // Main view container
+      var mainView: Selection<SVGSVGElement, unknown, HTMLElement, any> = d3.select("figure#graph_view")
+        .append("div")
+        .attr("id", "graph")
+        .classed("svg-container", true)
+        .append("svg")
+        .attr("viewBox", `0, 0, ${this.width}, ${this.height}`)
+        .classed("svg-content-responsive", true);
+
+      // Builds links
+      const link: Selection<BaseType | SVGPathElement, DisplayGraphLink, SVGGElement, unknown> = mainView.append("g")
+        .attr("fill", "none")
+        .attr("stroke-width", 1.5)
+        .selectAll("path")
+        .data(this.graph.links)
+        .join("path")
+        .attr("class", "graph_link")
+        .attr("stroke", d => color(d.type))
+        .attr("marker-end", d => `url(#arrow-${d.type})`);
+
+      // Builds nodes
+      // Added after the links so they are drawn over them
+      const nodeRoot: Selection<BaseType | SVGGElement, DisplayGraphNode, SVGGElement, unknown> = mainView.append("g")
+        .selectAll("g")
+        .data(this.graph.nodes)
+        .join("g")
+        .call(this.drag(simulation) as any);
+      const node = nodeRoot.append("circle")
+        .attr("class", "graph_node")
+        .on("mouseover", this.mouseoverButton)
+        .on("mouseout", this.mouseoutButton)
+        .on("click", (event, item) => this.selectNode.emit(item.id));
+      const nodeLabel = nodeRoot.append("text")
+        .text(d => d.name as string);
+
+      // Runs simulation
+      simulation.on("tick", () => {
+        link.attr("d", this.linkArc);
+
+        node
+          .attr("cx", (d: any) => d.x)
+          .attr("cy", (d: any) => d.y);
+
+        nodeLabel
+          .attr("x", (d: any) => d.x)
+          .attr("y", (d: any) => d.y);
+      });
+
+      this.displayGraph(mainView, link, nodeRoot, this.graph.types, this.width, this.height, color);
     }
   }
 
@@ -52,17 +102,10 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
     d3.select("figure#graph_view").select("#graph").remove();
   }
 
-  private displayGraph(links: DisplayGraphLink[], nodes: DisplayGraphNode[], types: String[], width: number, height: number, simulation: Simulation<DisplayGraphNode, undefined>) {
-    const color = d3.scaleOrdinal(types, d3.schemeCategory10)
-
-    // Main view container
-    var mainView = d3.select("figure#graph_view")
-      .append("div")
-      .attr("id", "graph")
-      .classed("svg-container", true)
-      .append("svg")
-      .attr("viewBox", `0, 0, ${width}, ${height}`)
-      .classed("svg-content-responsive", true);
+  private displayGraph(mainView: Selection<SVGSVGElement, unknown, HTMLElement, any>,
+    link: Selection<BaseType | SVGPathElement, DisplayGraphLink, SVGGElement, unknown>,
+    nodeRoot: Selection<BaseType | SVGGElement, DisplayGraphNode, SVGGElement, unknown>,
+    types: String[], width: number, height: number, color: ScaleOrdinal<String, string, never>) {
 
     // Per-type markers, as they don't inherit styles.
     mainView.append("defs").selectAll("marker")
@@ -79,32 +122,6 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
       .attr("fill", color)
       .attr("d", "M0,-5L10,0L0,5");
 
-    // Builds links
-    const link = mainView.append("g")
-      .attr("fill", "none")
-      .attr("stroke-width", 1.5)
-      .selectAll("path")
-      .data(links)
-      .join("path")
-      .attr("class", "graph_link")
-      .attr("stroke", d => color(d.type))
-      .attr("marker-end", d => `url(#arrow-${d.type})`);
-
-    // Builds nodes
-    // Added after the links so they are drawn over them
-    const nodeRoot = mainView.append("g")
-      .selectAll("g")
-      .data(nodes)
-      .join("g")
-      .call(this.drag(simulation) as any);
-    const node = nodeRoot.append("circle")
-      .attr("class", "graph_node")
-      .on("mouseover", this.mouseoverButton)
-      .on("mouseout", this.mouseoutButton)
-      .on("click", (event, item) => this.selectNode.emit(item.id));
-    const nodeLabel = nodeRoot.append("text")
-      .text(d => d.name as string);
-
     // Adds zoom
     const zoom: ZoomBehavior<Element, any> = d3.zoom()
       .extent([[0, 0], [width, height]])
@@ -115,19 +132,6 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
       });
     mainView.call(zoom as any);
     mainView.call(zoom.transform as any, d3.zoomIdentity.translate(width / 2, height / 2).scale(this.minZoom));
-
-    // Runs simulation
-    simulation.on("tick", () => {
-      link.attr("d", this.linkArc);
-
-      node
-        .attr("cx", (d: any) => d.x)
-        .attr("cy", (d: any) => d.y);
-
-      nodeLabel
-        .attr("x", (d: any) => d.x)
-        .attr("y", (d: any) => d.y);
-    });
   }
 
   private linkArc(d: any) {
