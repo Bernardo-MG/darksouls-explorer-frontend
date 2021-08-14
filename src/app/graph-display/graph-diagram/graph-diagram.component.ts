@@ -1,10 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { Graph } from '@app/api/models/graph';
 import { GraphLink } from '../models/graphLink';
 import { GraphNode } from '../models/graphNode';
 import * as d3 from 'd3';
-import { Link } from '@app/api/models/link';
-import { Node } from '@app/api/models/node';
 import { Simulation, SimulationNodeDatum } from 'd3';
 import { DisplayGraph } from '../models/displayGraph';
 
