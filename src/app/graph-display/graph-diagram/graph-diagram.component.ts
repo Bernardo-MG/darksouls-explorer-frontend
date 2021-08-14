@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewEncapsul
 import { DisplayGraphLink } from '../models/displayGraphLink';
 import { DisplayGraphNode } from '../models/displayGraphNode';
 import * as d3 from 'd3';
-import { Simulation, SimulationNodeDatum } from 'd3';
+import { Simulation, SimulationNodeDatum, ZoomBehavior } from 'd3';
 import { DisplayGraph } from '../models/displayGraph';
 
 @Component({
@@ -101,14 +101,15 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
       .text(d => d.name as string);
 
     // Adds zoom
-     mainView.call(d3.zoom()
-       .extent([[0, 0], [width, height]])
-       .scaleExtent([0.5, 5])
-       .on("zoom", (event) => {
-         link.attr('transform', event.transform);
-         nodeRoot.attr('transform', event.transform);
-       }) as any
-     );
+    const zoom: ZoomBehavior<Element, any> = d3.zoom()
+      .extent([[0, 0], [width, height]])
+      .scaleExtent([0.5, 5])
+      .on("zoom", (event) => {
+        link.attr('transform', event.transform);
+        nodeRoot.attr('transform', event.transform);
+      });
+    mainView.call(zoom as any);
+    mainView.call(zoom.transform as any, d3.zoomIdentity.translate(100, 50).scale(0.5));
 
     // Runs simulation
     simulation.on("tick", () => {
