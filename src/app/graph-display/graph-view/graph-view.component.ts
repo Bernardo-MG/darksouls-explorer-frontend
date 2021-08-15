@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NamedValue } from '@app/models/namedValue';
 import { Item } from '@app/api/models/item';
 import { GraphService } from '@app/graph-display/services/graph.service';
@@ -15,7 +15,7 @@ export class GraphViewComponent implements OnInit {
 
   graph: DisplayGraph = { nodes: [], links: [], types: [] };
 
-  @Input() info: Item = { id: 0, name: '', description: [] };
+  info: Item = { id: 0, name: '', description: [] };
 
   constructor(
     private graphService: GraphService
