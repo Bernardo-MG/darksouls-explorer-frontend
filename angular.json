@@ -125,5 +125,8 @@
       }
     }
   },
-  "defaultProject": "darksouls-explorer-frontend"
+  "defaultProject": "darksouls-explorer-frontend",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }
