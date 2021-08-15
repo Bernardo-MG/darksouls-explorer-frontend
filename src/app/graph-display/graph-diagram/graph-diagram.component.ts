@@ -25,7 +25,7 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
 
   maxZoom: number = 5;
 
-  currentZoom: number = 0.75;
+  @Input() currentZoom: number = 0.75;
 
   constructor() { }
 

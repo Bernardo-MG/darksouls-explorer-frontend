@@ -17,9 +17,15 @@ export class GraphViewComponent implements OnInit {
 
   info: Item = { id: 0, name: '', description: [] };
 
+  initialZoom: number = 0.75;
+
+  currentZoom: number = 0;
+
   constructor(
     private graphService: GraphService
-  ) { }
+  ) {
+    this.currentZoom = this.initialZoom;
+  }
 
   ngOnInit(): void {
     this.graphService.getOptions().subscribe(options => this.filterOptions = options);
@@ -31,8 +37,17 @@ export class GraphViewComponent implements OnInit {
 
   onApplyFilter(options: String[]) {
     if (options.length > 0) {
+      this.currentZoom = this.initialZoom;
       this.graphService.getGraph(options).subscribe(data => this.graph = data);
     }
+  }
+
+  onIncreaseZoom() {
+    this.currentZoom = this.currentZoom + 0.2;
+  }
+
+  onDecreaseZoom() {
+    this.currentZoom = this.currentZoom - 0.2;
   }
 
 }

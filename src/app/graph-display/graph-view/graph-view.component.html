@@ -9,8 +9,12 @@
                     <graph-status [graph]="graph"></graph-status>
                 </mat-card-header>
                 <mat-card-content>
-                    <graph-diagram [graph]="graph" (selectNode)="onSelectNode($event)"></graph-diagram>
+                    <graph-diagram [graph]="graph" [currentZoom]="currentZoom" (selectNode)="onSelectNode($event)"></graph-diagram>
                 </mat-card-content>
+                <mat-card-actions>
+                    <button mat-button (click)="onDecreaseZoom()">-</button>
+                    <button mat-button (click)="onIncreaseZoom()">+</button>
+                </mat-card-actions>
             </mat-card>
         </div>
         <div fxFlex="50">
