@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 import { GraphService } from '@app/graph-display/services/graph.service';
 import { GraphViewComponent } from './graph-view.component';
 import { Graph } from '@app/api/models/graph';
+import { GraphDisplayModule } from '../graph-display.module';
 
 class MockedGraphService {
 
@@ -15,14 +16,18 @@ class MockedGraphService {
 
 }
 
-describe('GraphComponent', () => {
+describe('GraphViewComponent', () => {
   let component: GraphViewComponent;
   let fixture: ComponentFixture<GraphViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [GraphViewComponent],
-      imports: [RouterTestingModule, ApolloTestingModule],
+      imports: [
+        RouterTestingModule,
+        ApolloTestingModule,
+        GraphDisplayModule
+      ],
       providers: [
         { provides: GraphService, useClass: MockedGraphService }
       ]
