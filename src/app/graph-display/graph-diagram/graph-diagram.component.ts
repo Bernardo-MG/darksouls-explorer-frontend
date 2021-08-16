@@ -144,7 +144,7 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
         nodeRoot.attr('transform', event.transform);
       });
     mainView.call(zoom as any);
-    mainView.call(zoom.transform as any, d3.zoomIdentity.translate(this.width / 2, this.height / 2).scale(this.currentZoom));
+    mainView.call(zoom.transform as any, d3.zoomIdentity.translate(this.width / 10, this.height / 2).scale(this.currentZoom));
   }
 
   private cleanGraph() {
