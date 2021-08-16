@@ -104,8 +104,7 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
   private buildLinks(mainView: Selection<SVGSVGElement, unknown, HTMLElement, any>,
     color: ScaleOrdinal<String, string, never>): Selection<BaseType | SVGPathElement, DisplayGraphLink, SVGGElement, unknown> {
     return mainView.append("g")
-      .attr("fill", "none")
-      .attr("stroke-width", 1.5)
+      .attr("class", "graph_link_container")
       .selectAll("path")
       .data(this.graph.links)
       .join("path")
