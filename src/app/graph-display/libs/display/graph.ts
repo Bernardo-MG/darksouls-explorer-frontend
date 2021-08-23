@@ -16,16 +16,16 @@ const config: DisplayConfig = {
 }
 
 export function display(graph: DisplayGraph, selectNode = new EventEmitter<Number>(), currentZoom: number) {
-    const color = d3.scaleOrdinal(graph.types, d3.schemeCategory10)
+    config.color = d3.scaleOrdinal(graph.types, d3.schemeCategory10)
 
     // Graph simulation
-    const simulation = buildSimulation(graph.nodes, graph.links);
+    config.simulation = buildSimulation(graph.nodes, graph.links);
 
     // Main view container
     var mainView = buildMainView();
 
     // Builds links
-    const link = buildLinks(mainView, color, graph.links);
+    const link = buildLinks(mainView, config.color, graph.links);
 
     // Builds nodes
     // Added after the links so they are drawn over them
@@ -33,7 +33,7 @@ export function display(graph: DisplayGraph, selectNode = new EventEmitter<Numbe
         .selectAll("g")
         .data(graph.nodes)
         .join("g")
-        .call(drag(simulation) as any);
+        .call(drag(config.simulation) as any);
     const node = nodeRoot.append("circle")
         .attr("class", "graph_node")
         .on("mouseover", mouseoverButton)
@@ -43,7 +43,7 @@ export function display(graph: DisplayGraph, selectNode = new EventEmitter<Numbe
         .text(d => d.name as string);
 
     // Runs simulation
-    simulation.on("tick", () => {
+    config.simulation.on("tick", () => {
         link.attr("d", linkArc);
 
         node
@@ -55,7 +55,7 @@ export function display(graph: DisplayGraph, selectNode = new EventEmitter<Numbe
             .attr("y", (d: any) => d.y);
     });
 
-    setMarkers(mainView, graph.types, color);
+    setMarkers(mainView, graph.types, config.color);
     setZoom(mainView, link, nodeRoot, currentZoom);
 }
 
