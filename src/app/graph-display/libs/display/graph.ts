@@ -6,14 +6,14 @@ import { EventEmitter } from '@angular/core';
 import { DisplayGraph } from "@app/graph-display/models/displayGraph";
 import { DisplayGraphLink } from '../../models/displayGraphLink';
 import { DisplayGraphNode } from '../../models/displayGraphNode';
+import { DisplayConfig } from './displayConfig';
 
-const height: number = 400;
-
-const width: number = 400;
-
-const minZoom: number = 0.5;
-
-const maxZoom: number = 5;
+const config: DisplayConfig = {
+    height: 400,
+    width: 400,
+    minZoom: 0.5,
+    maxZoom: 5
+}
 
 export function display(graph: DisplayGraph, selectNode = new EventEmitter<Number>(), currentZoom: number) {
     const color = d3.scaleOrdinal(graph.types, d3.schemeCategory10)
@@ -64,7 +64,7 @@ function buildSimulation(nodes: DisplayGraphNode[], links: DisplayGraphLink[]): 
     return d3.forceSimulation(nodes)
         .force("link", d3.forceLink(links).id((d: any) => d.id))
         .force("charge", d3.forceManyBody())
-        .force("center", d3.forceRadial(width / 2, height / 2));
+        .force("center", d3.forceRadial(config.width / 2, config.height / 2));
 }
 
 function buildMainView(): Selection<SVGSVGElement, unknown, HTMLElement, any> {
@@ -73,7 +73,7 @@ function buildMainView(): Selection<SVGSVGElement, unknown, HTMLElement, any> {
         .attr("id", "graph")
         .classed("svg-container", true)
         .append("svg")
-        .attr("viewBox", `0, 0, ${width}, ${height}`)
+        .attr("viewBox", `0, 0, ${config.width}, ${config.height}`)
         .classed("svg-content-responsive", true);
 }
 
@@ -110,18 +110,18 @@ function setMarkers(mainView: Selection<SVGSVGElement, unknown, HTMLElement, any
 
 function setZoom(mainView: Selection<SVGSVGElement, unknown, HTMLElement, any>,
     link: Selection<BaseType | SVGPathElement, DisplayGraphLink, SVGGElement, unknown>,
-    nodeRoot: Selection<BaseType | SVGGElement, DisplayGraphNode, SVGGElement, unknown>, 
+    nodeRoot: Selection<BaseType | SVGGElement, DisplayGraphNode, SVGGElement, unknown>,
     currentZoom: number) {
     // Adds zoom
     const zoom: ZoomBehavior<Element, any> = d3.zoom()
-        .extent([[0, 0], [width, height]])
-        .scaleExtent([minZoom, maxZoom])
+        .extent([[0, 0], [config.width, config.height]])
+        .scaleExtent([config.minZoom, config.maxZoom])
         .on("zoom", (event) => {
             link.attr('transform', event.transform);
             nodeRoot.attr('transform', event.transform);
         });
     mainView.call(zoom as any);
-    mainView.call(zoom.transform as any, d3.zoomIdentity.translate(width / 10, height / 2).scale(currentZoom));
+    mainView.call(zoom.transform as any, d3.zoomIdentity.translate(config.width / 10, config.height / 2).scale(currentZoom));
 }
 
 function linkArc(d: any) {
