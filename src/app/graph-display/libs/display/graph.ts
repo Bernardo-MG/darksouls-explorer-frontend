@@ -7,11 +7,13 @@ import { DisplayGraph } from "@app/graph-display/models/displayGraph";
 import { DisplayGraphLink } from '../../models/displayGraphLink';
 import { DisplayGraphNode } from '../../models/displayGraphNode';
 import { DisplayConfig } from './displayConfig';
+import { SimulatorRenderer } from './simulationRenderer';
 
 var config: DisplayConfig;
 
 export function display(graph: DisplayGraph, selectNode = new EventEmitter<Number>(), currentZoom: number) {
     config = new DisplayConfig(graph);
+    const simulation = new SimulatorRenderer(graph, config);
 
     // Main view container
     var mainView = buildMainView();
@@ -25,7 +27,7 @@ export function display(graph: DisplayGraph, selectNode = new EventEmitter<Numbe
         .selectAll("g")
         .data(graph.nodes)
         .join("g")
-        .call(drag(config.simulation) as any);
+        .call(simulation.drag());
     const node = nodeRoot.append("circle")
         .attr("class", "graph_node")
         .on("mouseover", mouseoverButton)
@@ -34,18 +36,7 @@ export function display(graph: DisplayGraph, selectNode = new EventEmitter<Numbe
     const nodeLabel = nodeRoot.append("text")
         .text(d => d.name as string);
 
-    // Runs simulation
-    config.simulation.on("tick", () => {
-        link.attr("d", linkArc);
-
-        node
-            .attr("cx", (d: any) => d.x)
-            .attr("cy", (d: any) => d.y);
-
-        nodeLabel
-            .attr("x", (d: any) => d.x)
-            .attr("y", (d: any) => d.y);
-    });
+    simulation.bind(node, link, nodeLabel);
 
     setMarkers(mainView, graph.types, config.color);
     setZoom(mainView, link, nodeRoot, currentZoom);
@@ -106,38 +97,6 @@ function setZoom(mainView: Selection<SVGSVGElement, unknown, HTMLElement, any>,
         });
     mainView.call(zoom as any);
     mainView.call(zoom.transform as any, d3.zoomIdentity.translate(config.width / 10, config.height / 2).scale(currentZoom));
-}
-
-function linkArc(d: any) {
-    const r = Math.hypot(d.target.x - d.source.x, d.target.y - d.source.y);
-    return `
-      M${d.source.x},${d.source.y}
-      A${r},${r} 0 0,1 ${d.target.x},${d.target.y}
-    `;
-}
-
-function drag(simulation: Simulation<DisplayGraphNode, undefined>) {
-    function dragstarted(event: any) {
-        if (!event.active) simulation.alphaTarget(0.3).restart();
-        event.subject.fx = event.subject.x;
-        event.subject.fy = event.subject.y;
-    }
-
-    function dragged(event: any) {
-        event.subject.fx = event.x;
-        event.subject.fy = event.y;
-    }
-
-    function dragended(event: any) {
-        if (!event.active) simulation.alphaTarget(0);
-        event.subject.fx = null;
-        event.subject.fy = null;
-    }
-
-    return d3.drag()
-        .on("start", dragstarted)
-        .on("drag", dragged)
-        .on("end", dragended)
 }
 
 function mouseoverButton(event: any, d: DisplayGraphNode) {
