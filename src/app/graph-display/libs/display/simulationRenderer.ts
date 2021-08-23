@@ -30,7 +30,7 @@ export class SimulatorRenderer {
     }
 
     public drag(): any {
-        return this.setupDrag(this.simulation);
+        return this.setupDrag();
     }
 
     private buildSimulation(nodes: DisplayGraphNode[], links: DisplayGraphLink[], config: DisplayConfig): Simulation<DisplayGraphNode, undefined> {
@@ -48,20 +48,20 @@ export class SimulatorRenderer {
         `;
     }
 
-    private setupDrag(simulation: Simulation<DisplayGraphNode, undefined>) {
-        function dragstarted(event: any) {
-            if (!event.active) simulation.alphaTarget(0.3).restart();
+    private setupDrag() {
+        const dragstarted = (event: any) => {
+            if (!event.active) this.simulation.alphaTarget(0.3).restart();
             event.subject.fx = event.subject.x;
             event.subject.fy = event.subject.y;
         }
 
-        function dragged(event: any) {
+        const dragged = (event: any) => {
             event.subject.fx = event.x;
             event.subject.fy = event.y;
         }
 
-        function dragended(event: any) {
-            if (!event.active) simulation.alphaTarget(0);
+        const dragended = (event: any) => {
+            if (!event.active) this.simulation.alphaTarget(0);
             event.subject.fx = null;
             event.subject.fy = null;
         }
