@@ -8,18 +8,10 @@ import { DisplayGraphLink } from '../../models/displayGraphLink';
 import { DisplayGraphNode } from '../../models/displayGraphNode';
 import { DisplayConfig } from './displayConfig';
 
-const config: DisplayConfig = {
-    height: 400,
-    width: 400,
-    minZoom: 0.5,
-    maxZoom: 5
-}
+var config: DisplayConfig;
 
 export function display(graph: DisplayGraph, selectNode = new EventEmitter<Number>(), currentZoom: number) {
-    config.color = d3.scaleOrdinal(graph.types, d3.schemeCategory10)
-
-    // Graph simulation
-    config.simulation = buildSimulation(graph.nodes, graph.links);
+    config = new DisplayConfig(graph);
 
     // Main view container
     var mainView = buildMainView();
@@ -57,14 +49,6 @@ export function display(graph: DisplayGraph, selectNode = new EventEmitter<Numbe
 
     setMarkers(mainView, graph.types, config.color);
     setZoom(mainView, link, nodeRoot, currentZoom);
-}
-
-
-function buildSimulation(nodes: DisplayGraphNode[], links: DisplayGraphLink[]): Simulation<DisplayGraphNode, undefined> {
-    return d3.forceSimulation(nodes)
-        .force("link", d3.forceLink(links).id((d: any) => d.id))
-        .force("charge", d3.forceManyBody())
-        .force("center", d3.forceRadial(config.width / 2, config.height / 2));
 }
 
 function buildMainView(): Selection<SVGSVGElement, unknown, HTMLElement, any> {
