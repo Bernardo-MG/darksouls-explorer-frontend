@@ -12,7 +12,10 @@ export class SimulatorRenderer {
 
     constructor(graph: DisplayGraph, config: DisplayConfig) {
         // Graph simulation
-        this.simulation = this.buildSimulation(graph.nodes, graph.links, config);
+        this.simulation = d3.forceSimulation(graph.nodes)
+            .force("link", d3.forceLink(graph.links).id((d: any) => d.id))
+            .force("charge", d3.forceManyBody())
+            .force("center", d3.forceRadial(config.width / 2, config.height / 2));
     }
 
     public bind(node: any, link: any, nodeLabel: any) {
@@ -30,25 +33,6 @@ export class SimulatorRenderer {
     }
 
     public drag(): any {
-        return this.setupDrag();
-    }
-
-    private buildSimulation(nodes: DisplayGraphNode[], links: DisplayGraphLink[], config: DisplayConfig): Simulation<DisplayGraphNode, undefined> {
-        return d3.forceSimulation(nodes)
-            .force("link", d3.forceLink(links).id((d: any) => d.id))
-            .force("charge", d3.forceManyBody())
-            .force("center", d3.forceRadial(config.width / 2, config.height / 2));
-    }
-
-    private linkArc(d: any) {
-        const r = Math.hypot(d.target.x - d.source.x, d.target.y - d.source.y);
-        return `
-          M${d.source.x},${d.source.y}
-          A${r},${r} 0 0,1 ${d.target.x},${d.target.y}
-        `;
-    }
-
-    private setupDrag() {
         const dragstarted = (event: any) => {
             if (!event.active) this.simulation.alphaTarget(0.3).restart();
             event.subject.fx = event.subject.x;
@@ -70,6 +54,14 @@ export class SimulatorRenderer {
             .on("start", dragstarted)
             .on("drag", dragged)
             .on("end", dragended)
+    }
+
+    private linkArc(d: any) {
+        const r = Math.hypot(d.target.x - d.source.x, d.target.y - d.source.y);
+        return `
+          M${d.source.x},${d.source.y}
+          A${r},${r} 0 0,1 ${d.target.x},${d.target.y}
+        `;
     }
 
 }
