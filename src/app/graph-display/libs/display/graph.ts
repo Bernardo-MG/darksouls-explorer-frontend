@@ -8,6 +8,8 @@ import { DisplayGraphLink } from '../../models/displayGraphLink';
 import { DisplayGraphNode } from '../../models/displayGraphNode';
 import { DisplayConfig } from './displayConfig';
 import { SimulatorRenderer } from './simulationRenderer';
+import { graphView } from './components/graph-view';
+import { links } from './components/links';
 
 var config: DisplayConfig;
 
@@ -15,12 +17,12 @@ export function display(graph: DisplayGraph, selectNode = new EventEmitter<Numbe
     config = new DisplayConfig(graph);
     const simulation = new SimulatorRenderer(graph, config);
 
+    const rootView = d3.select("figure#graph_view");
+
     // Main view container
-    var mainView = buildMainView();
-
+    const mainView = graphView(rootView, config);
     // Builds links
-    const link = buildLinks(mainView, config.color, graph.links);
-
+    const link = links(mainView, config.color, graph.links);
     // Builds nodes
     // Added after the links so they are drawn over them
     const nodes = buildNodeView(mainView, graph.nodes, selectNode);
@@ -48,28 +50,6 @@ function buildNodeView(mainView: any, nodes: DisplayGraphNode[], selectNode = ne
     return { nodeRoot, node, nodeLabel };
 }
 
-function buildMainView(): Selection<SVGSVGElement, unknown, HTMLElement, any> {
-    return d3.select("figure#graph_view")
-        .append("div")
-        .attr("id", "graph")
-        .classed("svg-container", true)
-        .append("svg")
-        .attr("viewBox", `0, 0, ${config.width}, ${config.height}`)
-        .classed("svg-content-responsive", true);
-}
-
-function buildLinks(mainView: Selection<SVGSVGElement, unknown, HTMLElement, any>,
-    color: ScaleOrdinal<String, string, never>,
-    links: DisplayGraphLink[]): Selection<BaseType | SVGPathElement, DisplayGraphLink, SVGGElement, unknown> {
-    return mainView.append("g")
-        .attr("class", "graph_link_container")
-        .selectAll("path")
-        .data(links)
-        .join("path")
-        .attr("class", "graph_link")
-        .attr("stroke", d => color(d.type))
-        .attr("marker-end", d => `url(#arrow-${d.type})`);
-}
 
 function setMarkers(mainView: Selection<SVGSVGElement, unknown, HTMLElement, any>,
     types: String[], color: ScaleOrdinal<String, string, never>) {
