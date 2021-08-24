@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { Simulation, ZoomBehavior, Selection, BaseType, ScaleOrdinal } from 'd3';
+import { ZoomBehavior, Selection, BaseType, ScaleOrdinal } from 'd3';
 
 import { EventEmitter } from '@angular/core';
 
@@ -23,23 +23,29 @@ export function display(graph: DisplayGraph, selectNode = new EventEmitter<Numbe
 
     // Builds nodes
     // Added after the links so they are drawn over them
+    const nodes = buildNodeView(mainView, graph.nodes, simulation, selectNode);
+
+    simulation.bind(nodes.node, link, nodes.nodeLabel);
+
+    setMarkers(mainView, graph.types, config.color);
+    setZoom(mainView, link, nodes.nodeRoot, currentZoom);
+}
+
+function buildNodeView(mainView: any, nodes: DisplayGraphNode[], simulation: any, selectNode = new EventEmitter<Number>()): any {
     const nodeRoot = mainView.append("g")
         .selectAll("g")
-        .data(graph.nodes)
+        .data(nodes)
         .join("g")
         .call(simulation.drag());
     const node = nodeRoot.append("circle")
         .attr("class", "graph_node")
         .on("mouseover", mouseoverButton)
         .on("mouseout", mouseoutButton)
-        .on("click", (event, item) => selectNode.emit(item.id));
+        .on("click", ((event: any, item: any) => selectNode.emit(item.id)));
     const nodeLabel = nodeRoot.append("text")
-        .text(d => d.name as string);
+        .text((d: any) => d.name as string);
 
-    simulation.bind(node, link, nodeLabel);
-
-    setMarkers(mainView, graph.types, config.color);
-    setZoom(mainView, link, nodeRoot, currentZoom);
+    return { nodeRoot, node, nodeLabel };
 }
 
 function buildMainView(): Selection<SVGSVGElement, unknown, HTMLElement, any> {
