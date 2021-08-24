@@ -23,20 +23,20 @@ export function display(graph: DisplayGraph, selectNode = new EventEmitter<Numbe
 
     // Builds nodes
     // Added after the links so they are drawn over them
-    const nodes = buildNodeView(mainView, graph.nodes, simulation, selectNode);
+    const nodes = buildNodeView(mainView, graph.nodes, selectNode);
 
+    nodes.nodeRoot.call(simulation.drag());
     simulation.bind(nodes.node, link, nodes.nodeLabel);
 
     setMarkers(mainView, graph.types, config.color);
     setZoom(mainView, link, nodes.nodeRoot, currentZoom);
 }
 
-function buildNodeView(mainView: any, nodes: DisplayGraphNode[], simulation: any, selectNode = new EventEmitter<Number>()): any {
+function buildNodeView(mainView: any, nodes: DisplayGraphNode[], selectNode = new EventEmitter<Number>()): any {
     const nodeRoot = mainView.append("g")
         .selectAll("g")
         .data(nodes)
-        .join("g")
-        .call(simulation.drag());
+        .join("g");
     const node = nodeRoot.append("circle")
         .attr("class", "graph_node")
         .on("mouseover", mouseoverButton)
