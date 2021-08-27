@@ -9,7 +9,7 @@ import { ElementBuilder } from './components/element-builder';
 import { NodeRootBuilder } from './components/node-root-builder';
 import { NodeBuilder } from './components/node-builder';
 import { NodeLabelBuilder } from './components/node-label-builder';
-import { LinksBuilder } from './components/links-builder';
+import { LinksBuilder } from './components/link-builder';
 import { GraphViewBuilder } from './components/graph-view-builder';
 
 var config: DisplayConfig;

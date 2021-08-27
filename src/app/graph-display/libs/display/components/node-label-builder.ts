@@ -5,7 +5,7 @@ import { DisplayConfig } from "../displayConfig";
 
 export class NodeLabelBuilder implements ElementBuilder {
 
-    bindToSimulation(root: Selection<any, any, any, any>, simulation: Simulation<any, any>): void {
+    public bindToSimulation(root: Selection<any, any, any, any>, simulation: Simulation<any, any>): void {
         simulation.on("tick.node-labels", () => {
             root.selectAll('.graph_node_label')
                 .attr("x", (d: any) => d.x)
@@ -13,7 +13,7 @@ export class NodeLabelBuilder implements ElementBuilder {
         });
     }
 
-    build(root: Selection<any, any, any, any>, graph: DisplayGraph, config: DisplayConfig): void {
+    public build(root: Selection<any, any, any, any>, graph: DisplayGraph, config: DisplayConfig): void {
         root.select('#graph_view').selectAll("#graph_nodes_root g")
             .append("text")
             .attr("class", "graph_node_label")

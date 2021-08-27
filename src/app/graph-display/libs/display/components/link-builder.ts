@@ -5,13 +5,13 @@ import { DisplayConfig } from "../displayConfig";
 
 export class LinksBuilder implements ElementBuilder {
 
-    bindToSimulation(root: Selection<any, any, any, any>, simulation: Simulation<any, any>): void {
+    public bindToSimulation(root: Selection<any, any, any, any>, simulation: Simulation<any, any>): void {
         simulation.on("tick.links", () => {
             root.selectAll('.graph_link').attr("d", this.linkArc);
         });
     }
 
-    build(root: Selection<any, any, any, any>, graph: DisplayGraph, config: DisplayConfig): void {
+    public build(root: Selection<any, any, any, any>, graph: DisplayGraph, config: DisplayConfig): void {
         root.select('#graph_view').append("g")
             .attr("class", "graph_link_container")
             .selectAll("path")

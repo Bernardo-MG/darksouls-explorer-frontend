@@ -5,9 +5,9 @@ import { DisplayConfig } from "../displayConfig";
 
 export class GraphViewBuilder implements ElementBuilder {
 
-    bindToSimulation(root: Selection<any, any, any, any>, simulation: Simulation<any, any>): void { }
+    public bindToSimulation(root: Selection<any, any, any, any>, simulation: Simulation<any, any>): void { }
 
-    build(root: Selection<any, any, any, any>, graph: DisplayGraph, config: DisplayConfig): void {
+    public build(root: Selection<any, any, any, any>, graph: DisplayGraph, config: DisplayConfig): void {
         root.append("div")
             .classed("svg-container", true)
             .append("svg")

@@ -7,7 +7,7 @@ import * as d3 from 'd3';
 
 export class NodeBuilder implements ElementBuilder {
 
-    bindToSimulation(root: Selection<any, any, any, any>, simulation: Simulation<any, any>): void {
+    public bindToSimulation(root: Selection<any, any, any, any>, simulation: Simulation<any, any>): void {
         simulation.on("tick.nodes", () => {
             root.selectAll('.graph_node')
                 .attr("cx", (d: any) => d.x)
@@ -17,7 +17,7 @@ export class NodeBuilder implements ElementBuilder {
         root.selectAll('#graph_nodes_root g').call(this.drag(simulation));
     }
 
-    build(root: Selection<any, any, any, any>, graph: DisplayGraph, config: DisplayConfig): void {
+    public build(root: Selection<any, any, any, any>, graph: DisplayGraph, config: DisplayConfig): void {
         root.select('#graph_view').selectAll("#graph_nodes_root g")
             .append("circle")
             .attr("class", "graph_node")

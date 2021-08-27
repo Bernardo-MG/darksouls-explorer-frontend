@@ -5,10 +5,10 @@ import { DisplayConfig } from "../displayConfig";
 
 export class NodeRootBuilder implements ElementBuilder {
 
-    bindToSimulation(root: Selection<any, any, any, any>, simulation: Simulation<any, any>): void {
+    public bindToSimulation(root: Selection<any, any, any, any>, simulation: Simulation<any, any>): void {
     }
 
-    build(root: Selection<any, any, any, any>, graph: DisplayGraph, config: DisplayConfig): void {
+    public build(root: Selection<any, any, any, any>, graph: DisplayGraph, config: DisplayConfig): void {
         root.select('#graph_view').append("g")
             .attr("id", 'graph_nodes_root')
             .selectAll("g")
