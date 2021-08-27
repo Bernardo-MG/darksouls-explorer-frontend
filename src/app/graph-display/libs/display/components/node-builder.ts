@@ -1,5 +1,5 @@
 import { ElementBuilder } from "./element-builder";
-import { Selection, Simulation } from 'd3';
+import { Selection, Simulation, ZoomBehavior } from 'd3';
 import { DisplayGraph } from "@app/graph-display/models/displayGraph";
 import { DisplayConfig } from "../displayConfig";
 import { DisplayGraphNode } from '../../../models/displayGraphNode';
@@ -15,6 +15,12 @@ export class NodeBuilder implements ElementBuilder {
         });
 
         root.selectAll('#graph_nodes_root g').call(this.drag(simulation));
+    }
+
+    public bindToZoom(root: Selection<any, any, any, any>, zoom: ZoomBehavior<any, any>): void {
+        zoom.on("zoom.node", (event) => {
+            root.selectAll('#graph_nodes_root g').attr('transform', event.transform);
+        })
     }
 
     public build(root: Selection<any, any, any, any>, graph: DisplayGraph, config: DisplayConfig): void {

@@ -16,6 +16,7 @@ import { MarkerBuilder } from './components/marker-builder';
 export function display(graph: DisplayGraph, selectNode = new EventEmitter<Number>(), currentZoom: number) {
     const config = new DisplayConfig(graph, currentZoom, (item: any) => selectNode.emit(item));
     const simulation = buildSimulation(graph, config);
+    const zoom = buildZoom(graph, config);
 
     const rootView = d3.select("figure#graph_container");
 
@@ -30,25 +31,10 @@ export function display(graph: DisplayGraph, selectNode = new EventEmitter<Numbe
     for (let builder of builders) {
         builder.build(rootView, graph, config);
         builder.bindToSimulation(rootView, simulation);
+        builder.bindToZoom(rootView, zoom);
     }
 
-    setZoom(rootView.select('#graph_view'), rootView.selectAll('.graph_link'), rootView.selectAll('#graph_nodes_root g'), config);
-}
-
-function setZoom(mainView: Selection<SVGSVGElement, unknown, HTMLElement, any>,
-    link: Selection<any, any, any, any>,
-    nodeRoot: Selection<any, any, any, any>,
-    config: DisplayConfig) {
-    // Adds zoom
-    const zoom: ZoomBehavior<Element, any> = d3.zoom()
-        .extent([[0, 0], [config.width, config.height]])
-        .scaleExtent([config.minZoom, config.maxZoom])
-        .on("zoom", (event) => {
-            link.attr('transform', event.transform);
-            nodeRoot.attr('transform', event.transform);
-        });
-    mainView.call(zoom as any);
-    mainView.call(zoom.transform as any, d3.zoomIdentity.translate(config.width / 10, config.height / 2).scale(config.zoomLevel));
+    rootView.select('#graph_view').call(zoom.transform as any, d3.zoomIdentity.translate(config.width / 10, config.height / 2).scale(config.zoomLevel));
 }
 
 function buildSimulation(graph: DisplayGraph, config: DisplayConfig): Simulation<any, any> {
@@ -56,4 +42,10 @@ function buildSimulation(graph: DisplayGraph, config: DisplayConfig): Simulation
         .force("link", d3.forceLink(graph.links).id((d: any) => d.id))
         .force("charge", d3.forceManyBody())
         .force("center", d3.forceRadial(config.width / 2, config.height / 2));
+}
+
+function buildZoom(graph: DisplayGraph, config: DisplayConfig): ZoomBehavior<Element, any> {
+    return d3.zoom()
+        .extent([[0, 0], [config.width, config.height]])
+        .scaleExtent([config.minZoom, config.maxZoom]);
 }

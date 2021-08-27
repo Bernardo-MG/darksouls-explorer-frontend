@@ -1,5 +1,5 @@
 import { ElementBuilder } from "./element-builder";
-import { Selection, Simulation } from 'd3';
+import { Selection, Simulation, ZoomBehavior } from 'd3';
 import { DisplayGraph } from "@app/graph-display/models/displayGraph";
 import { DisplayConfig } from "../displayConfig";
 
@@ -9,6 +9,12 @@ export class LinksBuilder implements ElementBuilder {
         simulation.on("tick.links", () => {
             root.selectAll('.graph_link').attr("d", this.linkArc);
         });
+    }
+
+    public bindToZoom(root: Selection<any, any, any, any>, zoom: ZoomBehavior<any, any>): void {
+        zoom.on("zoom.link", (event) => {
+            root.selectAll('.graph_link').attr('transform', event.transform);
+        })
     }
 
     public build(root: Selection<any, any, any, any>, graph: DisplayGraph, config: DisplayConfig): void {
