@@ -16,7 +16,7 @@ import { MarkerBuilder } from './components/marker-builder';
 export function display(graph: DisplayGraph, selectNode = new EventEmitter<Number>(), currentZoom: number) {
     const config = new DisplayConfig(graph, currentZoom, (item: any) => selectNode.emit(item));
     const simulation = buildSimulation(graph, config);
-    const zoom = buildZoom(graph, config);
+    const zoom = buildZoom(config);
 
     const rootView = d3.select("figure#graph_container");
 
@@ -44,7 +44,7 @@ function buildSimulation(graph: DisplayGraph, config: DisplayConfig): Simulation
         .force("center", d3.forceRadial(config.width / 2, config.height / 2));
 }
 
-function buildZoom(graph: DisplayGraph, config: DisplayConfig): ZoomBehavior<Element, any> {
+function buildZoom(config: DisplayConfig): ZoomBehavior<Element, any> {
     return d3.zoom()
         .extent([[0, 0], [config.width, config.height]])
         .scaleExtent([config.minZoom, config.maxZoom]);
