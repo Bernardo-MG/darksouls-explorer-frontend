@@ -5,7 +5,6 @@ import { EventEmitter } from '@angular/core';
 
 import { DisplayGraph } from "@app/graph-display/models/displayGraph";
 import { DisplayConfig } from './displayConfig';
-import { SimulatorRenderer } from './simulationRenderer';
 import { ElementBuilder } from './components/element-builder';
 import { NodeRootBuilder } from './components/node-root-builder';
 import { NodeBuilder } from './components/node-builder';
@@ -17,7 +16,10 @@ var config: DisplayConfig;
 
 export function display(graph: DisplayGraph, selectNode = new EventEmitter<Number>(), currentZoom: number) {
     config = new DisplayConfig(graph, (item: any) => selectNode.emit(item));
-    const simulation = new SimulatorRenderer(graph, config);
+    const simulation = d3.forceSimulation(graph.nodes)
+        .force("link", d3.forceLink(graph.links).id((d: any) => d.id))
+        .force("charge", d3.forceManyBody())
+        .force("center", d3.forceRadial(config.width / 2, config.height / 2));
 
     const rootView = d3.select("figure#graph_container");
 
@@ -30,10 +32,8 @@ export function display(graph: DisplayGraph, selectNode = new EventEmitter<Numbe
 
     for (let builder of builders) {
         builder.build(rootView, graph, config);
-        builder.bindToSimulation(rootView, simulation.simulation);
+        builder.bindToSimulation(rootView, simulation);
     }
-
-    rootView.selectAll('#graph_nodes_root g').call(simulation.drag());
 
     setMarkers(rootView.select('#graph_view'), graph.types, config.color);
     setZoom(rootView.select('#graph_view'), rootView.selectAll('.graph_link'), rootView.selectAll('#graph_nodes_root g'), currentZoom);
