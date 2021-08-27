@@ -35,7 +35,7 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
   }
 
   private cleanGraph() {
-    d3.select("figure#graph_view").select("#graph").remove();
+    d3.select("figure#graph_container").select(".svg-container").remove();
   }
 
 }
