@@ -6,7 +6,7 @@ import { DisplayConfig } from "../displayConfig";
 export class LinksBuilder implements ElementBuilder {
 
     build(root: Selection<any, any, any, any>, graph: DisplayGraph, config: DisplayConfig): void {
-        root.append("g")
+        root.select('#graph_view').append("g")
             .attr("class", "graph_link_container")
             .selectAll("path")
             .data(graph.links)

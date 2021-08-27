@@ -4,16 +4,14 @@ import { ZoomBehavior, Selection, ScaleOrdinal } from 'd3';
 import { EventEmitter } from '@angular/core';
 
 import { DisplayGraph } from "@app/graph-display/models/displayGraph";
-import { DisplayGraphNode } from '../../models/displayGraphNode';
 import { DisplayConfig } from './displayConfig';
 import { SimulatorRenderer } from './simulationRenderer';
-import { graphView } from './components/graph-view';
-import { links } from './components/links';
 import { ElementBuilder } from './components/element-builder';
 import { NodeRootBuilder } from './components/node-root-builder';
 import { NodeBuilder } from './components/node-builder';
 import { NodeLabelBuilder } from './components/node-label-builder';
 import { LinksBuilder } from './components/links-builder';
+import { GraphViewBuilder } from './components/graph-view-builder';
 
 var config: DisplayConfig;
 
@@ -21,26 +19,24 @@ export function display(graph: DisplayGraph, selectNode = new EventEmitter<Numbe
     config = new DisplayConfig(graph, (item: any) => selectNode.emit(item));
     const simulation = new SimulatorRenderer(graph, config);
 
-    const rootView = d3.select("figure#graph_view");
-
-    // Main view container
-    const mainView: Selection<any, any, any, any> = graphView(rootView, config);
+    const rootView = d3.select("figure#graph_container");
 
     const builders: ElementBuilder[] = [];
+    builders.push(new GraphViewBuilder());
     builders.push(new LinksBuilder());
     builders.push(new NodeRootBuilder());
     builders.push(new NodeBuilder());
     builders.push(new NodeLabelBuilder());
 
     for (let builder of builders) {
-        builder.build(mainView, graph, config);
+        builder.build(rootView, graph, config);
     }
 
     rootView.selectAll('#graph_nodes_root g').call(simulation.drag());
     simulation.bind(rootView.selectAll(".graph_node"), rootView.selectAll('.graph_link'), rootView.selectAll('.graph_node_label'));
 
-    setMarkers(mainView, graph.types, config.color);
-    setZoom(mainView, rootView.selectAll('.graph_link'), rootView.selectAll('#graph_nodes_root g'), currentZoom);
+    setMarkers(rootView.select('#graph_view'), graph.types, config.color);
+    setZoom(rootView.select('#graph_view'), rootView.selectAll('.graph_link'), rootView.selectAll('#graph_nodes_root g'), currentZoom);
 }
 
 function setMarkers(mainView: Selection<SVGSVGElement, unknown, HTMLElement, any>,

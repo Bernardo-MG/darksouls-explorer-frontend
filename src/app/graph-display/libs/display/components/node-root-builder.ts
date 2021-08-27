@@ -6,7 +6,7 @@ import { DisplayConfig } from "../displayConfig";
 export class NodeRootBuilder implements ElementBuilder {
 
     build(root: Selection<any, any, any, any>, graph: DisplayGraph, config: DisplayConfig): void {
-        root.append("g")
+        root.select('#graph_view').append("g")
             .attr("id", 'graph_nodes_root')
             .selectAll("g")
             .data(graph.nodes)
