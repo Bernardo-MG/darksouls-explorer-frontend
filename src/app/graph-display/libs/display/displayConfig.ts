@@ -14,8 +14,11 @@ export class DisplayConfig {
 
     color: ScaleOrdinal<String, string, never>;
 
-    constructor(graph: DisplayGraph) {
+    onSelectNode: Function;
+
+    constructor(graph: DisplayGraph, selectNode: Function) {
         this.color = d3.scaleOrdinal(graph.types, d3.schemeCategory10)
+        this.onSelectNode = selectNode;
     }
     
 }

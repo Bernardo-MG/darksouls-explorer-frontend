@@ -1,55 +1,47 @@
 import * as d3 from 'd3';
-import { ZoomBehavior, Selection, BaseType, ScaleOrdinal } from 'd3';
+import { ZoomBehavior, Selection, ScaleOrdinal } from 'd3';
 
 import { EventEmitter } from '@angular/core';
 
 import { DisplayGraph } from "@app/graph-display/models/displayGraph";
-import { DisplayGraphLink } from '../../models/displayGraphLink';
 import { DisplayGraphNode } from '../../models/displayGraphNode';
 import { DisplayConfig } from './displayConfig';
 import { SimulatorRenderer } from './simulationRenderer';
 import { graphView } from './components/graph-view';
 import { links } from './components/links';
+import { ElementBuilder } from './components/element-builder';
+import { NodeRootBuilder } from './components/node-root-builder';
+import { NodeBuilder } from './components/node-builder';
+import { NodeLabelBuilder } from './components/node-label-builder';
+import { LinksBuilder } from './components/links-builder';
 
 var config: DisplayConfig;
 
 export function display(graph: DisplayGraph, selectNode = new EventEmitter<Number>(), currentZoom: number) {
-    config = new DisplayConfig(graph);
+    config = new DisplayConfig(graph, (item: any) => selectNode.emit(item));
     const simulation = new SimulatorRenderer(graph, config);
 
     const rootView = d3.select("figure#graph_view");
 
     // Main view container
-    const mainView = graphView(rootView, config);
-    // Builds links
-    const link = links(mainView, config.color, graph.links);
-    // Builds nodes
-    // Added after the links so they are drawn over them
-    const nodes = buildNodeView(mainView, graph.nodes, selectNode);
+    const mainView: Selection<any, any, any, any> = graphView(rootView, config);
 
-    nodes.nodeRoot.call(simulation.drag());
-    simulation.bind(nodes.node, link, nodes.nodeLabel);
+    const builders: ElementBuilder[] = [];
+    builders.push(new LinksBuilder());
+    builders.push(new NodeRootBuilder());
+    builders.push(new NodeBuilder());
+    builders.push(new NodeLabelBuilder());
+
+    for (let builder of builders) {
+        builder.build(mainView, graph, config);
+    }
+
+    rootView.selectAll('#graph_nodes_root g').call(simulation.drag());
+    simulation.bind(rootView.selectAll(".graph_node"), rootView.selectAll('.graph_link'), rootView.selectAll('.graph_node_label'));
 
     setMarkers(mainView, graph.types, config.color);
-    setZoom(mainView, link, nodes.nodeRoot, currentZoom);
+    setZoom(mainView, rootView.selectAll('.graph_link'), rootView.selectAll('#graph_nodes_root g'), currentZoom);
 }
-
-function buildNodeView(mainView: any, nodes: DisplayGraphNode[], selectNode = new EventEmitter<Number>()): any {
-    const nodeRoot = mainView.append("g")
-        .selectAll("g")
-        .data(nodes)
-        .join("g");
-    const node = nodeRoot.append("circle")
-        .attr("class", "graph_node")
-        .on("mouseover", mouseoverButton)
-        .on("mouseout", mouseoutButton)
-        .on("click", ((event: any, item: any) => selectNode.emit(item.id)));
-    const nodeLabel = nodeRoot.append("text")
-        .text((d: any) => d.name as string);
-
-    return { nodeRoot, node, nodeLabel };
-}
-
 
 function setMarkers(mainView: Selection<SVGSVGElement, unknown, HTMLElement, any>,
     types: String[], color: ScaleOrdinal<String, string, never>) {
@@ -70,8 +62,8 @@ function setMarkers(mainView: Selection<SVGSVGElement, unknown, HTMLElement, any
 }
 
 function setZoom(mainView: Selection<SVGSVGElement, unknown, HTMLElement, any>,
-    link: Selection<BaseType | SVGPathElement, DisplayGraphLink, SVGGElement, unknown>,
-    nodeRoot: Selection<BaseType | SVGGElement, DisplayGraphNode, SVGGElement, unknown>,
+    link: Selection<any, any, any, any>,
+    nodeRoot: Selection<any, any, any, any>,
     currentZoom: number) {
     // Adds zoom
     const zoom: ZoomBehavior<Element, any> = d3.zoom()
@@ -83,16 +75,4 @@ function setZoom(mainView: Selection<SVGSVGElement, unknown, HTMLElement, any>,
         });
     mainView.call(zoom as any);
     mainView.call(zoom.transform as any, d3.zoomIdentity.translate(config.width / 10, config.height / 2).scale(currentZoom));
-}
-
-function mouseoverButton(event: any, d: DisplayGraphNode) {
-    d3.select(event.target)
-        .style("cursor", "pointer")
-        .classed("graph_node_selected", true);
-}
-
-function mouseoutButton(event: any, d: DisplayGraphNode) {
-    d3.select(event.target)
-        .style("cursor", "default")
-        .classed("graph_node_selected", false);
 }

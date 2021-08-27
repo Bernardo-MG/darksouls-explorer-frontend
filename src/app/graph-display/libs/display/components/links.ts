@@ -1,16 +1,18 @@
-import { Selection, BaseType, ScaleOrdinal } from 'd3';
+import { DisplayGraph } from '@app/graph-display/models/displayGraph';
+import { Selection, BaseType } from 'd3';
 
 import { DisplayGraphLink } from '../../../models/displayGraphLink';
+import { DisplayConfig } from '../displayConfig';
 
 export function links(root: Selection<any, any, any, any>,
-    color: ScaleOrdinal<String, string, never>,
-    links: DisplayGraphLink[]): Selection<BaseType | SVGPathElement, DisplayGraphLink, SVGGElement, unknown> {
+    graph: DisplayGraph,
+    config: DisplayConfig): Selection<BaseType | SVGPathElement, DisplayGraphLink, SVGGElement, unknown> {
     return root.append("g")
         .attr("class", "graph_link_container")
         .selectAll("path")
-        .data(links)
+        .data(graph.links)
         .join("path")
         .attr("class", "graph_link")
-        .attr("stroke", d => color(d.type))
+        .attr("stroke", d => config.color(d.type))
         .attr("marker-end", d => `url(#arrow-${d.type})`);
 }
