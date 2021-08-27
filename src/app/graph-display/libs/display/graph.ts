@@ -30,10 +30,10 @@ export function display(graph: DisplayGraph, selectNode = new EventEmitter<Numbe
 
     for (let builder of builders) {
         builder.build(rootView, graph, config);
+        builder.bindToSimulation(rootView, simulation.simulation);
     }
 
     rootView.selectAll('#graph_nodes_root g').call(simulation.drag());
-    simulation.bind(rootView.selectAll(".graph_node"), rootView.selectAll('.graph_link'), rootView.selectAll('.graph_node_label'));
 
     setMarkers(rootView.select('#graph_view'), graph.types, config.color);
     setZoom(rootView.select('#graph_view'), rootView.selectAll('.graph_link'), rootView.selectAll('#graph_nodes_root g'), currentZoom);

@@ -7,6 +7,14 @@ import * as d3 from 'd3';
 
 export class NodeBuilder implements ElementBuilder {
 
+    bindToSimulation(root: Selection<any, any, any, any>, simulation: d3.Simulation<any, any>): void {
+        simulation.on("tick.nodes", () => {
+            root.selectAll('.graph_node')
+                .attr("cx", (d: any) => d.x)
+                .attr("cy", (d: any) => d.y);
+        });
+    }
+
     build(root: Selection<any, any, any, any>, graph: DisplayGraph, config: DisplayConfig): void {
         root.select('#graph_view').selectAll("#graph_nodes_root g")
         .append("circle")
