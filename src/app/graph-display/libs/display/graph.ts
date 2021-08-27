@@ -14,7 +14,7 @@ import { GraphViewBuilder } from './components/graph-view-builder';
 import { MarkerBuilder } from './components/marker-builder';
 
 export function display(graph: DisplayGraph, selectNode = new EventEmitter<Number>(), currentZoom: number) {
-    const config = new DisplayConfig(graph, (item: any) => selectNode.emit(item));
+    const config = new DisplayConfig(graph, currentZoom, (item: any) => selectNode.emit(item));
     const simulation = d3.forceSimulation(graph.nodes)
         .force("link", d3.forceLink(graph.links).id((d: any) => d.id))
         .force("charge", d3.forceManyBody())
@@ -35,14 +35,13 @@ export function display(graph: DisplayGraph, selectNode = new EventEmitter<Numbe
         builder.bindToSimulation(rootView, simulation);
     }
 
-    setZoom(rootView.select('#graph_view'), rootView.selectAll('.graph_link'), rootView.selectAll('#graph_nodes_root g'), config, currentZoom);
+    setZoom(rootView.select('#graph_view'), rootView.selectAll('.graph_link'), rootView.selectAll('#graph_nodes_root g'), config);
 }
 
 function setZoom(mainView: Selection<SVGSVGElement, unknown, HTMLElement, any>,
     link: Selection<any, any, any, any>,
     nodeRoot: Selection<any, any, any, any>,
-    config: DisplayConfig,
-    currentZoom: number) {
+    config: DisplayConfig) {
     // Adds zoom
     const zoom: ZoomBehavior<Element, any> = d3.zoom()
         .extent([[0, 0], [config.width, config.height]])
@@ -52,5 +51,5 @@ function setZoom(mainView: Selection<SVGSVGElement, unknown, HTMLElement, any>,
             nodeRoot.attr('transform', event.transform);
         });
     mainView.call(zoom as any);
-    mainView.call(zoom.transform as any, d3.zoomIdentity.translate(config.width / 10, config.height / 2).scale(currentZoom));
+    mainView.call(zoom.transform as any, d3.zoomIdentity.translate(config.width / 10, config.height / 2).scale(config.zoomLevel));
 }
