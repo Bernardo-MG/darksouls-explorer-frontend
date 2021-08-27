@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { ZoomBehavior, Selection, ScaleOrdinal } from 'd3';
+import { ZoomBehavior, Selection, ScaleOrdinal, Simulation } from 'd3';
 
 import { EventEmitter } from '@angular/core';
 
@@ -15,10 +15,7 @@ import { MarkerBuilder } from './components/marker-builder';
 
 export function display(graph: DisplayGraph, selectNode = new EventEmitter<Number>(), currentZoom: number) {
     const config = new DisplayConfig(graph, currentZoom, (item: any) => selectNode.emit(item));
-    const simulation = d3.forceSimulation(graph.nodes)
-        .force("link", d3.forceLink(graph.links).id((d: any) => d.id))
-        .force("charge", d3.forceManyBody())
-        .force("center", d3.forceRadial(config.width / 2, config.height / 2));
+    const simulation = buildSimulation(graph, config);
 
     const rootView = d3.select("figure#graph_container");
 
@@ -52,4 +49,11 @@ function setZoom(mainView: Selection<SVGSVGElement, unknown, HTMLElement, any>,
         });
     mainView.call(zoom as any);
     mainView.call(zoom.transform as any, d3.zoomIdentity.translate(config.width / 10, config.height / 2).scale(config.zoomLevel));
+}
+
+function buildSimulation(graph: DisplayGraph, config: DisplayConfig): Simulation<any, any> {
+    return d3.forceSimulation(graph.nodes)
+        .force("link", d3.forceLink(graph.links).id((d: any) => d.id))
+        .force("charge", d3.forceManyBody())
+        .force("center", d3.forceRadial(config.width / 2, config.height / 2));
 }
