@@ -5,13 +5,13 @@ import { EventEmitter } from '@angular/core';
 
 import { DisplayGraph } from "@app/graph-display/models/displayGraph";
 import { DisplayConfig } from './displayConfig';
-import { ElementBuilder } from './components/element-builder';
-import { NodeRootBuilder } from './components/node-root-builder';
-import { NodeBuilder } from './components/node-builder';
-import { NodeLabelBuilder } from './components/node-label-builder';
-import { LinksBuilder } from './components/link-builder';
-import { GraphViewBuilder } from './components/graph-view-builder';
-import { MarkerBuilder } from './components/marker-builder';
+import { ElementBuilder } from './builder/element-builder';
+import { NodeRootBuilder } from './builder/node-root-builder';
+import { NodeBuilder } from './builder/node-builder';
+import { NodeLabelBuilder } from './builder/node-label-builder';
+import { LinksBuilder } from './builder/link-builder';
+import { GraphViewBuilder } from './builder/graph-view-builder';
+import { MarkerBuilder } from './builder/marker-builder';
 
 export function display(graph: DisplayGraph, selectNode = new EventEmitter<Number>(), currentZoom: number) {
     const config = new DisplayConfig(graph, currentZoom, (item: any) => selectNode.emit(item));
