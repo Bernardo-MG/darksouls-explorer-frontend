@@ -22,7 +22,7 @@ export class GraphRenderer {
     }
 
     public clear() {
-        d3.select("figure#graph_container").select(".svg-container").remove();
+        d3.select(this.rootSelector).select(".svg-container").remove();
     }
 
     public display(graph: DisplayGraph, selectNode = new EventEmitter<Number>(), currentZoom: number) {
@@ -30,7 +30,7 @@ export class GraphRenderer {
         const simulation = this.buildSimulation(graph, config);
         const zoom = this.buildZoom(config);
 
-        const root = d3.select("figure#graph_container");
+        const root = d3.select(this.rootSelector);
 
         const builders: ElementBuilder[] = [];
         builders.push(new GraphViewBuilder(root, config));
