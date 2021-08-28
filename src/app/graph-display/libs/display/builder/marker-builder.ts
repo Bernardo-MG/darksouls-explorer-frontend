@@ -5,16 +5,28 @@ import { DisplayConfig } from "../displayConfig";
 
 export class MarkerBuilder implements ElementBuilder {
 
-    public bindToSimulation(root: Selection<any, any, any, any>, simulation: Simulation<any, any>): void { }
+    config: DisplayConfig;
 
-    public bindToZoom(root: Selection<any, any, any, any>, zoom: ZoomBehavior<any, any>): void { }
+    graph: DisplayGraph;
 
-    public build(root: Selection<any, any, any, any>, graph: DisplayGraph, config: DisplayConfig): void {
+    root: Selection<any, any, any, any>;
+
+    constructor(root: Selection<any, any, any, any>, graph: DisplayGraph, config: DisplayConfig) {
+        this.root = root;
+        this.graph = graph;
+        this.config = config;
+    }
+
+    public bindToSimulation(simulation: Simulation<any, any>): void { }
+
+    public bindToZoom(zoom: ZoomBehavior<any, any>): void { }
+
+    public build(): void {
         // Per-type markers, as they don't inherit styles.
-        root.select('#graph_view')
+        this.root.select('#graph_view')
             .append("defs")
             .selectAll("marker")
-            .data(graph.types)
+            .data(this.graph.types)
             .join("marker")
             .attr("id", d => `arrow-${d}`)
             .attr("viewBox", "0 -5 10 10")
@@ -24,7 +36,7 @@ export class MarkerBuilder implements ElementBuilder {
             .attr("markerHeight", 6)
             .attr("orient", "auto")
             .append("path")
-            .attr("fill", config.color)
+            .attr("fill", this.config.color)
             .attr("d", "M0,-5L10,0L0,5");
     }
 

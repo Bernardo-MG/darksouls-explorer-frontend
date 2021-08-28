@@ -5,29 +5,41 @@ import { DisplayConfig } from "../displayConfig";
 
 export class LinksBuilder implements ElementBuilder {
 
-    public bindToSimulation(root: Selection<any, any, any, any>, simulation: Simulation<any, any>): void {
+    config: DisplayConfig;
+
+    graph: DisplayGraph;
+
+    root: Selection<any, any, any, any>;
+
+    constructor(root: Selection<any, any, any, any>, graph: DisplayGraph, config: DisplayConfig) {
+        this.root = root;
+        this.graph = graph;
+        this.config = config;
+    }
+
+    public bindToSimulation(simulation: Simulation<any, any>): void {
         simulation.on("tick.links", () => {
-            root.selectAll('.graph_link').attr("d", this.linkArc);
+            this.root.selectAll('.graph_link').attr("d", this.linkArc);
         });
     }
 
-    public bindToZoom(root: Selection<any, any, any, any>, zoom: ZoomBehavior<any, any>): void {
+    public bindToZoom(zoom: ZoomBehavior<any, any>): void {
         zoom.on("zoom.link", (event) => {
-            root.selectAll('.graph_link').attr('transform', event.transform);
+            this.root.selectAll('.graph_link').attr('transform', event.transform);
         })
     }
 
-    public build(root: Selection<any, any, any, any>, graph: DisplayGraph, config: DisplayConfig): void {
-        root.select('#graph_view').append("g")
+    public build(): void {
+        this.root.select('#graph_view').append("g")
             .attr("class", "graph_link_container")
             .style("fill", "none")
             .selectAll("path")
-            .data(graph.links)
+            .data(this.graph.links)
             .join("path")
             .attr("class", "graph_link")
-            .attr("stroke", d => config.color(d.type))
+            .attr("stroke", d => this.config.color(d.type))
             .attr("marker-end", d => `url(#arrow-${d.type})`)
-            .style("stroke-width", config.linkStrokeWidth);
+            .style("stroke-width", this.config.linkStrokeWidth);
     }
 
     private linkArc(d: any) {

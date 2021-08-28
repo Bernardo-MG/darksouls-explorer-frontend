@@ -5,16 +5,25 @@ import { DisplayConfig } from "../displayConfig";
 
 export class NodeRootBuilder implements ElementBuilder {
 
-    public bindToSimulation(root: Selection<any, any, any, any>, simulation: Simulation<any, any>): void {
+    graph: DisplayGraph;
+
+    root: Selection<any, any, any, any>;
+
+    constructor(root: Selection<any, any, any, any>, graph: DisplayGraph) {
+        this.root = root;
+        this.graph = graph;
     }
 
-    public bindToZoom(root: Selection<any, any, any, any>, zoom: ZoomBehavior<any, any>): void { }
+    public bindToSimulation(simulation: Simulation<any, any>): void {
+    }
 
-    public build(root: Selection<any, any, any, any>, graph: DisplayGraph, config: DisplayConfig): void {
-        root.select('#graph_view').append("g")
+    public bindToZoom(zoom: ZoomBehavior<any, any>): void { }
+
+    public build(): void {
+        this.root.select('#graph_view').append("g")
             .attr("id", 'graph_nodes_root')
             .selectAll("g")
-            .data(graph.nodes)
+            .data(this.graph.nodes)
             .join("g");
     }
 

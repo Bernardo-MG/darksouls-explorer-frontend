@@ -21,7 +21,7 @@ export class GraphRenderer {
         this.rootSelector = selector;
     }
 
-    public clear(){
+    public clear() {
         d3.select("figure#graph_container").select(".svg-container").remove();
     }
 
@@ -30,23 +30,23 @@ export class GraphRenderer {
         const simulation = this.buildSimulation(graph, config);
         const zoom = this.buildZoom(config);
 
-        const rootView = d3.select("figure#graph_container");
+        const root = d3.select("figure#graph_container");
 
         const builders: ElementBuilder[] = [];
-        builders.push(new GraphViewBuilder());
-        builders.push(new MarkerBuilder());
-        builders.push(new LinksBuilder());
-        builders.push(new NodeRootBuilder());
-        builders.push(new NodeBuilder());
-        builders.push(new NodeLabelBuilder());
+        builders.push(new GraphViewBuilder(root, config));
+        builders.push(new MarkerBuilder(root, graph, config));
+        builders.push(new LinksBuilder(root, graph, config));
+        builders.push(new NodeRootBuilder(root, graph));
+        builders.push(new NodeBuilder(root, config));
+        builders.push(new NodeLabelBuilder(root));
 
         for (let builder of builders) {
-            builder.build(rootView, graph, config);
-            builder.bindToSimulation(rootView, simulation);
-            builder.bindToZoom(rootView, zoom);
+            builder.build();
+            builder.bindToSimulation(simulation);
+            builder.bindToZoom(zoom);
         }
 
-        rootView.select('#graph_view').call(zoom.transform as any, d3.zoomIdentity.translate(config.width / 10, config.height / 2).scale(config.zoomLevel));
+        root.select('#graph_view').call(zoom.transform as any, d3.zoomIdentity.translate(config.width / 10, config.height / 2).scale(config.zoomLevel));
     }
 
     private buildSimulation(graph: DisplayGraph, config: DisplayConfig): Simulation<any, any> {

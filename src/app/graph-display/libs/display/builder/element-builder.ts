@@ -4,10 +4,10 @@ import { DisplayConfig } from "../displayConfig";
 
 export interface ElementBuilder {
 
-    bindToSimulation(root: Selection<any, any, any, any>, simulation: Simulation<any, any>): void
+    bindToSimulation(simulation: Simulation<any, any>): void
     
-    bindToZoom(root: Selection<any, any, any, any>, zoom: ZoomBehavior<any, any>): void
+    bindToZoom(zoom: ZoomBehavior<any, any>): void
 
-    build(root: Selection<any, any, any, any>, graph: DisplayGraph, config: DisplayConfig): void
+    build(): void
 
 }

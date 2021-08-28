@@ -5,18 +5,24 @@ import { DisplayConfig } from "../displayConfig";
 
 export class NodeLabelBuilder implements ElementBuilder {
 
-    public bindToSimulation(root: Selection<any, any, any, any>, simulation: Simulation<any, any>): void {
+    root: Selection<any, any, any, any>;
+
+    constructor(root: Selection<any, any, any, any>) {
+        this.root = root;
+    }
+
+    public bindToSimulation(simulation: Simulation<any, any>): void {
         simulation.on("tick.node-labels", () => {
-            root.selectAll('.graph_node_label')
+            this.root.selectAll('.graph_node_label')
                 .attr("x", (d: any) => d.x)
                 .attr("y", (d: any) => d.y);
         });
     }
 
-    public bindToZoom(root: Selection<any, any, any, any>, zoom: ZoomBehavior<any, any>): void { }
+    public bindToZoom(zoom: ZoomBehavior<any, any>): void { }
 
-    public build(root: Selection<any, any, any, any>, graph: DisplayGraph, config: DisplayConfig): void {
-        root.select('#graph_view').selectAll("#graph_nodes_root g")
+    public build(): void {
+        this.root.select('#graph_view').selectAll("#graph_nodes_root g")
             .append("text")
             .attr("class", "graph_node_label")
             .text((d: any) => d.name as string);

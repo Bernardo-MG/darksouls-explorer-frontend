@@ -7,31 +7,40 @@ import * as d3 from 'd3';
 
 export class NodeBuilder implements ElementBuilder {
 
-    public bindToSimulation(root: Selection<any, any, any, any>, simulation: Simulation<any, any>): void {
+    config: DisplayConfig;
+
+    root: Selection<any, any, any, any>;
+
+    constructor(root: Selection<any, any, any, any>, config: DisplayConfig) {
+        this.root = root;
+        this.config = config;
+    }
+
+    public bindToSimulation(simulation: Simulation<any, any>): void {
         simulation.on("tick.nodes", () => {
-            root.selectAll('.graph_node')
+            this.root.selectAll('.graph_node')
                 .attr("cx", (d: any) => d.x)
                 .attr("cy", (d: any) => d.y);
         });
 
-        root.selectAll('#graph_nodes_root g').call(this.drag(simulation));
+        this.root.selectAll('#graph_nodes_root g').call(this.drag(simulation));
     }
 
-    public bindToZoom(root: Selection<any, any, any, any>, zoom: ZoomBehavior<any, any>): void {
+    public bindToZoom(zoom: ZoomBehavior<any, any>): void {
         zoom.on("zoom.node", (event) => {
-            root.selectAll('#graph_nodes_root g').attr('transform', event.transform);
+            this.root.selectAll('#graph_nodes_root g').attr('transform', event.transform);
         })
     }
 
-    public build(root: Selection<any, any, any, any>, graph: DisplayGraph, config: DisplayConfig): void {
-        root.select('#graph_view').selectAll("#graph_nodes_root g")
+    public build(): void {
+        this.root.select('#graph_view').selectAll("#graph_nodes_root g")
             .append("circle")
             .attr("class", "graph_node")
-            .style("r", config.graphRadius)
-            .style("stroke", config.graphStroke)
+            .style("r", this.config.graphRadius)
+            .style("stroke", this.config.graphStroke)
             .on("mouseover", this.mouseoverButton as any)
             .on("mouseout", this.mouseoutButton as any)
-            .on("click", ((event: any, item: any) => config.onSelectNode(item.id)));
+            .on("click", ((event: any, item: any) => this.config.onSelectNode(item.id)));
     }
 
     private mouseoverButton(event: any, d: DisplayGraphNode) {
