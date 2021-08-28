@@ -22,7 +22,7 @@ export class NodeLabelBuilder implements ElementBuilder {
     public bindToZoom(zoom: ZoomBehavior<any, any>): void { }
 
     public build(): void {
-        this.root.select('#graph_view').selectAll("#graph_nodes_root g")
+        this.root.selectAll("#graph_nodes_root g")
             .append("text")
             .attr("class", "graph_node_label")
             .text((d: any) => d.name as string);

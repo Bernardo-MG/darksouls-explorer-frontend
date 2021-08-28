@@ -29,7 +29,7 @@ export class NodeBuilder implements ElementBuilder {
     public bindToZoom(zoom: ZoomBehavior<any, any>): void { }
 
     public build(): void {
-        this.root.select('#graph_view').selectAll("#graph_nodes_root g")
+        this.root.selectAll("#graph_nodes_root g")
             .append("circle")
             .attr("class", "graph_node")
             .style("r", this.config.graphRadius)
