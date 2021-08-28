@@ -24,7 +24,6 @@ export class DisplayConfig {
 
     zoomLevel: number;
 
-
     constructor(graph: DisplayGraph, zoom: number, selectNode: Function) {
         this.color = d3.scaleOrdinal(graph.types, d3.schemeCategory10)
         this.zoomLevel = zoom;

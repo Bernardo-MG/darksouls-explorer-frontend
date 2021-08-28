@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { ZoomBehavior, Selection, ScaleOrdinal, Simulation } from 'd3';
+import { ZoomBehavior, Simulation } from 'd3';
 
 import { EventEmitter } from '@angular/core';
 
@@ -13,39 +13,53 @@ import { LinksBuilder } from './builder/link-builder';
 import { GraphViewBuilder } from './builder/graph-view-builder';
 import { MarkerBuilder } from './builder/marker-builder';
 
-export function display(graph: DisplayGraph, selectNode = new EventEmitter<Number>(), currentZoom: number) {
-    const config = new DisplayConfig(graph, currentZoom, (item: any) => selectNode.emit(item));
-    const simulation = buildSimulation(graph, config);
-    const zoom = buildZoom(config);
+export class GraphRenderer {
 
-    const rootView = d3.select("figure#graph_container");
+    rootSelector: string;
 
-    const builders: ElementBuilder[] = [];
-    builders.push(new GraphViewBuilder());
-    builders.push(new MarkerBuilder());
-    builders.push(new LinksBuilder());
-    builders.push(new NodeRootBuilder());
-    builders.push(new NodeBuilder());
-    builders.push(new NodeLabelBuilder());
-
-    for (let builder of builders) {
-        builder.build(rootView, graph, config);
-        builder.bindToSimulation(rootView, simulation);
-        builder.bindToZoom(rootView, zoom);
+    constructor(selector: string) {
+        this.rootSelector = selector;
     }
 
-    rootView.select('#graph_view').call(zoom.transform as any, d3.zoomIdentity.translate(config.width / 10, config.height / 2).scale(config.zoomLevel));
-}
+    public clear(){
+        d3.select("figure#graph_container").select(".svg-container").remove();
+    }
 
-function buildSimulation(graph: DisplayGraph, config: DisplayConfig): Simulation<any, any> {
-    return d3.forceSimulation(graph.nodes)
-        .force("link", d3.forceLink(graph.links).id((d: any) => d.id))
-        .force("charge", d3.forceManyBody())
-        .force("center", d3.forceRadial(config.width / 2, config.height / 2));
-}
+    public display(graph: DisplayGraph, selectNode = new EventEmitter<Number>(), currentZoom: number) {
+        const config = new DisplayConfig(graph, currentZoom, (item: any) => selectNode.emit(item));
+        const simulation = this.buildSimulation(graph, config);
+        const zoom = this.buildZoom(config);
 
-function buildZoom(config: DisplayConfig): ZoomBehavior<Element, any> {
-    return d3.zoom()
-        .extent([[0, 0], [config.width, config.height]])
-        .scaleExtent([config.minZoom, config.maxZoom]);
+        const rootView = d3.select("figure#graph_container");
+
+        const builders: ElementBuilder[] = [];
+        builders.push(new GraphViewBuilder());
+        builders.push(new MarkerBuilder());
+        builders.push(new LinksBuilder());
+        builders.push(new NodeRootBuilder());
+        builders.push(new NodeBuilder());
+        builders.push(new NodeLabelBuilder());
+
+        for (let builder of builders) {
+            builder.build(rootView, graph, config);
+            builder.bindToSimulation(rootView, simulation);
+            builder.bindToZoom(rootView, zoom);
+        }
+
+        rootView.select('#graph_view').call(zoom.transform as any, d3.zoomIdentity.translate(config.width / 10, config.height / 2).scale(config.zoomLevel));
+    }
+
+    private buildSimulation(graph: DisplayGraph, config: DisplayConfig): Simulation<any, any> {
+        return d3.forceSimulation(graph.nodes)
+            .force("link", d3.forceLink(graph.links).id((d: any) => d.id))
+            .force("charge", d3.forceManyBody())
+            .force("center", d3.forceRadial(config.width / 2, config.height / 2));
+    }
+
+    private buildZoom(config: DisplayConfig): ZoomBehavior<Element, any> {
+        return d3.zoom()
+            .extent([[0, 0], [config.width, config.height]])
+            .scaleExtent([config.minZoom, config.maxZoom]);
+    }
+
 }

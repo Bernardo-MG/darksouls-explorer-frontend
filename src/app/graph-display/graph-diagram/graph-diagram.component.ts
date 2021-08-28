@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import * as d3 from 'd3';
 import { DisplayGraph } from '../models/displayGraph';
-import { display } from '../libs/display/graph'
+import { GraphRenderer } from '../libs/display/graph'
 
 @Component({
   selector: 'graph-diagram',
@@ -17,6 +16,8 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
 
   @Input() currentZoom: number = 0.75;
 
+  graphRenderer = new GraphRenderer("figure#graph_container");
+
   constructor() { }
 
   ngOnInit(): void {
@@ -28,14 +29,10 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
   }
 
   private reload(): void {
-    this.cleanGraph();
+    this.graphRenderer.clear();
     if (this.graph) {
-      display(this.graph, this.selectNode, this.currentZoom);
+      this.graphRenderer.display(this.graph, this.selectNode, this.currentZoom);
     }
-  }
-
-  private cleanGraph() {
-    d3.select("figure#graph_container").select(".svg-container").remove();
   }
 
 }
