@@ -26,7 +26,7 @@ export class GraphRenderer {
     }
 
     public display(graph: DisplayGraph, selectNode = new EventEmitter<Number>(), currentZoom: number) {
-        const config = new DisplayConfig(graph, currentZoom, (item: any) => selectNode.emit(item));
+        const config = new DisplayConfig(graph, currentZoom);
         const simulation = this.buildSimulation(graph, config);
         const zoom = this.buildZoom(config);
 
@@ -37,7 +37,7 @@ export class GraphRenderer {
         builders.push(new MarkerBuilder(root, graph, config));
         builders.push(new LinksBuilder(root, graph, config));
         builders.push(new NodeRootBuilder(root, graph));
-        builders.push(new NodeBuilder(root, config));
+        builders.push(new NodeBuilder(root, config, (item: any) => selectNode.emit(item)));
         builders.push(new NodeLabelBuilder(root));
 
         for (let builder of builders) {

@@ -1,6 +1,5 @@
 import { ElementBuilder } from "./element-builder";
 import { Selection, Simulation, ZoomBehavior } from 'd3';
-import { DisplayGraph } from "@app/graph-display/models/displayGraph";
 import { DisplayConfig } from "../displayConfig";
 import { DisplayGraphNode } from '../../../models/displayGraphNode';
 import * as d3 from 'd3';
@@ -11,9 +10,12 @@ export class NodeBuilder implements ElementBuilder {
 
     root: Selection<any, any, any, any>;
 
-    constructor(root: Selection<any, any, any, any>, config: DisplayConfig) {
+    onSelectNode: Function;
+
+    constructor(root: Selection<any, any, any, any>, config: DisplayConfig, onSelectNode: Function) {
         this.root = root;
         this.config = config;
+        this.onSelectNode = onSelectNode;
     }
 
     public bindToSimulation(simulation: Simulation<any, any>): void {
@@ -40,7 +42,7 @@ export class NodeBuilder implements ElementBuilder {
             .style("stroke", this.config.graphStroke)
             .on("mouseover", this.mouseoverButton as any)
             .on("mouseout", this.mouseoutButton as any)
-            .on("click", ((event: any, item: any) => this.config.onSelectNode(item.id)));
+            .on("click", ((event: any, item: any) => this.onSelectNode(item.id)));
     }
 
     private mouseoverButton(event: any, d: DisplayGraphNode) {

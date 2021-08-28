@@ -20,14 +20,11 @@ export class DisplayConfig {
 
     color: ScaleOrdinal<String, string, never>;
 
-    onSelectNode: Function;
-
     zoomLevel: number;
 
-    constructor(graph: DisplayGraph, zoom: number, selectNode: Function) {
+    constructor(graph: DisplayGraph, zoom: number) {
         this.color = d3.scaleOrdinal(graph.types, d3.schemeCategory10)
         this.zoomLevel = zoom;
-        this.onSelectNode = selectNode;
     }
 
 }
