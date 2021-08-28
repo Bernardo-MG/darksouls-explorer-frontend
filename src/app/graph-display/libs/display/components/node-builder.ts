@@ -27,6 +27,8 @@ export class NodeBuilder implements ElementBuilder {
         root.select('#graph_view').selectAll("#graph_nodes_root g")
             .append("circle")
             .attr("class", "graph_node")
+            .style("r", config.graphRadius)
+            .style("stroke", config.graphStroke)
             .on("mouseover", this.mouseoverButton as any)
             .on("mouseout", this.mouseoutButton as any)
             .on("click", ((event: any, item: any) => config.onSelectNode(item.id)));
@@ -34,14 +36,12 @@ export class NodeBuilder implements ElementBuilder {
 
     private mouseoverButton(event: any, d: DisplayGraphNode) {
         d3.select(event.target)
-            .style("cursor", "pointer")
-            .classed("graph_node_selected", true);
+            .style("cursor", "pointer");
     }
 
     private mouseoutButton(event: any, d: DisplayGraphNode) {
         d3.select(event.target)
-            .style("cursor", "default")
-            .classed("graph_node_selected", false);
+            .style("cursor", "default");
     }
 
     private drag(simulation: Simulation<any, any>): any {

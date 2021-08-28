@@ -20,12 +20,14 @@ export class LinksBuilder implements ElementBuilder {
     public build(root: Selection<any, any, any, any>, graph: DisplayGraph, config: DisplayConfig): void {
         root.select('#graph_view').append("g")
             .attr("class", "graph_link_container")
+            .style("fill", "none")
             .selectAll("path")
             .data(graph.links)
             .join("path")
             .attr("class", "graph_link")
             .attr("stroke", d => config.color(d.type))
-            .attr("marker-end", d => `url(#arrow-${d.type})`);
+            .attr("marker-end", d => `url(#arrow-${d.type})`)
+            .style("stroke-width", config.linkStrokeWidth);
     }
 
     private linkArc(d: any) {

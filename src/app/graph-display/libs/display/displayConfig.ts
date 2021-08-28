@@ -8,6 +8,12 @@ export class DisplayConfig {
 
     width: number = 400;
 
+    linkStrokeWidth: number = 1.5;
+
+    graphRadius: number = 5;
+
+    graphStroke: string = "#fff";
+
     minZoom: number = 0.5;
 
     maxZoom: number = 5;
@@ -18,10 +24,11 @@ export class DisplayConfig {
 
     zoomLevel: number;
 
+
     constructor(graph: DisplayGraph, zoom: number, selectNode: Function) {
         this.color = d3.scaleOrdinal(graph.types, d3.schemeCategory10)
         this.zoomLevel = zoom;
         this.onSelectNode = selectNode;
     }
-    
+
 }
