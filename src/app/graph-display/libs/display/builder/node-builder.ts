@@ -24,15 +24,9 @@ export class NodeBuilder implements ElementBuilder {
                 .attr("cx", (d: any) => d.x)
                 .attr("cy", (d: any) => d.y);
         });
-
-        this.root.selectAll('#graph_nodes_root g').call(this.drag(simulation));
     }
 
-    public bindToZoom(zoom: ZoomBehavior<any, any>): void {
-        zoom.on("zoom.node", (event) => {
-            this.root.selectAll('#graph_nodes_root g').attr('transform', event.transform);
-        })
-    }
+    public bindToZoom(zoom: ZoomBehavior<any, any>): void { }
 
     public build(): void {
         this.root.select('#graph_view').selectAll("#graph_nodes_root g")
@@ -53,30 +47,6 @@ export class NodeBuilder implements ElementBuilder {
     private mouseoutButton(event: any, d: DisplayGraphNode) {
         d3.select(event.target)
             .style("cursor", "default");
-    }
-
-    private drag(simulation: Simulation<any, any>): any {
-        const dragstarted = (event: any) => {
-            if (!event.active) simulation.alphaTarget(0.3).restart();
-            event.subject.fx = event.subject.x;
-            event.subject.fy = event.subject.y;
-        }
-
-        const dragged = (event: any) => {
-            event.subject.fx = event.x;
-            event.subject.fy = event.y;
-        }
-
-        const dragended = (event: any) => {
-            if (!event.active) simulation.alphaTarget(0);
-            event.subject.fx = null;
-            event.subject.fy = null;
-        }
-
-        return d3.drag()
-            .on("start", dragstarted)
-            .on("drag", dragged)
-            .on("end", dragended)
     }
 
 }
