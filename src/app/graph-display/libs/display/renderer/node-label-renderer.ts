@@ -19,6 +19,7 @@ export class NodeLabelRenderer implements ElementRenderer {
             .data(this.graph.nodes)
             .join("text")
             .classed("label", true)
+            .attr("text-anchor", "middle")
             .text((d: any) => d.name as string);
     }
 

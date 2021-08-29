@@ -26,18 +26,21 @@ export class GraphRenderer {
 
     rootSelector: string;
 
+    simulation: Simulation<any, any> | null = null;
+
     constructor(selector: string) {
         this.rootSelector = selector;
     }
 
     public clear() {
+        if(this.simulation){
+            this.simulation.stop();
+        }
         d3.select(this.rootSelector).select(".svg-container").remove();
     }
 
     public display(graph: DisplayGraph, selectNode: Function, currentZoom: number) {
         const config = new DisplayConfig(graph, currentZoom);
-        const simulation = this.buildSimulation(graph, config);
-        const zoom = this.buildZoom(config);
 
         const root = d3.select(this.rootSelector);
 
@@ -67,14 +70,16 @@ export class GraphRenderer {
             renderer.render();
         }
 
+        this.simulation = this.buildSimulation(graph, config);
         for (let binder of simBinders) {
-            binder.bind(simulation);
+            binder.bind(this.simulation);
         }
 
         for (let binder of eventBinders) {
             binder.bind();
         }
 
+        const zoom = this.buildZoom(config);
         for (let binder of zoomBinders) {
             binder.bind(zoom);
         }
