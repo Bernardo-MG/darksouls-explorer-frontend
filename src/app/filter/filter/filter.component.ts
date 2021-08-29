@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MatSelectChange } from '@angular/material/select';
 import { NamedValue } from '@app/models/namedValue';
-import { Tuple } from '@app/models/tuple';
 
 @Component({
   selector: 'filter',
@@ -14,16 +12,16 @@ export class FilterComponent {
 
   @Input() options: NamedValue[] = [];
 
-  selections: Tuple[] = [];
+  selections: string[] = [];
 
   constructor() { }
 
-  onSelectOption(event: MatSelectChange, index: number) {
-    this.selections[index].value = event.value;
+  onSelectOption(event: any, index: number) {
+    this.selections[index] = event.target.value;
   }
 
   onAddSelection() {
-    this.selections.push({ value: "", key: '' });
+    this.selections.push(this.options[0].value);
   }
 
   onRemoveSelection(index: number) {
@@ -31,8 +29,7 @@ export class FilterComponent {
   }
 
   onApplyFilter() {
-    const values = this.selections.map((s) => s.value);
-    this.applyFilter.emit(values)
+    this.applyFilter.emit(this.selections)
   }
 
 }

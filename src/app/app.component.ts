@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MenuLink } from './navigation/model/menu-link';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,6 @@ export class AppComponent {
 
   title = 'darksouls-explorer-frontend';
 
-  links = [];
+  links: MenuLink[] = [{ name: 'graph', path: '/relationships' }];
 
 }

@@ -1,12 +1,8 @@
-<div class="form-element" *ngFor="let selection of selections; let i = index">
-    <button mat-raised-button (click)="onRemoveSelection(i)">-</button>
-    <mat-form-field>
-        <mat-select (selectionChange)="onSelectOption($event, i)">
-            <mat-option *ngFor="let option of options" [value]="option.value">
-                {{option.name}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+<div class="input-group" *ngFor="let selection of selections; let i = index">
+    <button type="button" class="btn btn-primary" (click)="onRemoveSelection(i)">-</button>
+    <select class="form-select" aria-label="Filter select" (change)="onSelectOption($event, i)">
+        <option *ngFor="let option of options">{{option.name}}</option>
+    </select>
 </div>
-<button mat-raised-button (click)="onAddSelection()">+</button>
-<button mat-raised-button (click)="onApplyFilter()">Apply</button>
+<button type="button" class="btn btn-primary" (click)="onAddSelection()">+</button>
+<button type="button" class="btn btn-primary" (click)="onApplyFilter()">Apply</button>

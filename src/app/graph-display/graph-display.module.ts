@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { FlexLayoutModule } from '@angular/flex-layout';
-
-import { MatCardModule } from '@angular/material/card';
-
 import { GraphStatusComponent } from './graph-status/graph-status.component';
 import { GraphDiagramComponent } from './graph-diagram/graph-diagram.component';
 import { GraphViewComponent } from './graph-view/graph-view.component';
@@ -19,9 +15,7 @@ import { GraphService } from './services/graph.service';
   ],
   imports: [
     CommonModule,
-    FilterModule,
-    FlexLayoutModule,
-    MatCardModule
+    FilterModule
   ],
   exports: [
     GraphViewComponent
