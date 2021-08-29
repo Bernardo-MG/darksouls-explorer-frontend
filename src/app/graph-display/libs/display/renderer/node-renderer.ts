@@ -3,20 +3,27 @@ import { Selection } from 'd3';
 import { DisplayConfig } from "../displayConfig";
 import { DisplayGraphNode } from '../../../models/displayGraphNode';
 import * as d3 from 'd3';
+import { DisplayGraph } from "@app/graph-display/models/displayGraph";
 
 export class NodeRenderer implements ElementRenderer {
+
+    graph: DisplayGraph;
 
     config: DisplayConfig;
 
     root: Selection<any, any, any, any>;
 
-    constructor(root: Selection<any, any, any, any>, config: DisplayConfig) {
+    constructor(root: Selection<any, any, any, any>, graph: DisplayGraph, config: DisplayConfig) {
         this.root = root;
+        this.graph = graph;
         this.config = config;
     }
 
     public render(): void {
-        this.root.selectAll("#nodes_root g")
+        this.root.select("#nodes_root")
+            .selectAll("g")
+            .data(this.graph.nodes)
+            .join("g")
             .append("circle")
             .attr("class", "node")
             .style("r", this.config.graphRadius)

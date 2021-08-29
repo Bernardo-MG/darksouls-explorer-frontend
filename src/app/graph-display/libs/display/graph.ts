@@ -45,8 +45,8 @@ export class GraphRenderer {
         renderers.push(new GraphViewRenderer(root, config));
         renderers.push(new MarkerRenderer(root, graph, config));
         renderers.push(new LinkRenderer(root, graph, config));
-        renderers.push(new NodeRootRenderer(root, graph));
-        renderers.push(new NodeRenderer(root, config));
+        renderers.push(new NodeRootRenderer(root));
+        renderers.push(new NodeRenderer(root, graph, config));
         renderers.push(new NodeLabelRenderer(root));
 
         const simBinders: SimulationBinder[] = [];
