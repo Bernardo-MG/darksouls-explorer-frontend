@@ -1,6 +1,7 @@
 import { ElementRenderer } from "./element-renderer";
 import { Selection } from 'd3';
 import { DisplayGraph } from "@app/graph-display/models/displayGraph";
+import { DisplayConfig } from "../displayConfig";
 
 export class NodeLabelRenderer implements ElementRenderer {
 
@@ -19,7 +20,6 @@ export class NodeLabelRenderer implements ElementRenderer {
             .data(this.graph.nodes)
             .join("text")
             .classed("label", true)
-            .attr("text-anchor", "middle")
             .text((d: any) => d.name as string);
     }
 

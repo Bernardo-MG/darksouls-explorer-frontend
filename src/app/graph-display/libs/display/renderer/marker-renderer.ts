@@ -26,14 +26,16 @@ export class MarkerRenderer implements ElementRenderer {
             .join("marker")
             .attr("id", d => `arrow-${d}`)
             .attr("viewBox", "0 -5 10 10")
-            .attr("refX", 15)
-            .attr("refY", -0.5)
-            .attr("markerWidth", 6)
-            .attr("markerHeight", 6)
+            .attr("refX", 20)
+            .attr("refY", 1)
+            .attr("markerWidth", 20)
+            .attr("markerHeight", 20)
+            .attr("markerUnits", "strokeWidth")
+            .attr("xoverflow", "visible")
             .attr("orient", "auto")
             .append("path")
-            .attr("fill", this.config.color)
-            .attr("d", "M0,-5L10,0L0,5");
+            .attr("d", "M0,-5L10,0L0,5")
+            .attr("fill", this.config.color);
     }
 
 }

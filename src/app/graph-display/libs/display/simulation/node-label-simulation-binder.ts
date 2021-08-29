@@ -1,13 +1,17 @@
 import { Selection, Simulation } from 'd3';
 import { SimulationBinder } from './simulation-binder';
 import * as d3 from 'd3';
+import { DisplayConfig } from '../displayConfig';
 
 export class NodeLabelSimulationBinder implements SimulationBinder {
 
+    config: DisplayConfig;
+
     root: Selection<any, any, any, any>;
 
-    constructor(root: Selection<any, any, any, any>) {
+    constructor(root: Selection<any, any, any, any>, config: DisplayConfig) {
         this.root = root;
+        this.config = config;
     }
 
     public bind(simulation: Simulation<any, any>): void {
@@ -15,8 +19,8 @@ export class NodeLabelSimulationBinder implements SimulationBinder {
 
         simulation.on("tick.labels", () => {
             this.root.selectAll('text.label')
-                .attr("x", (d: any) => d.x)
-                .attr("y", (d: any) => d.y);
+                .attr("x", (d: any) => d.x + this.config.graphRadius)
+                .attr("y", (d: any) => d.y - this.config.graphRadius);
         });
     }
 

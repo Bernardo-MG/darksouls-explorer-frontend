@@ -54,7 +54,7 @@ export class GraphRenderer {
 
         const simBinders: SimulationBinder[] = [];
         simBinders.push(new LinkSimulationBinder(root, graph));
-        simBinders.push(new NodeLabelSimulationBinder(root));
+        simBinders.push(new NodeLabelSimulationBinder(root, config));
         simBinders.push(new NodeSimulationBinder(root));
 
         const eventBinders: EventBinder[] = [];
@@ -90,8 +90,8 @@ export class GraphRenderer {
     private buildSimulation(graph: DisplayGraph, config: DisplayConfig): Simulation<any, any> {
         return d3.forceSimulation(graph.nodes)
             .force("link", d3.forceLink(graph.links).id((d: any) => d.id))
-            .force("charge", d3.forceManyBody())
-            .force("center", d3.forceRadial(config.width / 2, config.height / 2));
+            .force("charge", d3.forceManyBody().strength(-600).distanceMin(1).distanceMax(10000))
+            .force("center", d3.forceRadial(1, config.width / 2, config.height / 2));
     }
 
     private buildZoom(config: DisplayConfig): ZoomBehavior<Element, any> {

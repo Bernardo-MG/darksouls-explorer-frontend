@@ -8,9 +8,9 @@ export class DisplayConfig {
 
     width: number = 400;
 
-    linkStrokeWidth: number = 1.5;
+    linkStrokeWidth: number = 0.5;
 
-    graphRadius: number = 5;
+    graphRadius: number = 10;
 
     graphStroke: string = "#fff";
 
