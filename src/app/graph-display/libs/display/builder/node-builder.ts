@@ -34,8 +34,8 @@ export class NodeBuilder implements ElementBuilder {
             .attr("class", "graph_node")
             .style("r", this.config.graphRadius)
             .style("stroke", this.config.graphStroke)
-            .on("mouseover", this.mouseoverButton as any)
-            .on("mouseout", this.mouseoutButton as any)
+            .on("mouseover.pointer", this.mouseoverButton as any)
+            .on("mouseout.pointer", this.mouseoutButton as any)
             .on("click", ((event: any, item: any) => this.onSelectNode(item.id)));
     }
 
