@@ -1,9 +1,9 @@
-import { ElementBuilder } from "./element-builder";
-import { Selection, Simulation, ZoomBehavior } from 'd3';
+import { ElementRenderer } from "./element-renderer";
+import { Selection } from 'd3';
 import { DisplayGraph } from "../../../models/displayGraph";
 import { DisplayConfig } from "../displayConfig";
 
-export class MarkerBuilder implements ElementBuilder {
+export class MarkerRenderer implements ElementRenderer {
 
     config: DisplayConfig;
 
@@ -17,13 +17,7 @@ export class MarkerBuilder implements ElementBuilder {
         this.config = config;
     }
 
-    public bindToEvents(): void { }
-
-    public bindToSimulation(simulation: Simulation<any, any>): void { }
-
-    public bindToZoom(zoom: ZoomBehavior<any, any>): void { }
-
-    public build(): void {
+    public render(): void {
         // Per-type markers, as they don't inherit styles.
         this.root.select('#graph_view')
             .append("defs")

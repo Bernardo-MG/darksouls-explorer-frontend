@@ -1,8 +1,8 @@
-import { ElementBuilder } from "./element-builder";
-import { Selection, Simulation, ZoomBehavior } from 'd3';
+import { ElementRenderer } from "./element-renderer";
+import { Selection } from 'd3';
 import { DisplayConfig } from "../displayConfig";
 
-export class GraphViewBuilder implements ElementBuilder {
+export class GraphViewRenderer implements ElementRenderer {
 
     config: DisplayConfig;
 
@@ -13,15 +13,7 @@ export class GraphViewBuilder implements ElementBuilder {
         this.config = config;
     }
 
-    public bindToEvents(): void { }
-
-    public bindToSimulation(simulation: Simulation<any, any>): void { }
-
-    public bindToZoom(zoom: ZoomBehavior<any, any>): void {
-        this.root.select('#graph_view').call(zoom as any);
-    }
-
-    public build(): void {
+    public render(): void {
         this.root.append("div")
             .classed("svg-container", true)
             .append("svg")

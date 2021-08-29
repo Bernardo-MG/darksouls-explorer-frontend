@@ -1,39 +1,21 @@
-import { ElementBuilder } from "./element-builder";
-import { Selection, Simulation, ZoomBehavior } from 'd3';
+import { ElementRenderer } from "./element-renderer";
+import { Selection } from 'd3';
 import { DisplayConfig } from "../displayConfig";
 import { DisplayGraphNode } from '../../../models/displayGraphNode';
 import * as d3 from 'd3';
 
-export class NodeBuilder implements ElementBuilder {
+export class NodeRenderer implements ElementRenderer {
 
     config: DisplayConfig;
 
     root: Selection<any, any, any, any>;
 
-    onSelectNode: Function;
-
-    constructor(root: Selection<any, any, any, any>, config: DisplayConfig, onSelectNode: Function) {
+    constructor(root: Selection<any, any, any, any>, config: DisplayConfig) {
         this.root = root;
         this.config = config;
-        this.onSelectNode = onSelectNode;
     }
 
-    public bindToEvents(): void {
-        this.root.selectAll("#graph_nodes_root g")
-            .on("click", ((event: any, item: any) => this.onSelectNode(item)));
-    }
-
-    public bindToSimulation(simulation: Simulation<any, any>): void {
-        simulation.on("tick.nodes", () => {
-            this.root.selectAll('.graph_node')
-                .attr("cx", (d: any) => d.x)
-                .attr("cy", (d: any) => d.y);
-        });
-    }
-
-    public bindToZoom(zoom: ZoomBehavior<any, any>): void { }
-
-    public build(): void {
+    public render(): void {
         this.root.selectAll("#graph_nodes_root g")
             .append("circle")
             .attr("class", "graph_node")

@@ -1,17 +1,26 @@
 import * as d3 from 'd3';
 import { ZoomBehavior, Simulation } from 'd3';
 
-import { EventEmitter } from '@angular/core';
-
 import { DisplayGraph } from "@app/graph-display/models/displayGraph";
 import { DisplayConfig } from './displayConfig';
-import { ElementBuilder } from './builder/element-builder';
-import { NodeRootBuilder } from './builder/node-root-builder';
-import { NodeBuilder } from './builder/node-builder';
-import { NodeLabelBuilder } from './builder/node-label-builder';
-import { LinksBuilder } from './builder/link-builder';
-import { GraphViewBuilder } from './builder/graph-view-builder';
-import { MarkerBuilder } from './builder/marker-builder';
+import { ElementRenderer } from './renderer/element-renderer';
+import { NodeRootRenderer } from './renderer/node-root-renderer';
+import { NodeRenderer } from './renderer/node-renderer';
+import { NodeLabelRenderer } from './renderer/node-label-renderer';
+import { LinkRenderer } from './renderer/link-renderer';
+import { GraphViewRenderer } from './renderer/graph-view-renderer';
+import { MarkerRenderer } from './renderer/marker-renderer';
+import { LinkSimulationBinder } from './simulation/link-simulation-binder';
+import { SimulationBinder } from './simulation/simulation-binder';
+import { NodeLabelSimulationBinder } from './simulation/node-label-simulation-binder';
+import { NodeRootSimulationBinder } from './simulation/node-root-simulation-binder';
+import { NodeSimulationBinder } from './simulation/node-simulation-binder';
+import { EventBinder } from './event/event-binder';
+import { NodeEventBinder } from './event/node-event-binder';
+import { ZoomBinder } from './zoom/zoom-binder';
+import { GraphViewZoomBinder } from './zoom/graph-view-zoom-binder';
+import { LinkZoomBinder } from './zoom/link-zoom-binder';
+import { NodeRootZoomBinder } from './zoom/node-root-zoom-binder';
 
 export class GraphRenderer {
 
@@ -32,19 +41,42 @@ export class GraphRenderer {
 
         const root = d3.select(this.rootSelector);
 
-        const builders: ElementBuilder[] = [];
-        builders.push(new GraphViewBuilder(root, config));
-        builders.push(new MarkerBuilder(root, graph, config));
-        builders.push(new LinksBuilder(root, graph, config));
-        builders.push(new NodeRootBuilder(root, graph));
-        builders.push(new NodeBuilder(root, config, selectNode));
-        builders.push(new NodeLabelBuilder(root));
+        const renderers: ElementRenderer[] = [];
+        renderers.push(new GraphViewRenderer(root, config));
+        renderers.push(new MarkerRenderer(root, graph, config));
+        renderers.push(new LinkRenderer(root, graph, config));
+        renderers.push(new NodeRootRenderer(root, graph));
+        renderers.push(new NodeRenderer(root, config));
+        renderers.push(new NodeLabelRenderer(root));
 
-        for (let builder of builders) {
-            builder.build();
-            builder.bindToSimulation(simulation);
-            builder.bindToZoom(zoom);
-            builder.bindToEvents();
+        const simBinders: SimulationBinder[] = [];
+        simBinders.push(new LinkSimulationBinder(root));
+        simBinders.push(new NodeLabelSimulationBinder(root));
+        simBinders.push(new NodeRootSimulationBinder(root));
+        simBinders.push(new NodeSimulationBinder(root));
+
+        const eventBinders: EventBinder[] = [];
+        eventBinders.push(new NodeEventBinder(root, selectNode));
+
+        const zoomBinders: ZoomBinder[] = [];
+        zoomBinders.push(new GraphViewZoomBinder(root));
+        zoomBinders.push(new LinkZoomBinder(root));
+        zoomBinders.push(new NodeRootZoomBinder(root));
+
+        for (let renderer of renderers) {
+            renderer.render();
+        }
+
+        for (let binder of simBinders) {
+            binder.bind(simulation);
+        }
+
+        for (let binder of eventBinders) {
+            binder.bind();
+        }
+
+        for (let binder of zoomBinders) {
+            binder.bind(zoom);
         }
 
         root.select('#graph_view').call(zoom.transform as any, d3.zoomIdentity.translate(config.width / 10, config.height / 2).scale(config.zoomLevel));

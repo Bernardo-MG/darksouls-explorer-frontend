@@ -1,37 +1,17 @@
-import { ElementBuilder } from "./element-builder";
-import { Selection, Simulation, ZoomBehavior } from 'd3';
-import { DisplayGraph } from "../../../models/displayGraph";
+import { Selection, Simulation } from 'd3';
 import * as d3 from "d3";
+import { SimulationBinder } from './simulation-binder';
 
-export class NodeRootBuilder implements ElementBuilder {
-
-    graph: DisplayGraph;
+export class NodeRootSimulationBinder implements SimulationBinder {
 
     root: Selection<any, any, any, any>;
 
-    constructor(root: Selection<any, any, any, any>, graph: DisplayGraph) {
+    constructor(root: Selection<any, any, any, any>) {
         this.root = root;
-        this.graph = graph;
     }
 
-    public bindToEvents(): void { }
-
-    public bindToSimulation(simulation: Simulation<any, any>): void {
+    public bind(simulation: Simulation<any, any>): void {
         this.root.selectAll('#graph_nodes_root g').call(this.drag(simulation));
-    }
-
-    public bindToZoom(zoom: ZoomBehavior<any, any>): void {
-        zoom.on("zoom.node", (event) => {
-            this.root.selectAll('#graph_nodes_root g').attr('transform', event.transform);
-        })
-    }
-
-    public build(): void {
-        this.root.select('#graph_view').append("g")
-            .attr("id", 'graph_nodes_root')
-            .selectAll("g")
-            .data(this.graph.nodes)
-            .join("g");
     }
 
     private drag(simulation: Simulation<any, any>): any {
