@@ -1,6 +1,6 @@
 import { ElementBuilder } from "./element-builder";
 import { Selection, Simulation, ZoomBehavior } from 'd3';
-import { DisplayGraph } from "@app/graph-display/models/displayGraph";
+import { DisplayGraph } from "../../../models/displayGraph";
 import * as d3 from "d3";
 
 export class NodeRootBuilder implements ElementBuilder {

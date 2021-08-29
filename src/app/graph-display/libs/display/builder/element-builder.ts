@@ -1,6 +1,4 @@
-import { Selection, Simulation, ZoomBehavior } from 'd3';
-import { DisplayGraph } from "@app/graph-display/models/displayGraph";
-import { DisplayConfig } from "../displayConfig";
+import { Simulation, ZoomBehavior } from 'd3';
 
 export interface ElementBuilder {
 

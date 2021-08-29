@@ -1,6 +1,5 @@
 import { ElementBuilder } from "./element-builder";
 import { Selection, Simulation, ZoomBehavior } from 'd3';
-import { DisplayGraph } from "@app/graph-display/models/displayGraph";
 import { DisplayConfig } from "../displayConfig";
 
 export class GraphViewBuilder implements ElementBuilder {

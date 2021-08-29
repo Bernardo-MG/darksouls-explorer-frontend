@@ -1,6 +1,6 @@
 import { ElementBuilder } from "./element-builder";
 import { Selection, Simulation, ZoomBehavior } from 'd3';
-import { DisplayGraph } from "@app/graph-display/models/displayGraph";
+import { DisplayGraph } from "../../../models/displayGraph";
 import { DisplayConfig } from "../displayConfig";
 
 export class MarkerBuilder implements ElementBuilder {
