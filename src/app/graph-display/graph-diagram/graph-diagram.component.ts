@@ -31,7 +31,7 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
   private reload(): void {
     this.graphRenderer.clear();
     if (this.graph) {
-      this.graphRenderer.display(this.graph, this.selectNode, this.currentZoom);
+      this.graphRenderer.display(this.graph, (event: any) => this.selectNode.emit(event.id), this.currentZoom);
     }
   }
 
