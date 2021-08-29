@@ -7,8 +7,10 @@
             <graph-status [graph]="graph"></graph-status>
             <graph-diagram [graph]="graph" [currentZoom]="currentZoom" (selectNode)="onSelectNode($event)">
             </graph-diagram>
-            <button mat-button (click)="onDecreaseZoom()">-</button>
-            <button mat-button (click)="onIncreaseZoom()">+</button>
+            <div class="btn-group" role="group" aria-label="Zoom buttons">
+                <button type="button" class="btn btn-primary" (click)="onDecreaseZoom()">-</button>
+                <button type="button" class="btn btn-primary" (click)="onIncreaseZoom()">+</button>
+            </div>
         </div>
         <div class="col">
             <p>{{info?.name}}</p>
