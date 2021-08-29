@@ -44,6 +44,7 @@ export class GraphRenderer {
             builder.build();
             builder.bindToSimulation(simulation);
             builder.bindToZoom(zoom);
+            builder.bindToEvents();
         }
 
         root.select('#graph_view').call(zoom.transform as any, d3.zoomIdentity.translate(config.width / 10, config.height / 2).scale(config.zoomLevel));

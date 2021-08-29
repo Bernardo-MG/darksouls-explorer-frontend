@@ -18,6 +18,11 @@ export class NodeBuilder implements ElementBuilder {
         this.onSelectNode = onSelectNode;
     }
 
+    public bindToEvents(): void {
+        this.root.selectAll("#graph_nodes_root g")
+            .on("click", ((event: any, item: any) => this.onSelectNode(item)));
+    }
+
     public bindToSimulation(simulation: Simulation<any, any>): void {
         simulation.on("tick.nodes", () => {
             this.root.selectAll('.graph_node')
@@ -35,8 +40,7 @@ export class NodeBuilder implements ElementBuilder {
             .style("r", this.config.graphRadius)
             .style("stroke", this.config.graphStroke)
             .on("mouseover.pointer", this.mouseoverButton as any)
-            .on("mouseout.pointer", this.mouseoutButton as any)
-            .on("click", ((event: any, item: any) => this.onSelectNode(item)));
+            .on("mouseout.pointer", this.mouseoutButton as any);
     }
 
     private mouseoverButton(event: any, d: DisplayGraphNode) {

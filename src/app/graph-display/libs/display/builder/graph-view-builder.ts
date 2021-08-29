@@ -13,6 +13,8 @@ export class GraphViewBuilder implements ElementBuilder {
         this.config = config;
     }
 
+    public bindToEvents(): void { }
+
     public bindToSimulation(simulation: Simulation<any, any>): void { }
 
     public bindToZoom(zoom: ZoomBehavior<any, any>): void {

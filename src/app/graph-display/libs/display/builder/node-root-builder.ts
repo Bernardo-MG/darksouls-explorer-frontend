@@ -14,6 +14,8 @@ export class NodeRootBuilder implements ElementBuilder {
         this.graph = graph;
     }
 
+    public bindToEvents(): void { }
+
     public bindToSimulation(simulation: Simulation<any, any>): void {
         this.root.selectAll('#graph_nodes_root g').call(this.drag(simulation));
     }

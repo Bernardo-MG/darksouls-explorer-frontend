@@ -9,6 +9,8 @@ export class NodeLabelBuilder implements ElementBuilder {
         this.root = root;
     }
 
+    public bindToEvents(): void { }
+
     public bindToSimulation(simulation: Simulation<any, any>): void {
         simulation.on("tick.node-labels", () => {
             this.root.selectAll('.graph_node_label')

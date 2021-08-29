@@ -17,6 +17,8 @@ export class LinksBuilder implements ElementBuilder {
         this.config = config;
     }
 
+    public bindToEvents(): void { }
+
     public bindToSimulation(simulation: Simulation<any, any>): void {
         simulation.on("tick.links", () => {
             this.root.selectAll('.graph_link').attr("d", this.linkArc);
