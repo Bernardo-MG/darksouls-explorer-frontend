@@ -18,7 +18,7 @@ export class NodeLabelRenderer implements ElementRenderer {
             .selectAll("text")
             .data(this.graph.nodes)
             .join("text")
-            .attr("class", "label")
+            .classed("label", true)
             .text((d: any) => d.name as string);
     }
 

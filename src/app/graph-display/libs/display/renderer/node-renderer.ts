@@ -24,7 +24,7 @@ export class NodeRenderer implements ElementRenderer {
             .selectAll("circle")
             .data(this.graph.nodes)
             .join("circle")
-            .attr("class", "node")
+            .classed("node", true)
             .style("r", this.config.graphRadius)
             .style("stroke", this.config.graphStroke)
             .on("mouseover.pointer", this.mouseoverButton as any)
