@@ -10,9 +10,9 @@ export class NodeLabelRenderer implements ElementRenderer {
     }
 
     public render(): void {
-        this.root.selectAll("#graph_nodes_root g")
+        this.root.selectAll("#nodes_root g")
             .append("text")
-            .attr("class", "graph_node_label")
+            .attr("class", "label")
             .text((d: any) => d.name as string);
     }
 

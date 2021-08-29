@@ -11,7 +11,7 @@ export class LinkZoomBinder implements ZoomBinder {
 
     public bind(zoom: ZoomBehavior<any, any>): void {
         zoom.on("zoom.link", (event) => {
-            this.root.selectAll('.graph_link').attr('transform', event.transform);
+            this.root.selectAll('.link').attr('transform', event.transform);
         })
     }
 

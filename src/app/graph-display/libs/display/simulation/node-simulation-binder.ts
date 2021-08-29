@@ -11,7 +11,7 @@ export class NodeSimulationBinder implements SimulationBinder {
 
     public bind(simulation: Simulation<any, any>): void {
         simulation.on("tick.nodes", () => {
-            this.root.selectAll('.graph_node')
+            this.root.selectAll('circle.node')
                 .attr("cx", (d: any) => d.x)
                 .attr("cy", (d: any) => d.y);
         });

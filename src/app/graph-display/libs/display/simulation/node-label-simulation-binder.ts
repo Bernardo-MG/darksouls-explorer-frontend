@@ -11,7 +11,7 @@ export class NodeLabelSimulationBinder implements SimulationBinder {
 
     public bind(simulation: Simulation<any, any>): void {
         simulation.on("tick.node-labels", () => {
-            this.root.selectAll('.graph_node_label')
+            this.root.selectAll('text.label')
                 .attr("x", (d: any) => d.x)
                 .attr("y", (d: any) => d.y);
         });

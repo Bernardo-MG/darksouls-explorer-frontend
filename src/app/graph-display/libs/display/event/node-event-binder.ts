@@ -13,7 +13,7 @@ export class NodeEventBinder implements EventBinder {
     }
 
     public bind(): void {
-        this.root.selectAll("#graph_nodes_root g")
+        this.root.selectAll("#nodes_root g")
             .on("click", ((event: any, item: any) => this.onSelectNode(item)));
     }
 

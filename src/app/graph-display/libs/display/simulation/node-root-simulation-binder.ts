@@ -11,7 +11,7 @@ export class NodeRootSimulationBinder implements SimulationBinder {
     }
 
     public bind(simulation: Simulation<any, any>): void {
-        this.root.selectAll('#graph_nodes_root g').call(this.drag(simulation));
+        this.root.selectAll('#nodes_root g').call(this.drag(simulation));
     }
 
     private drag(simulation: Simulation<any, any>): any {

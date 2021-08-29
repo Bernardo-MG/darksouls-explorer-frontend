@@ -11,7 +11,7 @@ export class LinkSimulationBinder implements SimulationBinder {
 
     public bind(simulation: Simulation<any, any>): void {
         simulation.on("tick.links", () => {
-            this.root.selectAll('.graph_link').attr("d", this.linkArc);
+            this.root.selectAll('.link').attr("d", this.linkArc);
         });
     }
 

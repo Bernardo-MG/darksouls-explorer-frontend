@@ -19,12 +19,12 @@ export class LinkRenderer implements ElementRenderer {
 
     public render(): void {
         this.root.select('#graph_view').append("g")
-            .attr("class", "graph_link_container")
+            .attr("class", "link_container")
             .style("fill", "none")
             .selectAll("path")
             .data(this.graph.links)
             .join("path")
-            .attr("class", "graph_link")
+            .attr("class", "link")
             .attr("stroke", d => this.config.color(d.type))
             .attr("marker-end", d => `url(#arrow-${d.type})`)
             .style("stroke-width", this.config.linkStrokeWidth);

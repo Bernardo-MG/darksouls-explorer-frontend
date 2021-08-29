@@ -15,7 +15,7 @@ export class NodeRootRenderer implements ElementRenderer {
 
     public render(): void {
         this.root.select('#graph_view').append("g")
-            .attr("id", 'graph_nodes_root')
+            .attr("id", 'nodes_root')
             .selectAll("g")
             .data(this.graph.nodes)
             .join("g");
