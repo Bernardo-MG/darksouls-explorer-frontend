@@ -13,14 +13,14 @@ import { MarkerRenderer } from './renderer/marker-renderer';
 import { LinkSimulationBinder } from './simulation/link-simulation-binder';
 import { SimulationBinder } from './simulation/simulation-binder';
 import { NodeLabelSimulationBinder } from './simulation/node-label-simulation-binder';
-import { NodeRootSimulationBinder } from './simulation/node-root-simulation-binder';
 import { NodeSimulationBinder } from './simulation/node-simulation-binder';
 import { EventBinder } from './event/event-binder';
 import { NodeEventBinder } from './event/node-event-binder';
 import { ZoomBinder } from './zoom/zoom-binder';
 import { GraphViewZoomBinder } from './zoom/graph-view-zoom-binder';
 import { LinkZoomBinder } from './zoom/link-zoom-binder';
-import { NodeRootZoomBinder } from './zoom/node-root-zoom-binder';
+import { NodeZoomBinder } from './zoom/node-zoom-binder';
+import { NodeLabelZoomBinder } from './zoom/node-label-zoom-binder';
 
 export class GraphRenderer {
 
@@ -47,12 +47,11 @@ export class GraphRenderer {
         renderers.push(new LinkRenderer(root, graph, config));
         renderers.push(new NodeRootRenderer(root));
         renderers.push(new NodeRenderer(root, graph, config));
-        renderers.push(new NodeLabelRenderer(root));
+        renderers.push(new NodeLabelRenderer(root, graph));
 
         const simBinders: SimulationBinder[] = [];
         simBinders.push(new LinkSimulationBinder(root));
         simBinders.push(new NodeLabelSimulationBinder(root));
-        simBinders.push(new NodeRootSimulationBinder(root));
         simBinders.push(new NodeSimulationBinder(root));
 
         const eventBinders: EventBinder[] = [];
@@ -61,7 +60,8 @@ export class GraphRenderer {
         const zoomBinders: ZoomBinder[] = [];
         zoomBinders.push(new GraphViewZoomBinder(root));
         zoomBinders.push(new LinkZoomBinder(root));
-        zoomBinders.push(new NodeRootZoomBinder(root));
+        zoomBinders.push(new NodeLabelZoomBinder(root));
+        zoomBinders.push(new NodeZoomBinder(root));
 
         for (let renderer of renderers) {
             renderer.render();

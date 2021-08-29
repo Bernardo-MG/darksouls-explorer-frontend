@@ -21,10 +21,9 @@ export class NodeRenderer implements ElementRenderer {
 
     public render(): void {
         this.root.select("#nodes_root")
-            .selectAll("g")
+            .selectAll("circle")
             .data(this.graph.nodes)
-            .join("g")
-            .append("circle")
+            .join("circle")
             .attr("class", "node")
             .style("r", this.config.graphRadius)
             .style("stroke", this.config.graphStroke)

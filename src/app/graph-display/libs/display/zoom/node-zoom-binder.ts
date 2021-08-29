@@ -1,7 +1,7 @@
 import { Selection, ZoomBehavior } from 'd3';
 import { ZoomBinder } from './zoom-binder';
 
-export class NodeRootZoomBinder implements ZoomBinder {
+export class NodeZoomBinder implements ZoomBinder {
 
     root: Selection<any, any, any, any>;
 
@@ -11,7 +11,7 @@ export class NodeRootZoomBinder implements ZoomBinder {
 
     public bind(zoom: ZoomBehavior<any, any>): void {
         zoom.on("zoom.node", (event) => {
-            this.root.selectAll('#nodes_root g').attr('transform', event.transform);
+            this.root.selectAll('circle.node').attr('transform', event.transform);
         })
     }
 
