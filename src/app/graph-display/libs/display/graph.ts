@@ -53,7 +53,7 @@ export class GraphRenderer {
         renderers.push(new NodeLabelRenderer(root, graph));
 
         const simBinders: SimulationBinder[] = [];
-        simBinders.push(new LinkSimulationBinder(root));
+        simBinders.push(new LinkSimulationBinder(root, graph));
         simBinders.push(new NodeLabelSimulationBinder(root));
         simBinders.push(new NodeSimulationBinder(root));
 

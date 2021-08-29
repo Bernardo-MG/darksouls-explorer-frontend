@@ -3,5 +3,5 @@ export interface Link {
     sourceId: number,
     target: Object,
     targetId: number,
-    type: String
+    type: string
 }

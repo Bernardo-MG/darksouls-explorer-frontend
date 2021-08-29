@@ -1,5 +1,5 @@
 export interface Item {
-    id: Number,
-    name: String,
-    description: String[]
+    id: number,
+    name: string,
+    description: string[]
 }

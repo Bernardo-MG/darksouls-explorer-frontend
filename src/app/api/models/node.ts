@@ -1,4 +1,4 @@
 export interface Node {
-    id: Number,
-    name: String
+    id: number,
+    name: string
 }
