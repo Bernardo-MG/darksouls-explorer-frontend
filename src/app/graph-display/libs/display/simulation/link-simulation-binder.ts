@@ -37,7 +37,6 @@ export class LinkSimulationBinder implements SimulationBinder {
 
             if (siblingCount > 1) {
                 var siblings = this.getSiblingLinks(d.source, d.target);
-                console.log(siblings);
                 var arcScale = d3.scaleOrdinal()
                                         .domain(siblings)
                                         .range([1, siblingCount]);
