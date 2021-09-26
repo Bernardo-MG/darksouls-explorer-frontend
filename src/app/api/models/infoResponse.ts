@@ -1,4 +1,4 @@
-import { Item } from './item';
+import { Item } from './info';
 
 export interface InfoResponse {
     info: Item

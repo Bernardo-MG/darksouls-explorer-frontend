@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Apollo, gql } from 'apollo-angular';
 import { map } from 'rxjs/operators';
 import { GraphResponse } from '@app/api/models/graphResponse';
 import { InfoResponse } from '@app/api/models/infoResponse';
 import { Graph } from '@app/api/models/graph';
-import { Item } from '@app/api/models/item';
+import { Item } from '@app/api/models/info';
 import { ApolloQueryResult } from '@apollo/client/core';
 
 @Injectable({

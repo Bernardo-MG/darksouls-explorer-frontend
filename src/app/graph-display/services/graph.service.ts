@@ -3,7 +3,7 @@ import { GraphQueryService } from '../../api/services/graph-query.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { NamedValue } from '@app/models/namedValue';
-import { Item } from '@app/api/models/item';
+import { Item } from '@app/api/models/info';
 import { DisplayGraph } from '@app/graph-display/models/displayGraph';
 import { Link } from '@app/api/models/link';
 import { Node } from '@app/api/models/node';
