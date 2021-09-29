@@ -1,76 +1,69 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Apollo, gql } from 'apollo-angular';
-import { map } from 'rxjs/operators';
-import { GraphResponse } from '@app/api/models/graphResponse';
-import { InfoResponse } from '@app/api/models/infoResponse';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { Graph } from '@app/api/models/graph';
-import { Item } from '@app/api/models/info';
-import { ApolloQueryResult } from '@apollo/client/core';
+import { Info } from '@app/api/models/info';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { environment } from 'environments/environment';
+import { ApiResponse } from '../models/api-response';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GraphQueryService {
 
+  private graphUrl = environment.apiUrl + "/graph";
+  private graphLinksUrl = environment.apiUrl + "/graph/links";
+
   constructor(
-    private apollo: Apollo
+    private http: HttpClient
   ) { }
 
   getGraph(relationships: String[]): Observable<Graph> {
-    const relArg = relationships.map((v) => '"' + v + '"').join(',');
-    return this.apollo
-      .watchQuery<GraphResponse>({
-        query: gql`
-          {
-            graph(type: [${relArg}]) {
-              nodes {
-                id,
-                name
-              },
-              links {
-                source,
-                sourceId,
-                target,
-                targetId,
-                type
-              },
-              types
-            }
-          }
-        `,
-      })
-      .valueChanges.pipe(map((response: ApolloQueryResult<GraphResponse>) => { return response.data.graph }));
+    const relArg = relationships.join(',');
+    const params = { params: new HttpParams().set('links', relArg) };
+    return this.http.get<Graph>(this.graphUrl, params).pipe(
+      map((response: Graph) => { return response }),
+      catchError(this.handleError<Graph>('getGraph', { nodes: [], links: [], types: [] }))
+    ).pipe(
+      catchError(this.handleError<Graph>('getGraph', { nodes: [], links: [], types: [] }))
+    );
   }
 
-  getAllTypes(): Observable<String[]> {
-    return this.apollo
-      .watchQuery<GraphResponse>({
-        query: gql`
-          {
-            graph {
-              types
-            }
-          }
-        `,
-      })
-      .valueChanges.pipe(map((response: ApolloQueryResult<GraphResponse>) => { return response.data.graph.types }));
+  getLinks(): Observable<String[]> {
+    return this.http.get<String[]>(this.graphLinksUrl).pipe(
+      map((response: String[]) => { return response }),
+      catchError(this.handleError<String[]>('getLinks', []))
+    ).pipe(
+      catchError(this.handleError<String[]>('getLinks', []))
+    );
   }
 
-  getOne(id: Number): Observable<Item> {
-    return this.apollo
-      .watchQuery<InfoResponse>({
-        query: gql`
-          {
-            info(id: ${id}) {
-              id
-              name
-              description
-            }
-          }
-        `,
-      })
-      .valueChanges.pipe(map((response: ApolloQueryResult<InfoResponse>) => { return response.data.info }));
+  getInfo(id: Number): Observable<Info> {
+    const url = this.graphUrl + `/${id}`
+    return this.http.get<Info>(url).pipe(
+      map((response: Info) => { return response }),
+      catchError(this.handleError<Info>('getInfo', { id: -1, name: '', description: [] }))
+    ).pipe(
+      catchError(this.handleError<Info>('getInfo', { id: -1, name: '', description: [] }))
+    );
+  }
+
+  /**
+ * Handle Http operation that failed.
+ * Let the app continue.
+ * @param operation - name of the operation that failed
+ * @param result - optional value to return as the observable result
+ */
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
   }
 
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NamedValue } from '@app/models/namedValue';
-import { Item } from '@app/api/models/info';
+import { Info } from '@app/api/models/info';
 import { GraphService } from '@app/graph-display/services/graph.service';
 import { DisplayGraph } from '@app/graph-display/models/displayGraph';
 
@@ -15,7 +15,7 @@ export class GraphViewComponent implements OnInit {
 
   graph: DisplayGraph = { nodes: [], links: [], types: [] };
 
-  info: Item = { id: 0, name: '', description: [] };
+  info: Info = { id: 0, name: '', description: [] };
 
   initialZoom: number = 0.75;
 
