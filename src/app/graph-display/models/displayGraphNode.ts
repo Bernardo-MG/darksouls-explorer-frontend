@@ -1,6 +1,5 @@
-import { SimulationNodeDatum } from 'd3';
 
-export interface DisplayGraphNode extends SimulationNodeDatum {
+export interface DisplayGraphNode {
     id: Number,
     name: String
 }

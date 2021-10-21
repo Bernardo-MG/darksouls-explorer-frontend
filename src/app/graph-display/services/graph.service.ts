@@ -43,7 +43,7 @@ export class GraphService {
   }
 
   private toGraphNode(data: Node): DisplayGraphNode {
-    return { id: data.id, name: data.name, x: 0, y: 0 };
+    return { id: data.id, name: data.name };
   }
 
 }
