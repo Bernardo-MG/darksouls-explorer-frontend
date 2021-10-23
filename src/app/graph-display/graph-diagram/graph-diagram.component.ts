@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { DisplayGraph } from '../models/displayGraph';
 import * as cytoscape from 'cytoscape';
-import { NodeDefinition } from 'cytoscape';
+import { EdgeDefinition, NodeDefinition } from 'cytoscape';
 
 @Component({
   selector: 'graph-diagram',
@@ -27,7 +27,7 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
 
   private reload(): void {
     const nodes: NodeDefinition[] = this.graph.nodes.map(node => { return { data: { id: node.id.toString() } } })
-    const links = this.graph.links.map(link => { return { data: { source: link.source.toString(), target: link.target.toString() } } })
+    const links: EdgeDefinition[] = this.graph.links.map(link => { return { data: { source: link.source.toString(), target: link.target.toString() } } })
 
     var cy = cytoscape({
       container: document.getElementById('graph_container'),
@@ -44,7 +44,6 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
             height: 44,
           }
         },
-
         {
           selector: 'edge',
           style: {
@@ -55,6 +54,10 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
       ]
     });
     cy.center();
+
+    cy.on("tapstart", "node", (evt) => {
+      this.selectNode.emit(evt.target.id());
+    });
   }
 
 }
