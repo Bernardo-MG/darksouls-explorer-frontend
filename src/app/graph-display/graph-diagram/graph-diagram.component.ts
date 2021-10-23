@@ -26,7 +26,7 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
   }
 
   private reload(): void {
-    const nodes: NodeDefinition[] = this.graph.nodes.map(node => { return { data: { id: node.id.toString() } } })
+    const nodes: NodeDefinition[] = this.graph.nodes.map(node => { return { data: { id: node.id.toString(), label: node.name } } })
     const links: EdgeDefinition[] = this.graph.links.map(link => { return { data: { source: link.source.toString(), target: link.target.toString() } } })
 
     var cy = cytoscape({
@@ -40,15 +40,7 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
         {
           selector: 'node',
           style: {
-            width: 44,
-            height: 44,
-          }
-        },
-        {
-          selector: 'edge',
-          style: {
-            width: 4,
-            opacity: 0.4
+            label: "data(label)"
           }
         }
       ]
