@@ -12,6 +12,9 @@ describe('ItemService', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule
+      ],
+      providers: [
+        ItemService
       ]
     });
     httpClient = TestBed.inject(HttpClient);
