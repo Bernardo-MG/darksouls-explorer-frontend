@@ -17,8 +17,6 @@ export class GraphViewComponent implements OnInit {
 
   info: Info = { id: 0, name: '', description: [] };
 
-  currentZoom: number = 0;
-
   constructor(
     private graphService: GraphService
   ) {}
@@ -35,14 +33,6 @@ export class GraphViewComponent implements OnInit {
     if (options.length > 0) {
       this.graphService.getGraph(options).subscribe(data => this.graph = data);
     }
-  }
-
-  onIncreaseZoom() {
-    this.currentZoom = this.currentZoom + 0.2;
-  }
-
-  onDecreaseZoom() {
-    this.currentZoom = this.currentZoom - 0.2;
   }
 
 }
