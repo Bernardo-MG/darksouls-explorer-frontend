@@ -5,7 +5,6 @@ import { Graph } from '@app/api/models/graph';
 import { Info } from '@app/api/models/info';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'environments/environment';
-import { ApiResponse } from '../models/api-response';
 
 @Injectable({
   providedIn: 'root'
