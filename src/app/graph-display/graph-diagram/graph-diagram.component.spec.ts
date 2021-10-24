@@ -6,12 +6,13 @@ import * as cytoscape from 'cytoscape';
 // @ts-ignore
 import * as klay from 'cytoscape-klay';
 
+cytoscape.use(klay);
+
 describe('GraphDiagramComponent', () => {
   let component: GraphDiagramComponent;
   let fixture: ComponentFixture<GraphDiagramComponent>;
 
   beforeEach(async () => {
-    cytoscape.use(klay);
     await TestBed.configureTestingModule({
       declarations: [ GraphDiagramComponent ]
     })
