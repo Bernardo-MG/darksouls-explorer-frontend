@@ -38,6 +38,7 @@
     "bootstrap": "^5.0.0-beta3",
     "component": "^1.1.0",
     "cytoscape": "^3.19.1",
+    "cytoscape-klay": "^3.1.4",
     "eslint": "^7.32.0",
     "graphql": "^15.5.0",
     "rxjs": "~7.3.0",

@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewEncapsul
 import { DisplayGraph } from '../models/displayGraph';
 import * as cytoscape from 'cytoscape';
 import { EdgeDefinition, NodeDefinition } from 'cytoscape';
+// @ts-ignore
+import * as klay from 'cytoscape-klay';
 
 @Component({
   selector: 'graph-diagram',
@@ -18,6 +20,7 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit(): void {
+    cytoscape.use(klay);
     this.reload();
   }
 
@@ -32,6 +35,9 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
     var cy = cytoscape({
       container: document.getElementById('graph_container'),
 
+      layout: {
+        name: 'klay'
+      },
       elements: {
         nodes: nodes,
         edges: links
