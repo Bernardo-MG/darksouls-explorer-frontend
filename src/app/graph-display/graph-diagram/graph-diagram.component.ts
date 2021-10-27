@@ -20,7 +20,6 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit(): void {
-    cytoscape.use(klay);
     this.reload();
   }
 
@@ -32,6 +31,7 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
     const nodes: NodeDefinition[] = this.graph.nodes.map(node => { return { data: { id: node.id.toString(), label: node.name } } })
     const links: EdgeDefinition[] = this.graph.links.map(link => { return { data: { source: link.source.toString(), target: link.target.toString() } } })
 
+    cytoscape.use(klay);
     var cy = cytoscape({
       container: document.getElementById('graph_container'),
 
