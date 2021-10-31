@@ -1,5 +1,5 @@
 
 export interface DisplayGraphNode {
-    id: Number,
-    name: String
+    id: string,
+    name: string
 }
