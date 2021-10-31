@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 import { GraphStatusComponent } from './graph-status/graph-status.component';
 import { GraphDiagramComponent } from './graph-diagram/graph-diagram.component';
@@ -17,7 +18,10 @@ import { GraphService } from './services/graph.service';
   imports: [
     CommonModule,
     FilterModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts'),
+    })
   ],
   exports: [
     GraphViewComponent

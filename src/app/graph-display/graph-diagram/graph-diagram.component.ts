@@ -1,9 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { DisplayGraph } from '../models/displayGraph';
-import * as cytoscape from 'cytoscape';
-import { EdgeDefinition, NodeDefinition } from 'cytoscape';
-// @ts-ignore
-import * as klay from 'cytoscape-klay';
+import { EChartsOption } from 'echarts';
 
 @Component({
   selector: 'graph-diagram',
@@ -17,6 +14,22 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
 
   @Output() selectNode = new EventEmitter<Number>();
 
+  chartOption: EChartsOption = {
+    xAxis: {
+      type: 'category',
+      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    },
+    yAxis: {
+      type: 'value',
+    },
+    series: [
+      {
+        data: [820, 932, 901, 934, 1290, 1330, 1320],
+        type: 'line',
+      },
+    ],
+  };
+
   constructor() { }
 
   ngOnInit(): void {
@@ -28,34 +41,34 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
   }
 
   private reload(): void {
-    const nodes: NodeDefinition[] = this.graph.nodes.map(node => { return { data: { id: node.id.toString(), label: node.name } } })
-    const links: EdgeDefinition[] = this.graph.links.map(link => { return { data: { source: link.source.toString(), target: link.target.toString() } } })
+    //const nodes: NodeDefinition[] = this.graph.nodes.map(node => { return { data: { id: node.id.toString(), label: node.name } } })
+    //const links: EdgeDefinition[] = this.graph.links.map(link => { return { data: { source: link.source.toString(), target: link.target.toString() } } })
 
-    cytoscape.use(klay);
-    var cy = cytoscape({
-      container: document.getElementById('graph_container'),
+    //cytoscape.use(klay);
+    //var cy = cytoscape({
+    //  container: document.getElementById('graph_container'),
+//
+    //  layout: {
+    //    name: 'klay'
+    //  },
+    //  elements: {
+    //    nodes: nodes,
+    //    edges: links
+    //  },
+    //  style: [ // the stylesheet for the graph
+    //    {
+    //      selector: 'node',
+    //      style: {
+    //        label: "data(label)"
+    //      }
+    //    }
+    //  ]
+    //});
+    //cy.center();
 
-      layout: {
-        name: 'klay'
-      },
-      elements: {
-        nodes: nodes,
-        edges: links
-      },
-      style: [ // the stylesheet for the graph
-        {
-          selector: 'node',
-          style: {
-            label: "data(label)"
-          }
-        }
-      ]
-    });
-    cy.center();
-
-    cy.on("tapstart", "node", (evt) => {
-      this.selectNode.emit(evt.target.id());
-    });
+    //cy.on("tapstart", "node", (evt) => {
+    //  this.selectNode.emit(evt.target.id());
+    //});
   }
 
 }
