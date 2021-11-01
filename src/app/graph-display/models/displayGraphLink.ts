@@ -1,5 +1,5 @@
 export interface DisplayGraphLink {
-    source: any,
-    target: any,
+    source: string,
+    target: string,
     type: string
 }

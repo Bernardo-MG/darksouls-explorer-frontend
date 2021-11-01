@@ -1,7 +1,7 @@
 export interface Link {
-    source: Object,
-    sourceId: number,
-    target: Object,
-    targetId: number,
+    sourceLabel: string,
+    source: string,
+    targetLabel: string,
+    target: string,
     type: string
 }

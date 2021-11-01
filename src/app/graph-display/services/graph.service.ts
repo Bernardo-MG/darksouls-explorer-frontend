@@ -39,11 +39,11 @@ export class GraphService {
   }
 
   private toGraphLink(data: Link): DisplayGraphLink {
-    return { source: data.sourceId, target: data.targetId, type: data.type };
+    return { ...data };
   }
 
   private toGraphNode(data: Node): DisplayGraphNode {
-    return { id: data.id, name: data.name };
+    return { ...data };
   }
 
 }

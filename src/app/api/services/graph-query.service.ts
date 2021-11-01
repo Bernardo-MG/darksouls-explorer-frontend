@@ -42,9 +42,9 @@ export class GraphQueryService {
     const url = this.graphUrl + `/${id}`
     return this.http.get<Info>(url).pipe(
       map((response: Info) => { return response }),
-      catchError(this.handleError<Info>('getInfo', { id: -1, name: '', description: [] }))
+      catchError(this.handleError<Info>('getInfo', { id: '-1', label: '', description: [] }))
     ).pipe(
-      catchError(this.handleError<Info>('getInfo', { id: -1, name: '', description: [] }))
+      catchError(this.handleError<Info>('getInfo', { id: '-1', label: '', description: [] }))
     );
   }
 

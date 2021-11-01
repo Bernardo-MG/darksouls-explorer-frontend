@@ -1,5 +1,5 @@
 export interface Info {
-    id: number,
-    name: string,
+    id: string,
+    label: string,
     description: string[]
 }

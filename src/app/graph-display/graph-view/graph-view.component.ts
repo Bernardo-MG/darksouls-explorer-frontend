@@ -15,7 +15,7 @@ export class GraphViewComponent implements OnInit {
 
   graph: DisplayGraph = { nodes: [], links: [], types: [] };
 
-  info: Info = { id: 0, name: '', description: [] };
+  info: Info = { id: '0', label: '', description: [] };
 
   constructor(
     private graphService: GraphService
