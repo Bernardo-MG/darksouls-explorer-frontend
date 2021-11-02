@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { GraphViewComponent } from './graph-display/graph-view/graph-view.component';
 import { ItemInfoComponent } from './item-explore/item-info/item-info.component';
+
+const graphModule = () => import('@app/graph-display/graph-display.module').then(x => x.GraphDisplayModule);
 
 const routes: Routes = [
   { path: '', redirectTo: '/relationships', pathMatch: 'full' },
-  { path: 'relationships', component: GraphViewComponent },
+  { path: 'relationships', loadChildren: graphModule },
   { path: 'items', component: ItemInfoComponent }
 ];
 
