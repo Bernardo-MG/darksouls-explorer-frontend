@@ -8,6 +8,7 @@ import { GraphDiagramComponent } from './graph-diagram/graph-diagram.component';
 import { GraphViewComponent } from './graph-view/graph-view.component';
 import { FilterModule } from '@app/filter/filter.module';
 import { GraphService } from './services/graph.service';
+import { GraphDisplayRoutingModule } from './graph-display-routing.module';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { GraphService } from './services/graph.service';
     GraphViewComponent
   ],
   imports: [
+    GraphDisplayRoutingModule,
     CommonModule,
     FilterModule,
     HttpClientModule,
