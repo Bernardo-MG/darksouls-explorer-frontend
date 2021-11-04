@@ -5,10 +5,7 @@ import { GraphViewComponent } from './graph-view/graph-view.component';
 
 const routes: Routes = [
     {
-        path: '',
-        children: [
-            { path: '', component: GraphViewComponent }
-        ]
+        path: '', component: GraphViewComponent
     }
 ];
 

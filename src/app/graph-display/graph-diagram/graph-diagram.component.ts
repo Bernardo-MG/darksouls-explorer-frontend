@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { DisplayGraph } from '../models/displayGraph';
-import { init } from 'echarts';
 
 @Component({
   selector: 'graph-diagram',
@@ -14,6 +13,10 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
 
   @Output() selectNode = new EventEmitter<Number>();
 
+  options = { series: {} };
+
+  mergeOption: any;
+
   constructor() { }
 
   ngOnInit(): void {
@@ -25,12 +28,8 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
   }
 
   private reload(): void {
-    var chartDom = document.getElementById('graph_container');
-    var myChart = init(chartDom as HTMLElement);
-
-    myChart.setOption({
-      series:
-      {
+    this.mergeOption = {
+      series: {
         type: 'graph',
         layout: 'force',
         roam: true,
@@ -44,7 +43,7 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
         links: this.graph.links.map((l) => { return { source: l.source.toString(), target: l.target.toString() } }),
         categories: this.graph.types.map((t) => { return { name: t } })
       }
-    });
+    };
   }
 
 }
