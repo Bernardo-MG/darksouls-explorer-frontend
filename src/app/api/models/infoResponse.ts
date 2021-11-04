@@ -1,5 +1,5 @@
-import { Item } from './info';
+import { Info } from './info';
 
 export interface InfoResponse {
-    info: Item
+    info: Info
 }

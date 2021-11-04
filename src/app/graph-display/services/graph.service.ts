@@ -33,17 +33,17 @@ export class GraphService {
   private toDisplayGraph(graph: Graph): DisplayGraph {
     const links: DisplayGraphLink[] = graph.links.map(this.toGraphLink);
     const nodes: DisplayGraphNode[] = graph.nodes.map(this.toGraphNode);
-    const types: String[] = graph.types;
+    const types: string[] = graph.types;
 
     return { nodes, links, types };
   }
 
   private toGraphLink(data: Link): DisplayGraphLink {
-    return { source: data.sourceId, target: data.targetId, type: data.type };
+    return { ...data };
   }
 
   private toGraphNode(data: Node): DisplayGraphNode {
-    return { id: data.id, name: data.name, x: 0, y: 0 };
+    return { ...data };
   }
 
 }

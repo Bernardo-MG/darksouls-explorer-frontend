@@ -4,5 +4,5 @@ import { DisplayGraphNode } from "./displayGraphNode";
 export interface DisplayGraph {
     nodes: DisplayGraphNode[],
     links: DisplayGraphLink[],
-    types: String[]
+    types: string[]
 }

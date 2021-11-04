@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { DisplayGraph } from '../models/displayGraph';
-import { GraphRenderer } from '../libs/display/graph'
 
 @Component({
   selector: 'graph-diagram',
@@ -14,9 +13,11 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
 
   @Output() selectNode = new EventEmitter<Number>();
 
-  @Input() currentZoom: number = 0.75;
+  options = { series: {} };
 
-  graphRenderer = new GraphRenderer("figure#graph_container");
+  mergeOption: any;
+
+  loading = false;
 
   constructor() { }
 
@@ -29,10 +30,26 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
   }
 
   private reload(): void {
-    this.graphRenderer.clear();
-    if (this.graph) {
-      this.graphRenderer.display(this.graph, (event: any) => this.selectNode.emit(event.id), this.currentZoom);
-    }
+    this.loading = true;
+
+    this.mergeOption = {
+      series: {
+        type: 'graph',
+        layout: 'force',
+        roam: true,
+        label: {
+          position: 'right'
+        },
+        force: {
+          repulsion: 100
+        },
+        data: this.graph.nodes.map((n) => { return { ...n, name: n.label, id: n.id.toString() } }),
+        links: this.graph.links.map((l) => { return { source: l.source.toString(), target: l.target.toString() } }),
+        categories: this.graph.types.map((t) => { return { name: t } })
+      }
+    };
+
+    this.loading = false;
   }
 
 }
