@@ -17,6 +17,8 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
 
   mergeOption: any;
 
+  loading = false;
+
   constructor() { }
 
   ngOnInit(): void {
@@ -28,6 +30,8 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
   }
 
   private reload(): void {
+    this.loading = true;
+
     this.mergeOption = {
       series: {
         type: 'graph',
@@ -44,6 +48,8 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
         categories: this.graph.types.map((t) => { return { name: t } })
       }
     };
+
+    this.loading = false;
   }
 
 }
