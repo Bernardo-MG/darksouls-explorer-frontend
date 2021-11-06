@@ -13,13 +13,17 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
 
   @Output() selectNode = new EventEmitter<Number>();
 
-  options = { series: {} };
+  options = {};
 
   mergeOption: any;
 
   loading = false;
 
   constructor() { }
+
+  onClick(event: any): void {
+    this.selectNode.emit(event.data.id);
+  }
 
   ngOnInit(): void {
     this.reload();

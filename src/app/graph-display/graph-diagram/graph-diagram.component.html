@@ -1,1 +1,2 @@
-<div echarts [options]="options" [merge]="mergeOption" [loading]="loading" id="graph_container" class="graph_container"></div>
+<div echarts [options]="options" [merge]="mergeOption" [loading]="loading" (chartClick)="onClick($event)"
+    id="graph_container" class="graph_container"></div>
