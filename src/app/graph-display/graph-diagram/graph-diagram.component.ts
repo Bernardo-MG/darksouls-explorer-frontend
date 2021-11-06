@@ -7,7 +7,7 @@ import { Graph } from '../models/graph';
   templateUrl: './graph-diagram.component.html',
   styleUrls: ['./graph-diagram.component.sass']
 })
-export class GraphDiagramComponent implements OnInit, OnChanges {
+export class GraphDiagramComponent implements OnChanges {
 
   @Input() graph: Graph = { nodes: [], links: [], types: [] };
 
@@ -25,15 +25,7 @@ export class GraphDiagramComponent implements OnInit, OnChanges {
     this.selectNode.emit(event.data.id);
   }
 
-  ngOnInit(): void {
-    this.reload();
-  }
-
   ngOnChanges(): void {
-    this.reload();
-  }
-
-  private reload(): void {
     this.loading = true;
 
     this.mergeOption = {
