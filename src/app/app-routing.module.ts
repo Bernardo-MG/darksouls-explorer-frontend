@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ItemInfoComponent } from './item-explore/item-info/item-info.component';
 
 const graphModule = () => import('@app/graph-display/graph-display.module').then(m => m.GraphDisplayModule);
+const itemModule = () => import('@app/item-explore/item-explore.module').then(m => m.ItemExploreModule);
 
 const routes: Routes = [
-  { path: '', redirectTo: '/relationships', pathMatch: 'full' },
-  { path: 'relationships', loadChildren: graphModule },
-  { path: 'items', component: ItemInfoComponent }
+  { path: '', redirectTo: '/graph', pathMatch: 'full' },
+  { path: 'graph', loadChildren: graphModule },
+  { path: 'items', loadChildren: itemModule }
 ];
 
 @NgModule({
