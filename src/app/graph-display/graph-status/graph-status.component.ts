@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { DisplayGraph } from '../models/displayGraph';
+import { Graph } from '../models/graph';
 
 @Component({
   selector: 'graph-status',
@@ -8,7 +8,7 @@ import { DisplayGraph } from '../models/displayGraph';
 })
 export class GraphStatusComponent {
 
-  @Input() graph: DisplayGraph = { nodes: [], links: [], types: [] };
+  @Input() graph: Graph = { nodes: [], links: [], types: [] };
 
   constructor() { }
 

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { DisplayGraph } from '../models/displayGraph';
+import { Graph } from '../models/graph';
 
 @Component({
   selector: 'graph-diagram',
@@ -9,7 +9,7 @@ import { DisplayGraph } from '../models/displayGraph';
 })
 export class GraphDiagramComponent implements OnInit, OnChanges {
 
-  @Input() graph: DisplayGraph = { nodes: [], links: [], types: [] };
+  @Input() graph: Graph = { nodes: [], links: [], types: [] };
 
   @Output() selectNode = new EventEmitter<Number>();
 
