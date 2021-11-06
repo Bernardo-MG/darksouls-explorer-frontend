@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { GraphQueryService } from '../../api/services/graph-query.service';
+import { GraphQueryService } from './graph-query.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { NamedValue } from '@app/models/namedValue';
-import { Info } from '@app/api/models/info';
-import { DisplayGraph } from '@app/graph-display/models/displayGraph';
-import { Link } from '@app/api/models/link';
-import { Node } from '@app/api/models/node';
-import { DisplayGraphLink } from '@app/graph-display/models/displayGraphLink';
-import { DisplayGraphNode } from '@app/graph-display/models/displayGraphNode';
-import { Graph } from '@app/api/models/graph';
+import { Info } from '../models/info';
+import { DisplayGraph } from '../models/displayGraph';
+import { Link } from '../models/link';
+import { Node } from '../models/node';
+import { DisplayGraphLink } from '../models/displayGraphLink';
+import { DisplayGraphNode } from '../models/displayGraphNode';
+import { Graph } from '../models/graph';
 
 @Injectable()
 export class GraphService {

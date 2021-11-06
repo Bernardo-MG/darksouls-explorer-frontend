@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Graph } from '@app/api/models/graph';
-import { Info } from '@app/api/models/info';
+import { Graph } from '@app/graph-display/models/graph';
+import { Info } from '@app/graph-display/models/info';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'environments/environment';
 

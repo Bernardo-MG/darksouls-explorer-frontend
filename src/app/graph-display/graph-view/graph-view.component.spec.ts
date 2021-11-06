@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 
 import { GraphService } from '@app/graph-display/services/graph.service';
 import { GraphViewComponent } from './graph-view.component';
-import { Graph } from '@app/api/models/graph';
+import { Graph } from '@app/graph-display/models/graph';
 import { GraphDisplayModule } from '../graph-display.module';
 
 class MockedGraphService {
