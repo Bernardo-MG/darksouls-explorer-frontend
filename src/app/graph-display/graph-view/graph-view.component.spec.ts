@@ -2,9 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from "@angular/router/testing";
 import { Observable, of } from 'rxjs';
 
-import { GraphService } from '@app/graph-display/services/graph.service';
+import { GraphService } from '../services/graph.service';
 import { GraphViewComponent } from './graph-view.component';
-import { Graph } from '@app/graph-display/models/graph';
+import { Graph } from '../models/graph';
 import { GraphDisplayModule } from '../graph-display.module';
 
 class MockedGraphService {

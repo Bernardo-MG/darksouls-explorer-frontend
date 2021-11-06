@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NamedValue } from '@app/models/namedValue';
-import { Info } from '@app/graph-display/models/info';
-import { GraphService } from '@app/graph-display/services/graph.service';
+import { Info } from '../models/info';
+import { GraphService } from '../services/graph.service';
 import { Graph } from '../models/graph';
 
 @Component({
