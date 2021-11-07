@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ItemInfoComponent } from './item-info/item-info.component';
+import { ItemViewComponent } from './item-view/item-view.component';
 
 
 const routes: Routes = [
     {
-        path: '', component: ItemInfoComponent
+        path: '', component: ItemViewComponent
     }
 ];
 
