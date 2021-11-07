@@ -10,7 +10,9 @@
         </div>
         <div class="col">
             <p>{{info?.label}}</p>
-            <p *ngFor="let desc of info?.description">{{desc}}</p>
+            <ng-template ngFor let-desc [ngForOf]="info?.description">
+                <p>{{desc}}</p>
+            </ng-template>
         </div>
     </div>
 </div>

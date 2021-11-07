@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
+import { Response } from '@app/api/models/response';
 
 @Injectable()
 export class ItemService {
@@ -15,11 +16,11 @@ export class ItemService {
   ) { }
 
   getItems(name: String): Observable<Item[]> {
-    return this.http.get<Item[]>(this.itemUrl).pipe(
-      map((response: Item[]) => { return response }),
-      catchError(this.handleError<Item[]>('getLinks', []))
+    return this.http.get<Response<Item>>(this.itemUrl).pipe(
+      map((response: Response<Item>) => { return response.content }),
+      catchError(this.handleError<Item[]>('getItems', []))
     ).pipe(
-      catchError(this.handleError<Item[]>('getLinks', []))
+      catchError(this.handleError<Item[]>('getItems', []))
     );
   }
 

@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { ItemInfoComponent } from './item-info/item-info.component';
 import { ItemService } from './services/item.service';
 import { ItemExploreRoutingModule } from './item-explore-routing.module';
+import { ItemListComponent } from './item-list/item-list.component';
 
 @NgModule({
   declarations: [
-    ItemInfoComponent
+    ItemInfoComponent,
+    ItemListComponent
   ],
   imports: [
     ItemExploreRoutingModule,
