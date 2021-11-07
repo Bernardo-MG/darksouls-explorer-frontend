@@ -16,7 +16,7 @@ export class ItemService {
   ) { }
 
   getItems(page: number): Observable<Item[]> {
-    const params = { params: new HttpParams().set('pageNumber', page) };
+    const params = { params: new HttpParams().set('page', page) };
     return this.http.get<Response<Item>>(this.itemUrl, params).pipe(
       map((response: Response<Item>) => { return response.content }),
       catchError(this.handleError<Item[]>('getItems', []))
