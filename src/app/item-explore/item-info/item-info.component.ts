@@ -11,12 +11,19 @@ export class ItemInfoComponent implements OnInit {
 
   items: Item[] = [];
 
+  page: number = 0;
+
   constructor(
     private itemService: ItemService
   ) { }
 
   ngOnInit(): void {
-    this.itemService.getItems("").subscribe(data => this.items = data);
+    this.itemService.getItems(this.page).subscribe(data => this.items = data);
+  }
+
+  loadNextPage(){
+    this.page += 1;
+    this.itemService.getItems(this.page).subscribe(data => this.items =  this.items.concat(data));
   }
 
 }

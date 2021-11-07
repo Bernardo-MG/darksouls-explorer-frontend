@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Item } from '@app/models/Item';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { Response } from '@app/api/models/response';
 
@@ -15,8 +15,9 @@ export class ItemService {
     private http: HttpClient
   ) { }
 
-  getItems(name: String): Observable<Item[]> {
-    return this.http.get<Response<Item>>(this.itemUrl).pipe(
+  getItems(page: number): Observable<Item[]> {
+    const params = { params: new HttpParams().set('pageNumber', page) };
+    return this.http.get<Response<Item>>(this.itemUrl, params).pipe(
       map((response: Response<Item>) => { return response.content }),
       catchError(this.handleError<Item[]>('getItems', []))
     ).pipe(

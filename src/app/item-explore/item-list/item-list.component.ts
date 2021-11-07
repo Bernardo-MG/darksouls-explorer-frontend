@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Item } from '@app/models/Item';
 
 @Component({
@@ -9,6 +9,8 @@ import { Item } from '@app/models/Item';
 export class ItemListComponent {
 
   @Input() selection: Item[] = [];
+
+  @Output() onLoadNextPage = new EventEmitter<Number>();
 
   constructor() { }
 
