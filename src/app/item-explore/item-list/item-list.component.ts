@@ -10,7 +10,7 @@ export class ItemListComponent {
 
   @Input() selection: Item[] = [];
 
-  @Output() onLoadNextPage = new EventEmitter<Number>();
+  @Output() loadNextPage = new EventEmitter<Number>();
 
   constructor() { }
 
