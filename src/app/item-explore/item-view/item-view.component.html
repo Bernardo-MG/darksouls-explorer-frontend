@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col">
             <div class="vh-100 overflow-auto">
-                <item-list [selection]="items" (selectItem)="selectItem($event)" (loadNextPage)="loadNextPage()"></item-list>
+                <item-list [selection]="items" (select)="selectItem($event)" (loadNextPage)="loadNextPage()"></item-list>
             </div>
         </div>
         <div class="col-10">
