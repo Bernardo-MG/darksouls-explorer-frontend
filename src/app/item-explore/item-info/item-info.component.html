@@ -1,1 +1,4 @@
-<p>Item info</p>
+<p>{{data.name}}</p>
+<ng-template ngFor let-desc [ngForOf]="data.description">
+    <p>{{desc}}</p>
+</ng-template>

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Item } from '@app/models/Item';
 
 @Component({
   selector: 'item-info',
@@ -7,6 +8,8 @@ import { Component } from '@angular/core';
 })
 export class ItemInfoComponent {
 
-  constructor( ) { }
+  @Input() data: Item = { name: '', description: [] };
+
+  constructor() { }
 
 }

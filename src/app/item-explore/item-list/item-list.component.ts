@@ -12,6 +12,8 @@ export class ItemListComponent {
 
   @Output() loadNextPage = new EventEmitter<Number>();
 
+  @Output() selectItem = new EventEmitter<Item>();
+
   constructor() { }
 
 }

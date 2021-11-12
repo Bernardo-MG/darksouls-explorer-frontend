@@ -11,6 +11,8 @@ export class ItemViewComponent implements OnInit {
 
   items: Item[] = [];
 
+  selected: Item = { name: '', description: [] }
+
   page: number = 0;
 
   constructor(
@@ -21,9 +23,13 @@ export class ItemViewComponent implements OnInit {
     this.itemService.getItems(this.page).subscribe(data => this.items = data);
   }
 
-  loadNextPage(){
+  selectItem(data: Item) {
+    this.selected = data;
+  }
+
+  loadNextPage() {
     this.page += 1;
-    this.itemService.getItems(this.page).subscribe(data => this.items =  this.items.concat(data));
+    this.itemService.getItems(this.page).subscribe(data => this.items = this.items.concat(data));
   }
 
 }
