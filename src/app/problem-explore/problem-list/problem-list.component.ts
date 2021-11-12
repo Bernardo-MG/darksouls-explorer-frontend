@@ -12,8 +12,6 @@ export class ProblemListComponent implements OnInit {
 
   @Output() loadNextPage = new EventEmitter<Number>();
 
-  @Output() select = new EventEmitter<Problem>();
-
   constructor() { }
 
   ngOnInit(): void {

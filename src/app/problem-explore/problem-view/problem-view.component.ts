@@ -11,8 +11,6 @@ export class ProblemViewComponent implements OnInit {
 
   items: Problem[] = [];
 
-  selected: Problem = { id: '' }
-
   page: number = 0;
 
   constructor(
