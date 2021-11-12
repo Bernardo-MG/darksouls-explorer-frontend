@@ -33,7 +33,9 @@ class FluentClient {
 
     prms = this.getHttpParams();
 
-    prms.set('page', page);
+    prms = prms.set('page', page);
+
+    this.params = { params: prms };
 
     return this;
   }
@@ -43,7 +45,9 @@ class FluentClient {
 
     prms = this.getHttpParams();
 
-    prms.set('size', size);
+    prms = prms.set('size', size);
+
+    this.params = { params: prms };
 
     return this;
   }
@@ -53,7 +57,9 @@ class FluentClient {
 
     prms = this.getHttpParams();
 
-    prms.append('sort', `${field},${direction}`);
+    prms = prms.append('sort', `${field},${direction}`);
+
+    this.params = { params: prms };
 
     return this;
   }
