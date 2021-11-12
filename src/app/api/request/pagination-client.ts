@@ -13,9 +13,53 @@ export class PaginationClient {
     private http: HttpClient
   ) { }
 
-  get<T>(url: string, page: number): Observable<T[]> {
-    const params = { params: new HttpParams().set('page', page) };
-    return this.http.get<Response<T>>(url, params).pipe(
+  request(url: string) {
+    return new FluentClient(this.http, url);
+  }
+
+}
+
+class FluentClient {
+
+  params: { params?: HttpParams } = {};
+
+  constructor(
+    private http: HttpClient,
+    private url: string
+  ) { }
+
+  page(page: number) {
+    let prms: HttpParams;
+
+    prms = this.getHttpParams();
+
+    prms.set('page', page);
+
+    return this;
+  }
+
+  pageSize(size: number) {
+    let prms: HttpParams;
+
+    prms = this.getHttpParams();
+
+    prms.set('size', size);
+
+    return this;
+  }
+
+  order(field: string, direction: string) {
+    let prms: HttpParams;
+
+    prms = this.getHttpParams();
+
+    prms.append('sort', `${field},${direction}`);
+
+    return this;
+  }
+
+  get<T>(): Observable<T[]> {
+    return this.http.get<Response<T>>(this.url, this.params).pipe(
       map((response: Response<T>) => { return response.content })
     ).pipe(
       catchError(this.handleError<T[]>([]))
@@ -31,6 +75,19 @@ export class PaginationClient {
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
+  }
+
+  private getHttpParams() {
+    let prms: HttpParams;
+
+    if (this.params.params) {
+      prms = this.params.params;
+    } else {
+      prms = new HttpParams();
+      this.params = { params: prms };
+    }
+
+    return prms;
   }
 
 }
