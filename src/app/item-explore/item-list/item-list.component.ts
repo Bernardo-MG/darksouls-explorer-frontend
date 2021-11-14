@@ -12,7 +12,7 @@ export class ItemListComponent {
 
   @Output() loadNextPage = new EventEmitter<Number>();
 
-  @Output() select = new EventEmitter<Item>();
+  @Output() pickOption = new EventEmitter<Item>();
 
   constructor() { }
 

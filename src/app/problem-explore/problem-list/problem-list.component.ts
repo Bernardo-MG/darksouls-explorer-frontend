@@ -6,15 +6,12 @@ import { Problem } from '../models/Problem';
   templateUrl: './problem-list.component.html',
   styleUrls: ['./problem-list.component.sass']
 })
-export class ProblemListComponent implements OnInit {
+export class ProblemListComponent {
 
   @Input() selection: Problem[] = [];
 
   @Output() loadNextPage = new EventEmitter<Number>();
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }
