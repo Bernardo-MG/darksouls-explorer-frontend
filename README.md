@@ -1,27 +1,58 @@
-# DarksoulsExplorerFrontend
+# Dark Souls Explorer Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.3.
+Frontend for the Dark Souls Explorer web service.
 
-## Development server
+## Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- d3
 
-## Code scaffolding
+## Usage
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Building the project
 
-## Build
+This builds the development version:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```
+npm run build
+```
 
-## Running unit tests
+### Running tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+To run the unit tests:
 
-## Running end-to-end tests
+```
+npm test
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Deploying locally
 
-## Further help
+The project can be deployed locally for testing:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```
+npm start
+```
+
+It will be available on `http://localhost:4200/`. Changes will be reloaded automatically.
+
+## Collaborate
+
+Any kind of help with the project will be well received, and there are two main ways to give such help:
+
+- Reporting errors and asking for extensions through the issues management
+- or forking the repository and extending the project
+
+### Issues management
+
+Issues are managed at the GitHub [project issues tracker][issues], where any Github user may report bugs or ask for new features.
+
+### Getting the code
+
+If you wish to fork or modify the code, visit the [GitHub project page][scm], where the latest versions are always kept. Check the 'master' branch for the latest release, and the 'develop' for the current, and stable, development version.
+
+## License
+
+The project has been released under the [MIT License][license].
+
+[issues]: https://github.com/Bernardo-MG/dnd5-api-angular-client/issues
+[license]: http://www.opensource.org/licenses/mit-license.php
+[scm]: https://github.com/Bernardo-MG/dnd5-api-angular-client

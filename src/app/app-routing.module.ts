@@ -1,7 +1,16 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 
-const routes: Routes = [];
+const graphModule = () => import('@app/graph-display/graph-display.module').then(m => m.GraphDisplayModule);
+const itemModule = () => import('@app/item-explore/item-explore.module').then(m => m.ItemExploreModule);
+const problemModule = () => import('@app/problem-explore/problem-explore.module').then(m => m.ProblemExploreModule);
+
+const routes: Routes = [
+  { path: '', redirectTo: '/graph', pathMatch: 'full' },
+  { path: 'graph', loadChildren: graphModule },
+  { path: 'items', loadChildren: itemModule },
+  { path: 'problems', loadChildren: problemModule }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

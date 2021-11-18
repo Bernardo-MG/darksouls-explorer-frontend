@@ -1,0 +1,6 @@
+<div class="list-group">
+    <ng-template ngFor let-data [ngForOf]="selection">
+        <button type="button" class="list-group-item list-group-item-action">{{data.id}} - {{data.source}} - {{data.problem}}</button>
+    </ng-template>
+    <button type="button" (click)="loadNextPage.emit()" class="list-group-item list-group-item-primary">More</button>
+</div>

@@ -1,0 +1,18 @@
+<div class="container">
+    <div class="row">
+        <filter [options]="filterOptions" (applyFilter)="onApplyFilter($event)"></filter>
+    </div>
+    <div class="row">
+        <div class="col">
+            <graph-status [graph]="graph"></graph-status>
+            <graph-diagram [graph]="graph" (selectNode)="onSelectNode($event)">
+            </graph-diagram>
+        </div>
+        <div class="col">
+            <p>{{info?.label}}</p>
+            <ng-template ngFor let-desc [ngForOf]="info?.description">
+                <p>{{desc}}</p>
+            </ng-template>
+        </div>
+    </div>
+</div>
