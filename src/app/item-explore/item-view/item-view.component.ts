@@ -20,7 +20,7 @@ export class ItemViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.itemService.getItems(this.page).subscribe(data => this.items = data);
+    this.itemService.getItems(this.page).subscribe(data => this.items = data.content);
   }
 
   selectItem(data: Item) {
@@ -29,7 +29,7 @@ export class ItemViewComponent implements OnInit {
 
   loadNextPage() {
     this.page += 1;
-    this.itemService.getItems(this.page).subscribe(data => this.items = this.items.concat(data));
+    this.itemService.getItems(this.page).subscribe(data => this.items = this.items.concat(data.content));
   }
 
 }

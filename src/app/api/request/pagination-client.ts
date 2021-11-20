@@ -64,22 +64,49 @@ class FluentClient {
     return this;
   }
 
-  get<T>(): Observable<T[]> {
+  get<T>(): Observable<Response<T>> {
     return this.http.get<Response<T>>(this.url, this.params).pipe(
-      map((response: Response<T>) => { return response.content })
+      map((response: Response<T>) => { return response })
     ).pipe(
-      catchError(this.handleError<T[]>([]))
+      catchError(this.handleError<T>())
     );
   }
 
-  private handleError<T>(result?: T) {
-    return (error: any): Observable<T> => {
+  private handleError<T>() {
+    return (error: any): Observable<Response<T>> => {
 
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
 
       // Let the app keep running by returning an empty result.
-      return of(result as T);
+      return of({
+        content: [],
+        empty: true,
+        first: true,
+        last: true,
+        number: 0,
+        numberOfElements: 0,
+        pageable: {
+          offset: 0,
+          pageNumber: 0,
+          pageSize: 0,
+          paged: false,
+          sort: {
+            empty: true,
+            sorted: false,
+            unsorted: true
+          },
+          unpaged: true
+        },
+        size: 0,
+        sort: {
+          empty: true,
+          sorted: false,
+          unsorted: true
+        },
+        totalElements: 0,
+        totalPages: 0
+      });
     };
   }
 

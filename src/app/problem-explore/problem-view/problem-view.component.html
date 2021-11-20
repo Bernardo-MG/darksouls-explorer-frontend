@@ -2,7 +2,8 @@
     <div class="row">
         <div class="col">
             <div class="vh-100 overflow-auto">
-                <problem-list [selection]="items" (loadNextPage)="loadNextPage()"></problem-list>
+                <problem-list [selection]="items" [pages]="pages" [previousEnabled]="previousEnabled"
+                    [nextEnabled]="nextEnabled" (previousPage)="previousPage()" (nextPage)="nextPage()" (toPage)="toPage($event)"></problem-list>
             </div>
         </div>
     </div>
