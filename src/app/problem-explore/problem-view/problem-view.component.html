@@ -2,8 +2,10 @@
     <div class="row">
         <div class="col">
             <div class="vh-100 overflow-auto">
-                <problem-list [selection]="items" [pages]="pages" [previousEnabled]="previousEnabled"
-                    [nextEnabled]="nextEnabled" (previousPage)="previousPage()" (nextPage)="nextPage()" (toPage)="toPage($event)"></problem-list>
+                <problem-list [selection]="paginator.data"></problem-list>
+                <pagination-navigation [pages]="paginator.pages" [previousEnabled]="paginator.previousEnabled" [nextEnabled]="paginator.nextEnabled"
+                    (previousPage)="previousPage()" (nextPage)="nextPage()" (toPage)="toPage($event)">
+                </pagination-navigation>
             </div>
         </div>
     </div>

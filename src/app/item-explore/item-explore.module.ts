@@ -5,6 +5,7 @@ import { ItemService } from './services/item.service';
 import { ItemExploreRoutingModule } from './item-explore-routing.module';
 import { ItemListComponent } from './item-list/item-list.component';
 import { ItemViewComponent } from './item-view/item-view.component';
+import { PaginationModule } from '@app/pagination/pagination.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { ItemViewComponent } from './item-view/item-view.component';
   ],
   imports: [
     ItemExploreRoutingModule,
-    CommonModule
+    CommonModule,
+    PaginationModule
   ],
   providers: [
     ItemService

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { Problem } from '../models/Problem';
-import { SelectionPage } from '../models/SelectionPage';
+import { SelectionPage } from '../../pagination/models/SelectionPage';
 
 @Component({
   selector: 'problem-list',
@@ -10,18 +10,6 @@ import { SelectionPage } from '../models/SelectionPage';
 export class ProblemListComponent {
 
   @Input() selection: Problem[] = [];
-
-  @Input() pages: SelectionPage[] = [];
-
-  @Input() previousEnabled: boolean = false;
-
-  @Input() nextEnabled: boolean = false;
-  
-  @Output() previousPage = new EventEmitter<number>();
-
-  @Output() nextPage = new EventEmitter<number>();
-  
-  @Output() toPage = new EventEmitter<number>();
 
   constructor() { }
 

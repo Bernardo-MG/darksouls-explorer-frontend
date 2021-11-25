@@ -1,8 +1,11 @@
 <div class="overflow-auto">
     <div class="row">
-        <div class="col">
+        <div class="col-2">
             <div class="vh-100 overflow-auto">
-                <item-list [selection]="items" (pickOption)="selectItem($event)" (loadNextPage)="loadNextPage()"></item-list>
+                <item-list [selection]="paginator.data" (pickOption)="selectItem($event)"></item-list>
+                <pagination-navigation [pages]="paginator.pages" [previousEnabled]="paginator.previousEnabled" [nextEnabled]="paginator.nextEnabled"
+                    (previousPage)="previousPage()" (nextPage)="nextPage()" (toPage)="toPage($event)">
+                </pagination-navigation>
             </div>
         </div>
         <div class="col-10">

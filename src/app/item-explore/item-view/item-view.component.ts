@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Item } from '@app/models/Item';
+import { Paginator } from '@app/pagination/paginator/paginator';
 import { ItemService } from '../services/item.service';
 
 @Component({
@@ -9,6 +10,8 @@ import { ItemService } from '../services/item.service';
 })
 export class ItemViewComponent implements OnInit {
 
+  paginator: Paginator = new Paginator((page) => this.service.getItems(page));
+
   items: Item[] = [];
 
   selected: Item = { name: '', description: [] }
@@ -16,20 +19,27 @@ export class ItemViewComponent implements OnInit {
   page: number = 0;
 
   constructor(
-    private itemService: ItemService
+    private service: ItemService
   ) { }
 
   ngOnInit(): void {
-    this.itemService.getItems(this.page).subscribe(data => this.items = data.content);
+    this.paginator.init();
+  }
+
+  previousPage() {
+    this.paginator.previousPage();
+  }
+
+  nextPage() {
+    this.paginator.nextPage();
+  }
+
+  toPage(page: number) {
+    this.paginator.toPage(page);
   }
 
   selectItem(data: Item) {
     this.selected = data;
-  }
-
-  loadNextPage() {
-    this.page += 1;
-    this.itemService.getItems(this.page).subscribe(data => this.items = this.items.concat(data.content));
   }
 
 }
