@@ -23,7 +23,7 @@ export class PaginationNavigationComponent implements OnChanges {
 
   @Output() toPage = new EventEmitter<number>();
 
-  rangeSize = 5;
+  rangeSize = 2;
 
   pages: SelectionPage[] = [];
 
@@ -37,26 +37,22 @@ export class PaginationNavigationComponent implements OnChanges {
     var start: number;
     var end: number;
 
-    if (this.currentPage <= this.rangeSize) {
+    if ((this.currentPage + 1) <= this.rangeSize) {
       start = 0;
+      end = this.rangeSize * 2;
+    } else if (this.currentPage + this.rangeSize > this.totalPages) {
+      start = this.totalPages - (this.rangeSize * 2);
+      end = this.totalPages - 1;
     } else {
       start = this.currentPage - this.rangeSize;
-    }
-
-    if (this.totalPages <= this.rangeSize) {
-      end = this.totalPages;
-    } else {
       end = this.currentPage + this.rangeSize;
-      if (end > this.totalPages) {
-        end = this.totalPages;
-      }
     }
 
     this.skipBefore = start > 0;
     this.skipAfter = end < this.totalPages;
 
     this.pages = [];
-    for (var i = start; i < end; i++) {
+    for (var i = start; i <= end; i++) {
       this.pages.push({ number: i, selected: i == this.currentPage });
     }
   }

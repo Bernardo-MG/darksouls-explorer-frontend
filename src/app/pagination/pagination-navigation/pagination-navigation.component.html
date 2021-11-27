@@ -7,7 +7,7 @@
         </li>
         <ng-template [ngIf]="skipBefore">
             <li class="page-item">
-                ...
+                <button type="button" class="page-link" disabled>...</button>
             </li>
         </ng-template>
         <ng-template ngFor let-page [ngForOf]="pages">
@@ -17,7 +17,7 @@
         </ng-template>
         <ng-template [ngIf]="skipAfter">
             <li class="page-item">
-                ...
+                <button type="button" class="page-link" disabled>...</button>
             </li>
         </ng-template>
         <li class="page-item" [ngClass]="{'disabled': !nextEnabled}">
