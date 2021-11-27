@@ -5,9 +5,19 @@
                 <span aria-hidden="true">&laquo;</span>
             </button>
         </li>
+        <ng-template [ngIf]="skipBefore">
+            <li class="page-item">
+                ...
+            </li>
+        </ng-template>
         <ng-template ngFor let-page [ngForOf]="pages">
             <li class="page-item" [ngClass]="{'active': page.selected}">
                 <button type="button" (click)="toPage.emit(page.number)" class="page-link">{{page.number}}</button>
+            </li>
+        </ng-template>
+        <ng-template [ngIf]="skipAfter">
+            <li class="page-item">
+                ...
             </li>
         </ng-template>
         <li class="page-item" [ngClass]="{'disabled': !nextEnabled}">
