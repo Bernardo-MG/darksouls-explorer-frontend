@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { SelectionPage } from '@app/pagination/models/SelectionPage';
-import { number } from 'echarts';
 
 @Component({
   selector: 'pagination-navigation',

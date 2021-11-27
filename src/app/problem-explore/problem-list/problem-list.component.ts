@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Problem } from '../models/Problem';
-import { SelectionPage } from '../../pagination/models/SelectionPage';
 
 @Component({
   selector: 'problem-list',
