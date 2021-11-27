@@ -3,10 +3,7 @@
         <div class="col-2">
             <div class="vh-100 overflow-auto">
                 <item-list [selection]="paginator.data" (pickOption)="selectItem($event)"></item-list>
-                <pagination-navigation [currentPage]="paginator.currentPage" [totalPages]="paginator.totalPages"
-                    [previousEnabled]="paginator.previousEnabled" [nextEnabled]="paginator.nextEnabled"
-                    (previousPage)="previousPage()" (nextPage)="nextPage()" (toPage)="toPage($event)">
-                </pagination-navigation>
+                <pagination-paginator-navigation [paginator]="paginator"></pagination-paginator-navigation>
             </div>
         </div>
         <div class="col-10">

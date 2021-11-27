@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProblemService } from '../services/problem.service';
+import { DefaultPaginator } from '@app/pagination/paginator/default-paginator';
 import { Paginator } from '@app/pagination/paginator/paginator';
 
 @Component({
@@ -9,26 +10,14 @@ import { Paginator } from '@app/pagination/paginator/paginator';
 })
 export class ProblemViewComponent implements OnInit {
 
-  paginator: Paginator = new Paginator((page) => this.service.getProblems(page));
+  paginator: Paginator = new DefaultPaginator((page) => this.service.getProblems(page));
 
   constructor(
     private service: ProblemService
   ) { }
 
   ngOnInit(): void {
-    this.paginator.init();
-  }
-
-  previousPage() {
-    this.paginator.previousPage();
-  }
-
-  nextPage() {
-    this.paginator.nextPage();
-  }
-
-  toPage(page: number) {
-    this.paginator.toPage(page);
+    this.paginator.firstPage();
   }
 
 }

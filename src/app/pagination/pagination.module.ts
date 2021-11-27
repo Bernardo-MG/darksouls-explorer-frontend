@@ -1,18 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PaginationNavigationComponent } from './pagination-navigation/pagination-navigation.component';
+import { PaginatorNavigationComponent } from './paginator-navigation/paginator-navigation.component';
 
 
 
 @NgModule({
   declarations: [
-    PaginationNavigationComponent
+    PaginationNavigationComponent,
+    PaginatorNavigationComponent
   ],
   imports: [
     CommonModule
   ],
   exports: [
-    PaginationNavigationComponent
+    PaginatorNavigationComponent
   ]
 })
 export class PaginationModule { }

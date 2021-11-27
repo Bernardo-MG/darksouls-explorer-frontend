@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Item } from '@app/models/Item';
+import { DefaultPaginator } from '@app/pagination/paginator/default-paginator';
 import { Paginator } from '@app/pagination/paginator/paginator';
 import { ItemService } from '../services/item.service';
 
@@ -10,7 +11,7 @@ import { ItemService } from '../services/item.service';
 })
 export class ItemViewComponent implements OnInit {
 
-  paginator: Paginator = new Paginator((page) => this.service.getItems(page));
+  paginator: Paginator = new DefaultPaginator((page) => this.service.getItems(page));
 
   items: Item[] = [];
 
@@ -23,19 +24,7 @@ export class ItemViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.paginator.init();
-  }
-
-  previousPage() {
-    this.paginator.previousPage();
-  }
-
-  nextPage() {
-    this.paginator.nextPage();
-  }
-
-  toPage(page: number) {
-    this.paginator.toPage(page);
+    this.paginator.firstPage();
   }
 
   selectItem(data: Item) {

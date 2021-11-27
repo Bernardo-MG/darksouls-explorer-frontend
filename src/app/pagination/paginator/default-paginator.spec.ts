@@ -1,9 +1,9 @@
 import { of } from 'rxjs';
-import { Paginator } from './paginator';
+import { DefaultPaginator } from './default-paginator';
 
 describe('Paginator', () => {
   it('should create an instance', () => {
-    expect(new Paginator((number) => of({
+    expect(new DefaultPaginator((number) => of({
       content: [],
       empty: true,
       first: true,
