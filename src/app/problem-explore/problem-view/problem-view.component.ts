@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Problem } from '../models/Problem';
 import { ProblemService } from '../services/problem.service';
-import { Response } from '@app/api/models/response';
-import { SelectionPage } from '@app/pagination/models/SelectionPage';
 import { Paginator } from '@app/pagination/paginator/paginator';
 
 @Component({

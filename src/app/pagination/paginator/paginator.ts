@@ -5,10 +5,10 @@ import { SelectionPage } from "../models/SelectionPage";
 export class Paginator {
 
     data: any[] = [];
-  
-    pages: SelectionPage[] = [];
 
     currentPage: number = 0;
+
+    totalPages: number = 0;
 
     previousEnabled: boolean = false;
   
@@ -44,14 +44,10 @@ export class Paginator {
 
     private loadData(response: Response<any>){
       this.data = response.content;
+      this.totalPages = response.totalPages;
   
       this.previousEnabled = !response.first;
       this.nextEnabled = !response.last;
-  
-      this.pages = [];
-      for(var i = 0; i < response.totalPages; i++){
-        this.pages.push({number: i, selected: i==this.currentPage});
-      }
     }
 
 }
