@@ -35,25 +35,26 @@ export class PaginationNavigationComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     var start: number;
     var end: number;
+    const totalp = this.totalPages - 1;
 
     if ((this.currentPage + 1) <= this.rangeSize) {
       // Current page in the lower page window
       start = 0;
       end = this.rangeSize * 2;
-      if (end > this.totalPages) {
-        end = this.totalPages - 1;
+      if (end > totalp) {
+        end = totalp;
       }
-    } else if (this.currentPage + this.rangeSize > this.totalPages) {
+    } else if (this.currentPage + this.rangeSize > totalp) {
       // Current page in the upper page window
-      start = this.totalPages - (this.rangeSize * 2);
-      end = this.totalPages - 1;
+      start = totalp - (this.rangeSize * 2);
+      end = totalp;
     } else {
       start = this.currentPage - this.rangeSize;
       end = this.currentPage + this.rangeSize;
     }
 
     this.skipBefore = start > 0;
-    this.skipAfter = end < (this.totalPages-1);
+    this.skipAfter = end < totalp;
 
     this.pages = [];
     for (var i = start; i <= end; i++) {
