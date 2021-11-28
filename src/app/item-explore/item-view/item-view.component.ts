@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Item } from '@app/models/Item';
+import { Item } from '@app/models/item';
 import { DefaultPaginator } from '@app/pagination/paginator/default-paginator';
 import { Paginator } from '@app/pagination/paginator/paginator';
 import { ItemService } from '../services/item.service';
@@ -15,7 +15,7 @@ export class ItemViewComponent implements OnInit {
 
   items: Item[] = [];
 
-  selected: Item = { name: '', description: [] }
+  selected: Item = { id: -1, name: '', description: [] }
 
   page: number = 0;
 

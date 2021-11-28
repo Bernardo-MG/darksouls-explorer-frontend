@@ -1,4 +1,22 @@
-<p>{{data.name}}</p>
+<h1>{{data.name}}</h1>
 <ng-template ngFor let-desc [ngForOf]="data.description">
     <p>{{desc}}</p>
+</ng-template>
+<ng-template [ngIf]="sources.length > 0">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Source</th>
+                <th scope="col">Relationship</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-template ngFor let-source [ngForOf]="sources">
+                <tr>
+                    <td>{{source.source}}</td>
+                    <td>{{source.relationship}}</td>
+                </tr>
+            </ng-template>
+        </tbody>
+    </table>
 </ng-template>

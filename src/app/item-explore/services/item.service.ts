@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Item } from '@app/models/Item';
+import { Item } from '@app/models/item';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 import { PaginationClient } from '@app/api/request/pagination-client';
 import { Response } from '@app/api/models/response';
+import { ItemSource } from '@app/models/itemSource';
 
 @Injectable()
 export class ItemService {
@@ -16,6 +17,10 @@ export class ItemService {
 
   getItems(page: number): Observable<Response<Item>> {
     return this.client.request(this.itemUrl).page(page).order('name', 'asc').get();
+  }
+
+  getItemSources(itemId: number): Observable<Response<ItemSource>> {
+    return this.client.request(this.itemUrl + "/" + itemId + "/sources").get();
   }
 
 }
