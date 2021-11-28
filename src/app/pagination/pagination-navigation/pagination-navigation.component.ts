@@ -37,9 +37,14 @@ export class PaginationNavigationComponent implements OnChanges {
     var end: number;
 
     if ((this.currentPage + 1) <= this.rangeSize) {
+      // Current page in the lower page window
       start = 0;
       end = this.rangeSize * 2;
+      if (end > this.totalPages) {
+        end = this.totalPages - 1;
+      }
     } else if (this.currentPage + this.rangeSize > this.totalPages) {
+      // Current page in the upper page window
       start = this.totalPages - (this.rangeSize * 2);
       end = this.totalPages - 1;
     } else {
@@ -48,7 +53,7 @@ export class PaginationNavigationComponent implements OnChanges {
     }
 
     this.skipBefore = start > 0;
-    this.skipAfter = end < this.totalPages;
+    this.skipAfter = end < (this.totalPages-1);
 
     this.pages = [];
     for (var i = start; i <= end; i++) {
