@@ -47,6 +47,9 @@ export class PaginationNavigationComponent implements OnChanges {
     } else if (this.currentPage + this.rangeSize > totalp) {
       // Current page in the upper page window
       start = totalp - (this.rangeSize * 2);
+      if (start < 0) {
+        start = 0;
+      }
       end = totalp;
     } else {
       start = this.currentPage - this.rangeSize;
