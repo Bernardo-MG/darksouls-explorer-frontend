@@ -15,7 +15,7 @@ export class ItemViewComponent implements OnInit {
 
   items: Item[] = [];
 
-  selected: Item = { id: -1, name: '', description: [] }
+  selected: Item = { id: -1, name: '', description: [], tags: [] }
 
   page: number = 0;
 

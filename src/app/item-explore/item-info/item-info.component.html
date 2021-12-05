@@ -2,6 +2,13 @@
 <ng-template ngFor let-desc [ngForOf]="data.description">
     <p>{{desc}}</p>
 </ng-template>
+<ng-template [ngIf]="data.tags.length > 0">
+    <ul>
+        <ng-template ngFor let-tag [ngForOf]="data.tags">
+            <li>{{tag}}</li>
+        </ng-template>
+    </ul>
+</ng-template>
 <ng-template [ngIf]="sources.length > 0">
     <table class="table">
         <thead>

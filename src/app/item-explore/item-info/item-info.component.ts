@@ -10,7 +10,7 @@ import { ItemService } from '../services/item.service';
 })
 export class ItemInfoComponent implements OnChanges {
 
-  @Input() data: Item = { id: -1, name: '', description: [] };
+  @Input() data: Item = { id: -1, name: '', description: [], tags: [] };
 
   sources: ItemSource[] = [];
 
