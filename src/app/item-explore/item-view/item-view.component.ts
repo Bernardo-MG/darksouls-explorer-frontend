@@ -19,6 +19,8 @@ export class ItemViewComponent implements OnInit {
 
   page: number = 0;
 
+  searchActive: boolean = false;
+
   constructor(
     private service: ItemService
   ) { }
@@ -29,6 +31,10 @@ export class ItemViewComponent implements OnInit {
 
   selectItem(data: Item) {
     this.selected = data;
+  }
+
+  toggleSearch(){
+    this.searchActive = !this.searchActive;
   }
 
 }

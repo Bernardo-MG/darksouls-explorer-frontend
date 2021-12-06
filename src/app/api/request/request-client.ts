@@ -7,7 +7,7 @@ import { Response } from '../models/response';
 @Injectable({
   providedIn: 'root'
 })
-export class PaginationClient {
+export class RequestClient {
 
   constructor(
     private http: HttpClient
@@ -20,6 +20,69 @@ export class PaginationClient {
 }
 
 class FluentClient {
+
+  params: { params?: HttpParams } = {};
+
+  constructor(
+    private http: HttpClient,
+    private url: string
+  ) { }
+  
+  page(page: number) {
+    return new FluentPagedClient(this.http, this.url).page(page);
+  }
+
+  pageSize(size: number) {
+    return new FluentPagedClient(this.http, this.url).pageSize(size);
+  }
+
+  order(field: string, direction: string) {
+    let prms: HttpParams;
+
+    prms = this.getHttpParams();
+
+    prms = prms.append('sort', `${field},${direction}`);
+
+    this.params = { params: prms };
+
+    return this;
+  }
+
+  get<T>(): Observable<T> {
+    return this.http.get<T>(this.url, this.params).pipe(
+      map((response: T) => { return response })
+    ).pipe(
+      catchError(this.handleError<T>())
+    );
+  }
+
+  private handleError<T>() {
+    return (error: any): Observable<T> => {
+
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // Let the app keep running by returning an empty result.
+      return of();
+    };
+  }
+
+  private getHttpParams() {
+    let prms: HttpParams;
+
+    if (this.params.params) {
+      prms = this.params.params;
+    } else {
+      prms = new HttpParams();
+      this.params = { params: prms };
+    }
+
+    return prms;
+  }
+
+}
+
+class FluentPagedClient {
 
   params: { params?: HttpParams } = {};
 

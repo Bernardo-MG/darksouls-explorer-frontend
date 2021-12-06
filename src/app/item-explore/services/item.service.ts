@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Item } from '@app/models/item';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
-import { PaginationClient } from '@app/api/request/pagination-client';
+import { RequestClient } from '@app/api/request/request-client';
 import { Response } from '@app/api/models/response';
 import { ItemSource } from '@app/models/itemSource';
 
@@ -12,7 +12,7 @@ export class ItemService {
   private itemUrl = environment.apiUrl + "/items";
 
   constructor(
-    private client: PaginationClient
+    private client: RequestClient
   ) { }
 
   getItems(page: number): Observable<Response<Item>> {

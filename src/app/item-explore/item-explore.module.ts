@@ -6,12 +6,15 @@ import { ItemExploreRoutingModule } from './item-explore-routing.module';
 import { ItemListComponent } from './item-list/item-list.component';
 import { ItemViewComponent } from './item-view/item-view.component';
 import { PaginationModule } from '@app/pagination/pagination.module';
+import { ItemSearchComponent } from './item-search/item-search.component';
+import { ItemSearchService } from './services/item-search.service';
 
 @NgModule({
   declarations: [
     ItemInfoComponent,
     ItemListComponent,
-    ItemViewComponent
+    ItemViewComponent,
+    ItemSearchComponent
   ],
   imports: [
     ItemExploreRoutingModule,
@@ -19,7 +22,8 @@ import { PaginationModule } from '@app/pagination/pagination.module';
     PaginationModule
   ],
   providers: [
-    ItemService
+    ItemService,
+    ItemSearchService
   ]
 })
 export class ItemExploreModule { }

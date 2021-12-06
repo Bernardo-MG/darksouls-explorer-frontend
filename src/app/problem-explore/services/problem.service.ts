@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PaginationClient } from '@app/api/request/pagination-client';
+import { RequestClient } from '@app/api/request/request-client';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { Problem } from '../models/Problem';
@@ -11,7 +11,7 @@ export class ProblemService {
   private problemUrl = environment.apiUrl + "/problems";
 
   constructor(
-    private client: PaginationClient
+    private client: RequestClient
   ) { }
 
   getProblems(page: number): Observable<Response<Problem>> {
