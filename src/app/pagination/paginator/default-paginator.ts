@@ -55,11 +55,11 @@ export class DefaultPaginator implements Paginator {
     }
 
     public toPage(page: number): void {
-        this._currentPage = page;
-        this.loader(this._currentPage).subscribe(response => this.loadData(response));
+        this.loader(page).subscribe(response => this.loadData(response));
     }
 
     private loadData(response: Response<any>){
+      this._currentPage = response.number;
       this._data = response.content;
       this._totalPages = response.totalPages;
   
