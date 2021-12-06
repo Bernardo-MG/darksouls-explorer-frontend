@@ -4,7 +4,7 @@ import { DefaultPaginator } from '../paginator/default-paginator';
 import { Paginator } from '../paginator/paginator';
 
 @Component({
-  selector: 'pagination-paginator-navigation',
+  selector: 'pagination-navigation',
   templateUrl: './paginator-navigation.component.html',
   styleUrls: ['./paginator-navigation.component.sass']
 })

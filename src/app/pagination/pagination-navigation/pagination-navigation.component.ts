@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { SelectionPage } from '@app/pagination/models/SelectionPage';
 
 @Component({
-  selector: 'pagination-navigation',
+  selector: 'pagination-root-navigation',
   templateUrl: './pagination-navigation.component.html',
   styleUrls: ['./pagination-navigation.component.sass']
 })
