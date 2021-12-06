@@ -5,10 +5,12 @@ import { NavigationMenuComponent } from './navigation-menu/navigation-menu.compo
 import { LayoutModule } from '@angular/cdk/layout';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
+import { NavigationDropdownComponent } from './navigation-dropdown/navigation-dropdown.component';
 
 @NgModule({
   declarations: [
-    NavigationMenuComponent
+    NavigationMenuComponent,
+    NavigationDropdownComponent
   ],
   imports: [
     CommonModule,
