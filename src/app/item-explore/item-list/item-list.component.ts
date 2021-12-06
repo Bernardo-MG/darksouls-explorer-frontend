@@ -14,6 +14,13 @@ export class ItemListComponent {
 
   @Output() pickOption = new EventEmitter<Item>();
 
+  selected: number = -1;
+
   constructor() { }
+
+  public select(data: Item){
+    this.selected = data.id;
+    this.pickOption.emit(data);
+  }
 
 }

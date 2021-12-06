@@ -1,14 +1,6 @@
-<table class="table table-hover table-sm">
-    <thead>
-        <tr>
-            <th scope="col">Item</th>
-        </tr>
-    </thead>
-    <tbody>
-        <ng-template ngFor let-data [ngForOf]="selection">
-            <tr class="clickable" (click)="pickOption.emit(data)">
-                <td>{{data.name}}</td>
-            </tr>
-        </ng-template>
-    </tbody>
-</table>
+<div class="list-group">
+    <ng-template ngFor let-data [ngForOf]="selection">
+        <button type="button" class="list-group-item list-group-item-action" [ngClass]="{'active': data.id == selected}"
+            (click)="select(data)">{{data.name}}</button>
+    </ng-template>
+</div>
