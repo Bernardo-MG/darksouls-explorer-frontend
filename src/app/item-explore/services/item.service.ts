@@ -19,6 +19,10 @@ export class ItemService {
     return this.client.request(this.itemUrl).page(page).order('name', 'asc').get();
   }
 
+  getItemsByTags(tags: string[], page: number): Observable<Response<Item>> {
+    return this.client.request(this.itemUrl).parameter("tags", tags).page(page).order('name', 'asc').get();
+  }
+
   getItemSources(itemId: number): Observable<Response<ItemSource>> {
     return this.client.request(this.itemUrl + "/" + itemId + "/sources").get();
   }

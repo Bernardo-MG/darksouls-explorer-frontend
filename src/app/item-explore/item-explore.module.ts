@@ -8,6 +8,7 @@ import { ItemViewComponent } from './item-view/item-view.component';
 import { PaginationModule } from '@app/pagination/pagination.module';
 import { ItemSearchComponent } from './item-search/item-search.component';
 import { ItemSearchService } from './services/item-search.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ItemSearchService } from './services/item-search.service';
   imports: [
     ItemExploreRoutingModule,
     CommonModule,
-    PaginationModule
+    PaginationModule,
+    FormsModule
   ],
   providers: [
     ItemService,

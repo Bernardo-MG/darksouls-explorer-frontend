@@ -7,7 +7,7 @@
 
         <div class="col-9">
             <ng-template [ngIf]="searchActive" [ngIfElse]="info">
-                <item-search></item-search>
+                <item-search [tags]="tags" (search)="applySearch($event)"></item-search>
             </ng-template>
             <ng-template #info>
                 <item-info [data]="selected"></item-info>
