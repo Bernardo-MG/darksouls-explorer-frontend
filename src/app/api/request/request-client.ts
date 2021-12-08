@@ -9,31 +9,51 @@ import { Response } from '../models/response';
 })
 export class RequestClient {
 
-  constructor(
-    private http: HttpClient
-  ) { }
-
-  request(url: string) {
-    return new FluentClient(this.http, url);
-  }
-
-}
-
-class FluentClient {
-
   params: { params?: HttpParams } = {};
 
+  url: string = "";
+
+  getFunc: Function;
+
   constructor(
-    private http: HttpClient,
-    private url: string
-  ) { }
-  
+    private http: HttpClient
+  ) {
+    this.getFunc = this.getUnpaged;
+  }
+
+  request(url: string) {
+    this.params = {};
+
+    this.url = url;
+    return this;
+  }
+
   page(page: number) {
-    return new FluentPagedClient(this.http, this.url).page(page);
+    let prms: HttpParams;
+
+    prms = this.getHttpParams();
+
+    prms = prms.set('page', page);
+
+    this.params = { params: prms };
+
+    this.getFunc = this.getPaged;
+
+    return this;
   }
 
   pageSize(size: number) {
-    return new FluentPagedClient(this.http, this.url).pageSize(size);
+    let prms: HttpParams;
+
+    prms = this.getHttpParams();
+
+    prms = prms.set('size', size);
+
+    this.params = { params: prms };
+
+    this.getFunc = this.getPaged;
+
+    return this;
   }
 
   order(field: string, direction: string) {
@@ -48,11 +68,35 @@ class FluentClient {
     return this;
   }
 
+  parameter(name: string, value: any) {
+    let prms: HttpParams;
+
+    prms = this.getHttpParams();
+
+    prms = prms.append(name, value);
+
+    this.params = { params: prms };
+
+    return this;
+  }
+
   get<T>(): Observable<T> {
+    return this.getFunc();
+  }
+
+  private getUnpaged<T>(): Observable<T> {
     return this.http.get<T>(this.url, this.params).pipe(
       map((response: T) => { return response })
     ).pipe(
       catchError(this.handleError<T>())
+    );
+  }
+
+  private getPaged<T>(): Observable<Response<T>> {
+    return this.http.get<Response<T>>(this.url, this.params).pipe(
+      map((response: Response<T>) => { return response })
+    ).pipe(
+      catchError(this.handleErrorPaged<T>())
     );
   }
 
@@ -80,62 +124,7 @@ class FluentClient {
     return prms;
   }
 
-}
-
-class FluentPagedClient {
-
-  params: { params?: HttpParams } = {};
-
-  constructor(
-    private http: HttpClient,
-    private url: string
-  ) { }
-
-  page(page: number) {
-    let prms: HttpParams;
-
-    prms = this.getHttpParams();
-
-    prms = prms.set('page', page);
-
-    this.params = { params: prms };
-
-    return this;
-  }
-
-  pageSize(size: number) {
-    let prms: HttpParams;
-
-    prms = this.getHttpParams();
-
-    prms = prms.set('size', size);
-
-    this.params = { params: prms };
-
-    return this;
-  }
-
-  order(field: string, direction: string) {
-    let prms: HttpParams;
-
-    prms = this.getHttpParams();
-
-    prms = prms.append('sort', `${field},${direction}`);
-
-    this.params = { params: prms };
-
-    return this;
-  }
-
-  get<T>(): Observable<Response<T>> {
-    return this.http.get<Response<T>>(this.url, this.params).pipe(
-      map((response: Response<T>) => { return response })
-    ).pipe(
-      catchError(this.handleError<T>())
-    );
-  }
-
-  private handleError<T>() {
+  private handleErrorPaged<T>() {
     return (error: any): Observable<Response<T>> => {
 
       // TODO: send the error to remote logging infrastructure
@@ -171,19 +160,6 @@ class FluentPagedClient {
         totalPages: 0
       });
     };
-  }
-
-  private getHttpParams() {
-    let prms: HttpParams;
-
-    if (this.params.params) {
-      prms = this.params.params;
-    } else {
-      prms = new HttpParams();
-      this.params = { params: prms };
-    }
-
-    return prms;
   }
 
 }
