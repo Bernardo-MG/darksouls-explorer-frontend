@@ -15,12 +15,12 @@ export class ItemService {
     private client: RequestClient
   ) { }
 
-  getItems(page: number): Observable<Response<Item>> {
+  getAllItems(page: number): Observable<Response<Item>> {
     return this.client.request(this.itemUrl).page(page).order('name', 'asc').get();
   }
 
-  getItemsByTags(tags: string[], page: number): Observable<Response<Item>> {
-    return this.client.request(this.itemUrl).parameter("tags", tags).page(page).order('name', 'asc').get();
+  getItems(name: string, tags: string[], page: number): Observable<Response<Item>> {
+    return this.client.request(this.itemUrl).parameter("name", name).parameter("tags", tags).page(page).order('name', 'asc').get();
   }
 
   getItemSources(itemId: number): Observable<Response<ItemSource>> {

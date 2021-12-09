@@ -15,6 +15,8 @@ export class ItemSearchComponent implements OnInit, OnChanges {
 
   selection: ValueSelection[] = [];
 
+  name: string = '';
+
   constructor() { }
 
   ngOnInit(): void {
@@ -27,7 +29,7 @@ export class ItemSearchComponent implements OnInit, OnChanges {
 
   applySearch() {
     const selectedTags = this.selection.filter((s) => s.selected).map((s) => s.value);
-    this.search.emit({ tags: selectedTags });
+    this.search.emit({ name: this.name, tags: selectedTags });
   }
 
   private toSelection(tag: string): ValueSelection {

@@ -30,7 +30,7 @@ export class ItemViewComponent implements OnInit {
     private searchService: ItemSearchService
   ) {
     // By default it will search for all the items
-    this.paginator = new DefaultPaginator((page) => this.service.getItems(page));
+    this.paginator = new DefaultPaginator((page) => this.service.getAllItems(page));
   }
 
   ngOnInit(): void {
@@ -47,7 +47,7 @@ export class ItemViewComponent implements OnInit {
   }
 
   applySearch(search: ItemSearch) {
-    this.paginator = new DefaultPaginator((page) => this.service.getItemsByTags(search.tags, page));
+    this.paginator = new DefaultPaginator((page) => this.service.getItems(search.name, search.tags, page));
     this.paginator.firstPage();
   }
 
