@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Item } from '@app/models/item';
 import { DefaultPaginator } from '@app/pagination/paginator/default-paginator';
 import { Paginator } from '@app/pagination/paginator/paginator';
+import { ItemSearch } from '../models/itemSearch';
 import { ItemSearchService } from '../services/item-search.service';
 import { ItemService } from '../services/item.service';
 
@@ -12,7 +13,7 @@ import { ItemService } from '../services/item.service';
 })
 export class ItemViewComponent implements OnInit {
 
-  paginator: Paginator = new DefaultPaginator((page) => this.service.getItems(page));
+  paginator: Paginator;
 
   items: Item[] = [];
 
@@ -27,7 +28,10 @@ export class ItemViewComponent implements OnInit {
   constructor(
     private service: ItemService,
     private searchService: ItemSearchService
-  ) { }
+  ) {
+    // By default it will search for all the items
+    this.paginator = new DefaultPaginator((page) => this.service.getItems(page));
+  }
 
   ngOnInit(): void {
     this.paginator.firstPage();
@@ -38,12 +42,12 @@ export class ItemViewComponent implements OnInit {
     this.selected = data;
   }
 
-  toggleSearch(){
+  toggleSearch() {
     this.searchActive = !this.searchActive;
   }
 
-  applySearch(tags: string[]) {
-    this.paginator = new DefaultPaginator((page) => this.service.getItemsByTags(tags, page));
+  applySearch(search: ItemSearch) {
+    this.paginator = new DefaultPaginator((page) => this.service.getItemsByTags(search.tags, page));
     this.paginator.firstPage();
   }
 
