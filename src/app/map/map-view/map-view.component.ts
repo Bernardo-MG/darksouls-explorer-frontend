@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MapService } from '../services/map.service';
 import { Map } from '@app/models/map';
 import { MapConnection } from '@app/models/mapConnection';
-import { Category } from '@app/graph-display/models/category';
-import { Link } from '@app/graph-display/models/link';
-import { Node } from '@app/graph-display/models/node';
+import { Category } from '@app/graph/models/category';
+import { Link } from '@app/graph/models/link';
+import { Node } from '@app/graph/models/node';
 
 @Component({
   selector: 'app-map-view',

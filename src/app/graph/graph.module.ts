@@ -22,4 +22,4 @@ import { FilterModule } from '@app/filter/filter.module';
     GraphDiagramComponent
   ]
 })
-export class GraphDisplayModule { }
+export class GraphModule { }

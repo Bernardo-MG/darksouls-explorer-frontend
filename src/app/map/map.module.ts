@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MapViewComponent } from './map-view/map-view.component';
 import { MapService } from './services/map.service';
 import { MapRoutingModule } from './map-routing.module';
-import { GraphDisplayModule } from '@app/graph-display/graph-display.module';
+import { GraphModule } from '@app/graph/graph.module';
 
 
 
@@ -14,7 +14,7 @@ import { GraphDisplayModule } from '@app/graph-display/graph-display.module';
   imports: [
     MapRoutingModule,
     CommonModule,
-    GraphDisplayModule
+    GraphModule
   ],
   providers: [
     MapService
