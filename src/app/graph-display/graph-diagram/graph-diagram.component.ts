@@ -1,4 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
+import { Category } from '../models/category';
+import { Link } from '../models/link';
+import { Node } from '../models/node';
 
 @Component({
   selector: 'graph-diagram',
@@ -10,20 +13,11 @@ export class GraphDiagramComponent implements OnChanges {
 
   @Output() selectNode = new EventEmitter<Number>();
 
-  @Input() nodes: {
-    name: string;
-    id: string;
-    label: string;
-  }[] = [];
+  @Input() nodes: Node[] = [];
 
-  @Input() links: {
-    source: string;
-    target: string;
-  }[] = [];
+  @Input() links: Link[] = [];
 
-  @Input() categories: {
-    name: string;
-  }[] = [];
+  @Input() categories: Category[] = [];
 
   options = {};
 

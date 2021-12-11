@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MapService } from '../services/map.service';
 import { Map } from '@app/models/map';
 import { MapConnection } from '@app/models/mapConnection';
+import { Category } from '@app/graph-display/models/category';
+import { Link } from '@app/graph-display/models/link';
+import { Node } from '@app/graph-display/models/node';
 
 @Component({
   selector: 'app-map-view',
@@ -14,20 +17,11 @@ export class MapViewComponent implements OnInit {
 
   connections: MapConnection[] = [];
   
-  nodes: {
-    name: string;
-    id: string;
-    label: string;
-  }[] = [];
+  nodes: Node[] = [];
 
-  links: {
-    source: string;
-    target: string;
-  }[] = [];
+  links: Link[] = [];
 
-  categories: {
-    name: string;
-  }[] = [];
+  categories: Category[] = [];
 
   constructor(
     private service: MapService
