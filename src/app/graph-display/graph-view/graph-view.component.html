@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col">
             <graph-status [graph]="graph"></graph-status>
-            <graph-diagram [graph]="graph" (selectNode)="onSelectNode($event)">
+            <graph-diagram [nodes]="nodes" [links]="links" [categories]="categories" (selectNode)="onSelectNode($event)">
             </graph-diagram>
         </div>
         <div class="col">

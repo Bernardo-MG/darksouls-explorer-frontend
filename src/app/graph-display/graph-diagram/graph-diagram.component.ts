@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
-import { Graph } from '../models/graph';
 
 @Component({
   selector: 'graph-diagram',
@@ -9,9 +8,22 @@ import { Graph } from '../models/graph';
 })
 export class GraphDiagramComponent implements OnChanges {
 
-  @Input() graph: Graph = { nodes: [], links: [], types: [] };
-
   @Output() selectNode = new EventEmitter<Number>();
+
+  @Input() nodes: {
+    name: string;
+    id: string;
+    label: string;
+  }[] = [];
+
+  @Input() links: {
+    source: string;
+    target: string;
+  }[] = [];
+
+  @Input() categories: {
+    name: string;
+  }[] = [];
 
   options = {};
 
@@ -39,9 +51,9 @@ export class GraphDiagramComponent implements OnChanges {
         force: {
           repulsion: 100
         },
-        data: this.graph.nodes.map((n) => { return { ...n, name: n.label, id: n.id.toString() } }),
-        links: this.graph.links.map((l) => { return { source: l.source.toString(), target: l.target.toString() } }),
-        categories: this.graph.types.map((t) => { return { name: t } })
+        data: this.nodes,
+        links: this.links,
+        categories: this.categories
       }
     };
 

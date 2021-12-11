@@ -10,6 +10,6 @@ export class AppComponent {
 
   title = 'darksouls-explorer-frontend';
 
-  links: MenuLink[] = [{ name: 'graph', path: '/graph' },{ name: 'items', path: '/items' },{ name: 'problems', path: '/problems' }];
+  links: MenuLink[] = [{ name: 'graph', path: '/graph' },{ name: 'items', path: '/items' },{ name: 'maps', path: '/maps' },{ name: 'problems', path: '/problems' }];
 
 }

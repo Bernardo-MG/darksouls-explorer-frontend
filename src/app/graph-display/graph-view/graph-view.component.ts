@@ -14,6 +14,21 @@ export class GraphViewComponent implements OnInit {
   filterOptions: NamedValue[] = [];
 
   graph: Graph = { nodes: [], links: [], types: [] };
+  
+  nodes: {
+    name: string;
+    id: string;
+    label: string;
+  }[] = [];
+
+  links: {
+    source: string;
+    target: string;
+  }[] = [];
+
+  categories: {
+    name: string;
+  }[] = [];
 
   info: Info = { id: '0', label: '', description: [] };
 
@@ -31,7 +46,12 @@ export class GraphViewComponent implements OnInit {
 
   onApplyFilter(options: String[]) {
     if (options.length > 0) {
-      this.graphService.getGraph(options).subscribe(data => this.graph = data);
+      this.graphService.getGraph(options).subscribe(graph =>{
+        this.graph = graph;
+        this.nodes = graph.nodes.map((n) => { return { ...n, name: n.label, id: n.id.toString() } });
+        this.links = graph.links.map((l) => { return { source: l.source.toString(), target: l.target.toString() } });
+        this.categories = graph.types.map((t) => { return { name: t } });
+      });
     }
   }
 

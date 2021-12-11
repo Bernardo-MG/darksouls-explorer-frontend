@@ -26,6 +26,7 @@ import { GraphDisplayRoutingModule } from './graph-display-routing.module';
     })
   ],
   exports: [
+    GraphDiagramComponent,
     GraphViewComponent
   ],
   providers: [
