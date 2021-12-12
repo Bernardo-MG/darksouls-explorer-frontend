@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MapService } from '../services/map.service';
 import { Category } from '@app/graph/models/category';
-import { Link } from '@app/graph/models/link';
-import { Node } from '@app/graph/models/node';
 import { Graph } from '@app/graph/models/graph';
 
 @Component({

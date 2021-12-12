@@ -9,6 +9,7 @@ import { PaginationModule } from '@app/pagination/pagination.module';
 import { ItemSearchComponent } from './item-search/item-search.component';
 import { ItemSearchService } from './services/item-search.service';
 import { FormsModule } from '@angular/forms';
+import { GraphModule } from '@app/graph/graph.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { FormsModule } from '@angular/forms';
     ItemExploreRoutingModule,
     CommonModule,
     PaginationModule,
-    FormsModule
+    FormsModule,
+    GraphModule
   ],
   providers: [
     ItemService,

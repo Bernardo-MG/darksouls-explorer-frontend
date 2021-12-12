@@ -1,4 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Category } from '@app/graph/models/category';
+import { Graph } from '@app/graph/models/graph';
 import { Item } from '@app/models/item';
 import { ItemSource } from '@app/models/itemSource';
 import { ItemService } from '../services/item.service';
@@ -14,12 +16,17 @@ export class ItemInfoComponent implements OnChanges {
 
   sources: ItemSource[] = [];
 
+  sourcesGraph: Graph = { nodes: [], links: [] };
+
+  sourcesCategories: Category[] = [];
+
   constructor(
     private service: ItemService
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.service.getItemSources(this.data.id).subscribe(response => this.sources = response.content);
+    this.service.getItemSourcesGraph(this.data.id).subscribe(graph => this.sourcesGraph = graph);
   }
 
 }
