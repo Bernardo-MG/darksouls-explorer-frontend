@@ -29,8 +29,8 @@ export class MapViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.categories = [{name: 'connected_to'}];
-    this.service.getAllMaps().subscribe((data) => this.nodes = data.content.map((n) => { return { label: n.name, name: n.name, id: n.id.toString() } }));
-    this.service.getAllMapConnections().subscribe((data) => this.links = data.content.map((l) => { return { source: l.id.toString(), target: l.connection.toString() } }));
+    this.service.getAllMaps().subscribe((data) => this.nodes = data);
+    this.service.getAllMapConnections().subscribe((data) => this.links = data);
   }
 
 }
