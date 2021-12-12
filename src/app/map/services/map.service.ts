@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { RequestClient } from '@app/api/request/request-client';
 import { environment } from 'environments/environment';
@@ -8,6 +8,7 @@ import { MapConnection } from '@app/models/mapConnection';
 import { Map } from '@app/models/map';
 import { Link } from '@app/graph/models/link';
 import { Response } from '@app/api/models/response';
+import { Graph } from '@app/graph/models/graph';
 
 @Injectable()
 export class MapService {
@@ -20,12 +21,16 @@ export class MapService {
     private client: RequestClient
   ) { }
 
-  getAllMaps(): Observable<Node[]> {
+  getMapGraph(): Observable<Graph> {
+    return forkJoin({ nodes: this.getAllMaps(), links: this.getAllMapConnections() })
+  }
+
+  private getAllMaps(): Observable<Node[]> {
     return this.client.request(this.mapUrl).pageSize(100).order('name', 'asc').get()
       .pipe(map((response) => (response as Response<Map>).content.map(this.toNode)));
   }
 
-  getAllMapConnections(): Observable<Link[]> {
+  private getAllMapConnections(): Observable<Link[]> {
     return this.client.request(this.mapConnectionUrl).pageSize(100).get()
       .pipe(map((response) => (response as Response<MapConnection>).content.map(this.toLink)));
   }

@@ -3,6 +3,7 @@ import { MapService } from '../services/map.service';
 import { Category } from '@app/graph/models/category';
 import { Link } from '@app/graph/models/link';
 import { Node } from '@app/graph/models/node';
+import { Graph } from '@app/graph/models/graph';
 
 @Component({
   selector: 'app-map-view',
@@ -11,20 +12,17 @@ import { Node } from '@app/graph/models/node';
 })
 export class MapViewComponent implements OnInit {
 
-  nodes: Node[] = [];
-
-  links: Link[] = [];
-
   categories: Category[] = [];
+
+  graph: Graph = { nodes: [], links: [] };
 
   constructor(
     private service: MapService
   ) { }
 
   ngOnInit(): void {
-    this.categories = [{name: 'connected_to'}];
-    this.service.getAllMaps().subscribe((data) => this.nodes = data);
-    this.service.getAllMapConnections().subscribe((data) => this.links = data);
+    this.categories = [{ name: 'connected_to' }];
+    this.service.getMapGraph().subscribe((data) => this.graph = data);
   }
 
 }
