@@ -18,6 +18,8 @@ export class GraphDiagramComponent implements OnChanges {
   @Input() links: Link[] = [];
 
   @Input() categories: Category[] = [];
+  
+  @Input() title: string = '';
 
   options = {};
 
@@ -35,6 +37,19 @@ export class GraphDiagramComponent implements OnChanges {
     this.loading = true;
 
     this.mergeOption = {
+      title: {
+        text: this.title,
+        subtext: 'Default layout',
+        top: 'bottom',
+        left: 'right'
+      },
+      legend: [
+        {
+          data: this.categories.map(function (a) {
+            return a.name;
+          })
+        }
+      ],
       series: {
         type: 'graph',
         layout: 'force',

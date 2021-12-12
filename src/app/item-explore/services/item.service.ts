@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Item } from '@app/models/item';
-import { forkJoin, map, Observable } from 'rxjs';
+import { forkJoin, map, Observable, of } from 'rxjs';
 import { environment } from 'environments/environment';
 import { RequestClient } from '@app/api/request/request-client';
 import { Response } from '@app/api/models/response';
@@ -20,7 +20,7 @@ export class ItemService {
 
   private mapConnectionUrl = environment.apiUrl + "/maps/connections";
 
-  private mapGraph: Graph = { nodes: [], links: [] };
+  private mapGraph: Graph = { nodes: [], links: [], categories: [] };
 
   constructor(
     private client: RequestClient
@@ -42,21 +42,21 @@ export class ItemService {
 
   getItemSourcesGraph(itemId: number): Observable<Graph> {
     return this.getItemSources(itemId).pipe(map((sources) => {
-      const itemNodes = sources.content.map((s) => { return { id: s.itemId.toString(), name: s.item, label: s.item } })
-      const locationNodes = sources.content.map((s) => { return { id: s.locationId.toString(), name: s.location, label: s.location } })
-      const sourceNodes = sources.content.map((s) => { return { id: s.sourceId.toString(), name: s.source, label: s.source } })
+      const itemNodes = sources.content.map((s) => { return { id: s.itemId.toString(), name: s.item, label: s.item, category: 0 } })
+      const sourceNodes = sources.content.map((s) => { return { id: s.sourceId.toString(), name: s.source, label: s.source, category: 1 } })
+      const locationNodes = sources.content.map((s) => { return { id: s.locationId.toString(), name: s.location, label: s.location, category: 2 } })
       var nodes = [...itemNodes, ...locationNodes, ...sourceNodes];
       nodes = Array.from(nodes.reduce((m, t) => m.set(t.name, t), new Map()).values());
 
       const itemSources = sources.content.map((s) => { return { source: s.itemId.toString(), target: s.sourceId.toString() } })
       const sourceLocations = sources.content.map((s) => { return { source: s.sourceId.toString(), target: s.locationId.toString() } })
 
-      return { nodes: nodes, links: [...itemSources, ...sourceLocations] }
+      return { nodes: nodes, links: [...itemSources, ...sourceLocations], categories: [{ name: 'Item' }, { name: 'Source' }, { name: 'Location' }] }
     }));
   }
 
   private getMapGraph(): Observable<Graph> {
-    return forkJoin({ nodes: this.getAllMaps(), links: this.getAllMapConnections() })
+    return forkJoin({ nodes: this.getAllMaps(), links: this.getAllMapConnections(), categories: of([{ name: 'Location' }]) })
   }
 
   private getAllMaps(): Observable<Node[]> {
@@ -70,7 +70,7 @@ export class ItemService {
   }
 
   private toNode(data: Map): Node {
-    return { label: data.name, name: data.name, id: data.id.toString() };
+    return { label: data.name, name: data.name, id: data.id.toString(), category: 2 };
   }
 
   private toLink(data: MapConnection): Link {

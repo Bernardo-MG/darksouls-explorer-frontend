@@ -16,9 +16,9 @@ export class ItemInfoComponent implements OnChanges {
 
   sources: ItemSource[] = [];
 
-  sourcesGraph: Graph = { nodes: [], links: [] };
+  sourcesGraph: Graph = { nodes: [], links: [], categories: [] };
 
-  sourcesCategories: Category[] = [];
+  sourcesTitle: string = "Item sources";
 
   constructor(
     private service: ItemService

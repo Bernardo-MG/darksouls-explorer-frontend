@@ -10,16 +10,15 @@ import { Graph } from '@app/graph/models/graph';
 })
 export class MapViewComponent implements OnInit {
 
-  categories: Category[] = [];
+  graph: Graph = { nodes: [], links: [], categories: [] };
 
-  graph: Graph = { nodes: [], links: [] };
+  title: string = "Maps";
 
   constructor(
     private service: MapService
   ) { }
 
   ngOnInit(): void {
-    this.categories = [{ name: 'connected_to' }];
     this.service.getMapGraph().subscribe((data) => this.graph = data);
   }
 
