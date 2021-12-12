@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MapService } from '../services/map.service';
-import { Map } from '@app/models/map';
-import { MapConnection } from '@app/models/mapConnection';
 import { Category } from '@app/graph/models/category';
 import { Link } from '@app/graph/models/link';
 import { Node } from '@app/graph/models/node';
@@ -13,10 +11,6 @@ import { Node } from '@app/graph/models/node';
 })
 export class MapViewComponent implements OnInit {
 
-  maps: Map[] = [];
-
-  connections: MapConnection[] = [];
-  
   nodes: Node[] = [];
 
   links: Link[] = [];
