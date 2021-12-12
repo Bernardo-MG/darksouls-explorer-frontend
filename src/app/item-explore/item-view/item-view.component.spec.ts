@@ -24,7 +24,7 @@ describe('ItemViewComponent', () => {
         ItemSearchService
       ]
     })
-    .compileComponents();
+      .compileComponents();
     httpClient = TestBed.inject(HttpClient);
   });
 
