@@ -4,7 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxEchartsModule } from 'ngx-echarts';
 
 import { GraphDiagramComponent } from './graph-diagram/graph-diagram.component';
-import { FilterModule } from '@app/filter/filter.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +11,6 @@ import { FilterModule } from '@app/filter/filter.module';
   ],
   imports: [
     CommonModule,
-    FilterModule,
     HttpClientModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'),
