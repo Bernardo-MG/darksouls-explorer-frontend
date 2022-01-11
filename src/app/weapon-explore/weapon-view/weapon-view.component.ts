@@ -5,11 +5,8 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './weapon-view.component.html',
   styleUrls: ['./weapon-view.component.sass']
 })
-export class WeaponViewComponent implements OnInit {
+export class WeaponViewComponent {
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }
