@@ -4,6 +4,7 @@ import { ProblemViewComponent } from './problem-view/problem-view.component';
 import { ProblemListComponent } from './problem-list/problem-list.component';
 import { ProblemExploreRoutingModule } from './problem-explore-routing.module';
 import { ProblemService } from './services/problem.service';
+import { PaginationModule } from '@app/pagination/pagination.module';
 
 
 
@@ -14,7 +15,8 @@ import { ProblemService } from './services/problem.service';
   ],
   imports: [
     ProblemExploreRoutingModule,
-    CommonModule
+    CommonModule,
+    PaginationModule
   ],
   providers: [
     ProblemService

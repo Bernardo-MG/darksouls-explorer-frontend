@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-const graphModule = () => import('@app/graph-display/graph-display.module').then(m => m.GraphDisplayModule);
 const itemModule = () => import('@app/item-explore/item-explore.module').then(m => m.ItemExploreModule);
+const mapModule = () => import('@app/map/map.module').then(m => m.MapModule);
 const problemModule = () => import('@app/problem-explore/problem-explore.module').then(m => m.ProblemExploreModule);
+const weaponModule = () => import('@app/weapon-explore/weapon-explore.module').then(m => m.WeaponExploreModule);
 
 const routes: Routes = [
-  { path: '', redirectTo: '/graph', pathMatch: 'full' },
-  { path: 'graph', loadChildren: graphModule },
+  { path: '', redirectTo: '/items', pathMatch: 'full' },
   { path: 'items', loadChildren: itemModule },
-  { path: 'problems', loadChildren: problemModule }
+  { path: 'problems', loadChildren: problemModule },
+  { path: 'maps', loadChildren: mapModule },
+  { path: 'weapons', loadChildren: weaponModule }
 ];
 
 @NgModule({

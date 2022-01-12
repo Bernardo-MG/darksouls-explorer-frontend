@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { GraphDisplayModule } from './graph-display/graph-display.module';
+import { GraphModule } from './graph/graph.module';
 import { NavigationModule } from './navigation/navigation.module';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -15,7 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     AppRoutingModule,
     BrowserModule,
-    GraphDisplayModule,
+    GraphModule,
     NavigationModule,
     HttpClientModule
   ],

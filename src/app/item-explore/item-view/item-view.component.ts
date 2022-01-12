@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Item } from '@app/models/Item';
+import { Item } from '@app/models/item';
+import { DefaultPaginator } from '@app/pagination/paginator/default-paginator';
+import { Paginator } from '@app/pagination/paginator/paginator';
+import { ItemSearch } from '../models/itemSearch';
+import { ItemSearchService } from '../services/item-search.service';
 import { ItemService } from '../services/item.service';
 
 @Component({
@@ -9,27 +13,42 @@ import { ItemService } from '../services/item.service';
 })
 export class ItemViewComponent implements OnInit {
 
+  paginator: Paginator;
+
   items: Item[] = [];
 
-  selected: Item = { name: '', description: [] }
+  selected: Item = { id: -1, name: '', description: [], tags: [] }
 
   page: number = 0;
 
+  searchActive: boolean = false;
+
+  tags: string[] = [];
+
   constructor(
-    private itemService: ItemService
-  ) { }
+    private service: ItemService,
+    private searchService: ItemSearchService
+  ) {
+    // By default it will search for all the items
+    this.paginator = new DefaultPaginator((page) => this.service.getAllItems(page));
+  }
 
   ngOnInit(): void {
-    this.itemService.getItems(this.page).subscribe(data => this.items = data);
+    this.paginator.firstPage();
+    this.searchService.getTags().subscribe(data => this.tags = data);
   }
 
   selectItem(data: Item) {
     this.selected = data;
   }
 
-  loadNextPage() {
-    this.page += 1;
-    this.itemService.getItems(this.page).subscribe(data => this.items = this.items.concat(data));
+  toggleSearch() {
+    this.searchActive = !this.searchActive;
+  }
+
+  applySearch(search: ItemSearch) {
+    this.paginator = new DefaultPaginator((page) => this.service.getItems(search.name, search.tags, page));
+    this.paginator.firstPage();
   }
 
 }

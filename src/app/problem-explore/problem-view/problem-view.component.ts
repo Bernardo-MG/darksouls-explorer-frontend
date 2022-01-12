@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Problem } from '../models/Problem';
 import { ProblemService } from '../services/problem.service';
+import { DefaultPaginator } from '@app/pagination/paginator/default-paginator';
+import { Paginator } from '@app/pagination/paginator/paginator';
 
 @Component({
   selector: 'problem-view',
@@ -9,21 +10,14 @@ import { ProblemService } from '../services/problem.service';
 })
 export class ProblemViewComponent implements OnInit {
 
-  items: Problem[] = [];
-
-  page: number = 0;
+  paginator: Paginator = new DefaultPaginator((page) => this.service.getProblems(page));
 
   constructor(
-    private itemService: ProblemService
+    private service: ProblemService
   ) { }
 
   ngOnInit(): void {
-    this.itemService.getProblems(this.page).subscribe(data => this.items = data);
-  }
-
-  loadNextPage() {
-    this.page += 1;
-    this.itemService.getProblems(this.page).subscribe(data => this.items = this.items.concat(data));
+    this.paginator.firstPage();
   }
 
 }

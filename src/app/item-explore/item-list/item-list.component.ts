@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Item } from '@app/models/Item';
+import { Item } from '@app/models/item';
 
 @Component({
   selector: 'item-list',
@@ -14,6 +14,13 @@ export class ItemListComponent {
 
   @Output() pickOption = new EventEmitter<Item>();
 
+  selected: number = -1;
+
   constructor() { }
+
+  public select(data: Item){
+    this.selected = data.id;
+    this.pickOption.emit(data);
+  }
 
 }
