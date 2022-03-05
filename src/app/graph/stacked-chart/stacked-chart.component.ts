@@ -1,4 +1,5 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Line } from '../models/line';
 
 @Component({
   selector: 'chart-stacked',
@@ -15,16 +16,22 @@ export class StackedChartComponent implements OnChanges {
 
   @Input() title: string = '';
 
+  @Input() categories: string[] = [];
+
+  @Input() lines: Line[] = [];
+
   constructor() {
     this.options = {
       title: {
-        text: 'Stacked Line'
+        text: this.title
       },
       tooltip: {
         trigger: 'axis'
       },
       legend: {
-        data: ['Email', 'Union Ads', 'Video Ads', 'Direct', 'Search Engine']
+        data: this.lines.map(function (a) {
+          return a.name;
+        })
       },
       grid: {
         left: '3%',
@@ -40,50 +47,33 @@ export class StackedChartComponent implements OnChanges {
       xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        data: this.categories
       },
       yAxis: {
         type: 'value'
-      },
-      series: [
-        {
-          name: 'Email',
-          type: 'line',
-          stack: 'Total',
-          data: [120, 132, 101, 134, 90, 230, 210]
-        },
-        {
-          name: 'Union Ads',
-          type: 'line',
-          stack: 'Total',
-          data: [220, 182, 191, 234, 290, 330, 310]
-        },
-        {
-          name: 'Video Ads',
-          type: 'line',
-          stack: 'Total',
-          data: [150, 232, 201, 154, 190, 330, 410]
-        },
-        {
-          name: 'Direct',
-          type: 'line',
-          stack: 'Total',
-          data: [320, 332, 301, 334, 390, 330, 320]
-        },
-        {
-          name: 'Search Engine',
-          type: 'line',
-          stack: 'Total',
-          data: [820, 932, 901, 934, 1290, 1330, 1320]
-        }
-      ]
+      }
     };
   }
-
-  ngOnChanges(): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.loading = true;
 
-    this.mergeOption = {};
+    this.mergeOption = {
+      legend: {
+        data: this.lines.map(function (l) {
+          return l.name;
+        })
+      },
+      xAxis: {
+        data: this.categories
+      },
+      series:  this.lines.map(function (l) {
+        return {
+          name: l.name,
+          type: 'line',
+          data: l.data
+        };
+      })
+    };
 
     this.loading = false;
   }
