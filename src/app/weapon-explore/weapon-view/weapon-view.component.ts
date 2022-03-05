@@ -14,7 +14,7 @@ export class WeaponViewComponent implements OnInit {
 
   paginator: Paginator;
 
-  stats: WeaponProgression = {weapon:""};
+  stats: WeaponProgression = { weapon: "", paths: [] };
 
   selected: Item = { id: -1, name: '', description: [], tags: [] }
 

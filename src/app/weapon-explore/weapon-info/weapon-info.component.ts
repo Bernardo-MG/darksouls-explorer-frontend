@@ -9,22 +9,39 @@ import { WeaponProgression } from '../models/weaponProgression';
 })
 export class WeaponInfoComponent implements OnChanges {
 
-  @Input() stats: WeaponProgression = { weapon: '' };
+  @Input() stats: WeaponProgression = { weapon: '', paths: [] };
 
   weaponTitle: string = 'Item sources';
 
-  levels: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'];
+  levels: string[] = [];
 
-  @Input() lines: Line[] = [
-    { name: 'standard', data: [82, 90, 98, 106, 114, 123, 131, 139, 147, 155, 164, 172, 180, 188, 196, 205] },
-    { name: 'raw', data: [null, null, null, null, null, 141, 150, 159, 169, 178, 188] },
-    { name: 'crystal', data: [null, null, null, null, null, null, null, null, null, null, 180, 188, 196, 205, 213, 221] }
-  ];
+  lines: Line[] = [];
 
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.weaponTitle = this.stats.weapon;
+    this.lines = this.stats.paths.map(function (p) {
+      return {
+        name: p.path,
+        type: 'line',
+        data: p.levels.map(function (l) {
+          return l.physicalDamage
+        })
+      };
+    });
+    let maxLevel = 0;
+    for (let i = 0; i < this.stats.paths.length; i++) {
+      let path = this.stats.paths[i];
+      let pathMax = path.levels[path.levels.length - 1].level;
+      if (pathMax > maxLevel) {
+        maxLevel = pathMax;
+      }
+    }
+    this.levels = [];
+    for (let i = 0; i < maxLevel; i++) {
+      this.levels.push(i.toString());
+    }
   }
 
 }

@@ -1,3 +1,6 @@
+import { WeaponPathProgression } from "./weaponPathProgression";
+
 export interface WeaponProgression {
-    weapon: string
+    weapon: string,
+    paths: WeaponPathProgression[]
 }
