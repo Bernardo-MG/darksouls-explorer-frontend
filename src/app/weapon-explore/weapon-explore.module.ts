@@ -6,6 +6,7 @@ import { WeaponService } from './services/weapon.service';
 import { WeaponListComponent } from './weapon-list/weapon-list.component';
 import { PaginationModule } from '@app/pagination/pagination.module';
 import { WeaponInfoComponent } from './weapon-info/weapon-info.component';
+import { GraphModule } from '@app/graph/graph.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { WeaponInfoComponent } from './weapon-info/weapon-info.component';
   imports: [
     WeaponExploreRoutingModule,
     CommonModule,
-    PaginationModule
+    PaginationModule,
+    GraphModule
   ],
   providers: [
     WeaponService

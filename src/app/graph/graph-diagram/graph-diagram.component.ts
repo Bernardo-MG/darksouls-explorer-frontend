@@ -27,29 +27,14 @@ export class GraphDiagramComponent implements OnChanges {
 
   loading = false;
 
-  constructor() { }
-
-  onClick(event: any): void {
-    this.selectNode.emit(event.data.id);
-  }
-
-  ngOnChanges(): void {
-    this.loading = true;
-
-    this.mergeOption = {
+  constructor() {
+    this.options = {
       title: {
         text: this.title,
         subtext: 'Default layout',
         top: 'bottom',
         left: 'right'
       },
-      legend: [
-        {
-          data: this.categories.map(function (a) {
-            return a.name;
-          })
-        }
-      ],
       series: {
         type: 'graph',
         layout: 'force',
@@ -59,7 +44,27 @@ export class GraphDiagramComponent implements OnChanges {
         },
         force: {
           repulsion: 100
-        },
+        }
+      }
+    };
+  }
+
+  onClick(event: any): void {
+    this.selectNode.emit(event.data.id);
+  }
+
+  ngOnChanges(): void {
+    this.loading = true;
+
+    this.mergeOption = {
+      legend: [
+        {
+          data: this.categories.map(function (a) {
+            return a.name;
+          })
+        }
+      ],
+      series: {
         data: this.nodes,
         links: this.links,
         categories: this.categories
