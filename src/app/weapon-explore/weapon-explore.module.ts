@@ -7,18 +7,22 @@ import { WeaponListComponent } from './weapon-list/weapon-list.component';
 import { PaginationModule } from '@app/pagination/pagination.module';
 import { WeaponInfoComponent } from './weapon-info/weapon-info.component';
 import { GraphModule } from '@app/graph/graph.module';
+import { WeaponStatsComponent } from './weapon-stats/weapon-stats.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     WeaponViewComponent,
     WeaponListComponent,
-    WeaponInfoComponent
+    WeaponInfoComponent,
+    WeaponStatsComponent
   ],
   imports: [
     WeaponExploreRoutingModule,
     CommonModule,
     PaginationModule,
-    GraphModule
+    GraphModule,
+    FormsModule
   ],
   providers: [
     WeaponService
