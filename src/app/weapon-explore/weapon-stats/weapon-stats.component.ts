@@ -23,38 +23,38 @@ export class WeaponStatsComponent implements OnChanges {
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.load(this.path);
+    this.loadPath();
   }
 
-  load(path: WeaponPathProgression): void {
+  loadPath(): void {
     this.weaponTitle = this.stats.weapon;
 
     let line;
     let values;
     this.lines = [];
 
-    values = path.levels.map(level => this.removeEmpty(level.fireDamage));
+    values = this.path.levels.map(level => this.removeEmpty(level.fireDamage));
     line = {
       name: 'Fire',
       data: values
     }
     this.lines.push(line);
 
-    values = path.levels.map(level => this.removeEmpty(level.lightningDamage));
+    values = this.path.levels.map(level => this.removeEmpty(level.lightningDamage));
     line = {
       name: 'Lightning',
       data: values
     }
     this.lines.push(line);
 
-    values = path.levels.map(level => this.removeEmpty(level.magicDamage));
+    values = this.path.levels.map(level => this.removeEmpty(level.magicDamage));
     line = {
       name: 'Magic',
       data: values
     }
     this.lines.push(line);
 
-    values = path.levels.map(level => this.removeEmpty(level.physicalDamage));
+    values = this.path.levels.map(level => this.removeEmpty(level.physicalDamage));
     line = {
       name: 'Physical',
       data: values
@@ -73,11 +73,6 @@ export class WeaponStatsComponent implements OnChanges {
     for (let i = 0; i < maxLevel; i++) {
       this.levels.push(i.toString());
     }
-  }
-
-  public selectPath(selected: WeaponPathProgression) {
-    this.path = selected;
-    this.load(this.path);
   }
 
   private removeEmpty(value: number): number | null{
