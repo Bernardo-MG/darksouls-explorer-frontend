@@ -1,0 +1,6 @@
+<chart-stacked [title]="weaponTitle" [categories]="levels" [lines]="lines"></chart-stacked>
+<select [(ngModel)]="path" (change)="loadPath()">
+    <ng-template ngFor let-p [ngForOf]="stats.paths">
+        <option [ngValue]="p">{{ p.path }}</option>
+    </ng-template>
+</select>

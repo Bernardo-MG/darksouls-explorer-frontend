@@ -1,0 +1,5 @@
+<h1>{{stats.weapon}}</h1>
+
+<ng-template [ngIf]="stats.paths.length > 0">
+    <weapon-stats [stats]="stats"></weapon-stats>
+</ng-template>

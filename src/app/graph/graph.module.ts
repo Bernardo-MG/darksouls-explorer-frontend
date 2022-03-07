@@ -1,23 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { NgxEchartsModule } from 'ngx-echarts';
 
 import { GraphDiagramComponent } from './graph-diagram/graph-diagram.component';
+import { StackedChartComponent } from './stacked-chart/stacked-chart.component';
 
 @NgModule({
   declarations: [
-    GraphDiagramComponent
+    GraphDiagramComponent,
+    StackedChartComponent
   ],
   imports: [
     CommonModule,
-    HttpClientModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'),
     })
   ],
   exports: [
-    GraphDiagramComponent
+    GraphDiagramComponent,
+    StackedChartComponent
   ]
 })
 export class GraphModule { }
