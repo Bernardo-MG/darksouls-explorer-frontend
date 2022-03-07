@@ -33,28 +33,28 @@ export class WeaponStatsComponent implements OnChanges {
     let values;
     this.lines = [];
 
-    values = path.levels.map(level => level.fireDamage);
+    values = path.levels.map(level => this.removeEmpty(level.fireDamage));
     line = {
       name: 'Fire',
       data: values
     }
     this.lines.push(line);
 
-    values = path.levels.map(level => level.lightningDamage);
+    values = path.levels.map(level => this.removeEmpty(level.lightningDamage));
     line = {
       name: 'Lightning',
       data: values
     }
     this.lines.push(line);
 
-    values = path.levels.map(level => level.magicDamage);
+    values = path.levels.map(level => this.removeEmpty(level.magicDamage));
     line = {
       name: 'Magic',
       data: values
     }
     this.lines.push(line);
 
-    values = path.levels.map(level => level.physicalDamage);
+    values = path.levels.map(level => this.removeEmpty(level.physicalDamage));
     line = {
       name: 'Physical',
       data: values
@@ -78,6 +78,18 @@ export class WeaponStatsComponent implements OnChanges {
   public selectPath(selected: WeaponPathProgression) {
     this.path = selected;
     this.load(this.path);
+  }
+
+  private removeEmpty(value: number): number | null{
+    let result: number | null;
+
+    if(value == 0){
+      result = null;
+    } else {
+      result = value;
+    }
+
+    return result;
   }
 
 }
