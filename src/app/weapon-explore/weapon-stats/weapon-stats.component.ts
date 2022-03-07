@@ -23,6 +23,8 @@ export class WeaponStatsComponent implements OnChanges {
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.weaponTitle = this.stats.weapon;
+
     if (this.stats.paths.length > 0) {
       this.path = this.stats.paths[0];
       this.loadPath();
@@ -30,8 +32,6 @@ export class WeaponStatsComponent implements OnChanges {
   }
 
   loadPath(): void {
-    this.weaponTitle = this.stats.weapon;
-
     let line;
     let values;
     this.lines = [];
