@@ -23,7 +23,10 @@ export class WeaponStatsComponent implements OnChanges {
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.loadPath();
+    if (this.stats.paths.length > 0) {
+      this.path = this.stats.paths[0];
+      this.loadPath();
+    }
   }
 
   loadPath(): void {
@@ -75,10 +78,10 @@ export class WeaponStatsComponent implements OnChanges {
     }
   }
 
-  private removeEmpty(value: number): number | null{
+  private removeEmpty(value: number): number | null {
     let result: number | null;
 
-    if(value == 0){
+    if (value == 0) {
       result = null;
     } else {
       result = value;
