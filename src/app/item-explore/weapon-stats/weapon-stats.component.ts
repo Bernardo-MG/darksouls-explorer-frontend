@@ -13,8 +13,6 @@ export class WeaponStatsComponent implements OnChanges {
 
   @Input() stats: WeaponProgression = { weapon: '', paths: [] };
 
-  @Input() weaponTitle: string = '';
-
   // TODO: split componente. The path and stats should be in two components
   path: WeaponPathProgression = { path: '', levels: [] };
 
@@ -24,9 +22,7 @@ export class WeaponStatsComponent implements OnChanges {
 
   constructor() { }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.weaponTitle = this.stats.weapon;
-
+  ngOnChanges(): void {
     if (this.stats.paths.length > 0) {
       this.path = this.stats.paths[0];
       this.loadPath();
