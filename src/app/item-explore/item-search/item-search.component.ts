@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { ItemSearch } from '../models/itemSearch';
-import { ValueSelection } from '../models/valueSelection';
+import { ItemSearch } from '@app/models/itemSearch';
+import { ValueSelection } from '@app/models/valueSelection';
+
 
 @Component({
   selector: 'item-search',

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Item } from '@app/models/item';
+import { ItemSearch } from '@app/models/itemSearch';
+import { WeaponProgression } from '@app/models/weaponProgression';
 import { DefaultPaginator } from '@app/pagination/paginator/default-paginator';
 import { Paginator } from '@app/pagination/paginator/paginator';
-import { ItemSearch } from '../models/itemSearch';
-import { WeaponProgression } from '../models/weaponProgression';
 import { ItemSearchService } from '../services/item-search.service';
 import { ItemService } from '../services/item.service';
 

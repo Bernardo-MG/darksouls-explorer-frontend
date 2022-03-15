@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Graph } from '@app/graph/models/graph';
 import { Item } from '@app/models/item';
 import { ItemSource } from '@app/models/itemSource';
-import { WeaponProgression } from '../models/weaponProgression';
+import { WeaponProgression } from '@app/models/weaponProgression';
 import { ItemService } from '../services/item.service';
 
 @Component({

@@ -10,7 +10,7 @@ import { Map } from '@app/models/map';
 import { Link } from '@app/graph/models/link';
 import { Node } from '@app/graph/models/node';
 import { MapConnection } from '@app/models/mapConnection';
-import { WeaponProgression } from '../models/weaponProgression';
+import { WeaponProgression } from '@app/models/weaponProgression';
 
 @Injectable()
 export class ItemService {

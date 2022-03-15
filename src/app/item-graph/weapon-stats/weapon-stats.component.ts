@@ -1,8 +1,8 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { Line } from '@app/graph/models/line';
-import { WeaponPathProgression } from '@app/item-explore/models/weaponPathProgression';
-import { WeaponPathProgressionLevel } from '@app/item-explore/models/weaponPathProgressionLevel';
-import { WeaponProgression } from '@app/item-explore/models/weaponProgression';
+import { WeaponPathProgression } from '@app/models/weaponPathProgression';
+import { WeaponPathProgressionLevel } from '@app/models/weaponPathProgressionLevel';
+import { WeaponProgression } from '@app/models/weaponProgression';
 
 @Component({
   selector: 'weapon-stats',
