@@ -10,6 +10,7 @@ import { Map } from '@app/models/map';
 import { Link } from '@app/graph/models/link';
 import { Node } from '@app/graph/models/node';
 import { MapConnection } from '@app/models/mapConnection';
+import { WeaponProgression } from '../models/weaponProgression';
 
 @Injectable()
 export class ItemService {
@@ -19,6 +20,8 @@ export class ItemService {
   private mapUrl = environment.apiUrl + "/maps";
 
   private mapConnectionUrl = environment.apiUrl + "/maps/connections";
+
+  private weaponStatsUrl = environment.apiUrl + "/weapons/stats";
 
   private mapGraph: Graph = { nodes: [], links: [], categories: [] };
 
@@ -53,6 +56,10 @@ export class ItemService {
 
       return { nodes: nodes, links: [...itemSources, ...sourceLocations], categories: [{ name: 'Item' }, { name: 'Source' }, { name: 'Location' }] }
     }));
+  }
+
+  getWeaponStats(weaponId: Number): Observable<WeaponProgression> {
+    return this.client.request(this.weaponStatsUrl + "/" + weaponId).get();
   }
 
   private getMapGraph(): Observable<Graph> {

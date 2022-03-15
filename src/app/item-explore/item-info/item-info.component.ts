@@ -3,6 +3,7 @@ import { Category } from '@app/graph/models/category';
 import { Graph } from '@app/graph/models/graph';
 import { Item } from '@app/models/item';
 import { ItemSource } from '@app/models/itemSource';
+import { WeaponProgression } from '../models/weaponProgression';
 import { ItemService } from '../services/item.service';
 
 @Component({
@@ -13,6 +14,8 @@ import { ItemService } from '../services/item.service';
 export class ItemInfoComponent implements OnChanges {
 
   @Input() data: Item = { id: -1, name: '', description: [], tags: [] };
+
+  @Input() stats: WeaponProgression = { weapon: '', paths: [] };
 
   sources: ItemSource[] = [];
 

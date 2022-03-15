@@ -10,7 +10,7 @@
                 <item-search [tags]="tags" (search)="applySearch($event)"></item-search>
             </ng-template>
             <ng-template #info>
-                <item-info [data]="selected"></item-info>
+                <item-info [data]="selected" [stats]="stats"></item-info>
             </ng-template>
         </div>
     </div>

@@ -25,4 +25,7 @@
         </tbody>
     </table>
     <graph-diagram [nodes]="sourcesGraph.nodes" [links]="sourcesGraph.links" [categories]="sourcesGraph.categories" [title]="sourcesTitle"></graph-diagram>
+    <ng-template [ngIf]="stats.paths.length > 0">
+        <weapon-stats [stats]="stats"></weapon-stats>
+    </ng-template>
 </ng-template>

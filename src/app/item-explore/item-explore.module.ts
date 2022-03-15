@@ -10,13 +10,15 @@ import { ItemSearchComponent } from './item-search/item-search.component';
 import { ItemSearchService } from './services/item-search.service';
 import { FormsModule } from '@angular/forms';
 import { GraphModule } from '@app/graph/graph.module';
+import { WeaponStatsComponent } from './weapon-stats/weapon-stats.component';
 
 @NgModule({
   declarations: [
     ItemInfoComponent,
     ItemListComponent,
     ItemViewComponent,
-    ItemSearchComponent
+    ItemSearchComponent,
+    WeaponStatsComponent
   ],
   imports: [
     ItemExploreRoutingModule,

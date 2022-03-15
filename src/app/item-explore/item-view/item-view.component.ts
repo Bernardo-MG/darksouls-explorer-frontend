@@ -3,6 +3,7 @@ import { Item } from '@app/models/item';
 import { DefaultPaginator } from '@app/pagination/paginator/default-paginator';
 import { Paginator } from '@app/pagination/paginator/paginator';
 import { ItemSearch } from '../models/itemSearch';
+import { WeaponProgression } from '../models/weaponProgression';
 import { ItemSearchService } from '../services/item-search.service';
 import { ItemService } from '../services/item.service';
 
@@ -18,6 +19,8 @@ export class ItemViewComponent implements OnInit {
   items: Item[] = [];
 
   selected: Item = { id: -1, name: '', description: [], tags: [] }
+
+  stats: WeaponProgression = { weapon: "", paths: [] };
 
   page: number = 0;
 
@@ -40,6 +43,7 @@ export class ItemViewComponent implements OnInit {
 
   selectItem(data: Item) {
     this.selected = data;
+    this.service.getWeaponStats(this.selected.id).subscribe(data => this.stats = data);
   }
 
   toggleSearch() {
