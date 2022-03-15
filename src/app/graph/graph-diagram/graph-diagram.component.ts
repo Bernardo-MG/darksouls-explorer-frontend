@@ -31,7 +31,6 @@ export class GraphDiagramComponent implements OnChanges {
     this.options = {
       title: {
         text: this.title,
-        subtext: 'Default layout',
         top: 'bottom',
         left: 'right'
       },
