@@ -16,7 +16,7 @@ export class StackedChartComponent implements OnChanges {
 
   @Input() title: string = '';
 
-  @Input() categories: string[] = [];
+  @Input() scale: string[] = [];
 
   @Input() lines: Line[] = [];
 
@@ -42,7 +42,7 @@ export class StackedChartComponent implements OnChanges {
       xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: this.categories
+        data: this.scale
       },
       yAxis: {
         type: 'value'
@@ -59,7 +59,7 @@ export class StackedChartComponent implements OnChanges {
         })
       },
       xAxis: {
-        data: this.categories
+        data: this.scale
       },
       series:  this.lines.map(function (l) {
         return {
