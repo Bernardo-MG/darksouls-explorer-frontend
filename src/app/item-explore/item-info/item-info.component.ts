@@ -1,5 +1,4 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Category } from '@app/graph/models/category';
 import { Graph } from '@app/graph/models/graph';
 import { Item } from '@app/models/item';
 import { ItemSource } from '@app/models/itemSource';
