@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { NgxEchartsModule } from 'ngx-echarts';
-
 import { GraphDiagramComponent } from './graph-diagram/graph-diagram.component';
 import { StackedChartComponent } from './stacked-chart/stacked-chart.component';
+
 
 @NgModule({
   declarations: [

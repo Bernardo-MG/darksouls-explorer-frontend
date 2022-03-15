@@ -5,8 +5,6 @@ import { GraphModule } from '@app/graph/graph.module';
 import { ItemSourceGraphComponent } from './item-source-graph/item-source-graph.component';
 import { WeaponStatsComponent } from './weapon-stats/weapon-stats.component';
 
-
-
 @NgModule({
   declarations: [
     WeaponStatsComponent,

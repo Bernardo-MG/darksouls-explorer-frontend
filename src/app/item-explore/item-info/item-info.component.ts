@@ -26,7 +26,7 @@ export class ItemInfoComponent implements OnChanges {
     private service: ItemService
   ) { }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this.service.getItemSources(this.data.id).subscribe(response => this.sources = response.content);
     this.service.getItemSourcesGraph(this.data.id).subscribe(graph => this.sourcesGraph = graph);
   }

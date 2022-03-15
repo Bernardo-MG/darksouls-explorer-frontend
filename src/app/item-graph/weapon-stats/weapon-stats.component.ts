@@ -13,7 +13,7 @@ export class WeaponStatsComponent implements OnChanges {
 
   @Input() stats: WeaponProgression = { weapon: '', paths: [] };
 
-  // TODO: split componente. The path and stats should be in two components
+  // TODO: split component. The path and stats should be in two components
   path: WeaponPathProgression = { path: '', levels: [] };
 
   levels: string[] = [];
