@@ -1,35 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Item } from '@app/models/item';
-import { forkJoin, map, Observable, of } from 'rxjs';
-import { environment } from 'environments/environment';
-import { RequestClient } from '@app/api/request/request-client';
 import { Response } from '@app/api/models/response';
-import { ItemSource } from '@app/models/itemSource';
+import { RequestClient } from '@app/api/request/request-client';
 import { Graph } from '@app/graph/models/graph';
-import { Map } from '@app/models/map';
-import { Link } from '@app/graph/models/link';
-import { Node } from '@app/graph/models/node';
-import { MapConnection } from '@app/models/mapConnection';
+import { Item } from '@app/models/item';
+import { ItemSource } from '@app/models/itemSource';
 import { WeaponProgression } from '@app/models/weaponProgression';
+import { environment } from 'environments/environment';
+import { map, Observable } from 'rxjs';
 
 @Injectable()
 export class ItemService {
 
   private itemUrl = environment.apiUrl + "/items";
 
-  private mapUrl = environment.apiUrl + "/maps";
-
-  private mapConnectionUrl = environment.apiUrl + "/maps/connections";
-
-  private weaponStatsUrl = environment.apiUrl + "/weapons/stats";
-
-  private mapGraph: Graph = { nodes: [], links: [], categories: [] };
-
   constructor(
     private client: RequestClient
-  ) {
-    this.getMapGraph().subscribe((graph) => this.mapGraph = graph);
-  }
+  ) { }
 
   getAllItems(page: number): Observable<Response<Item>> {
     return this.client.request(this.itemUrl).page(page).order('name', 'asc').get();
@@ -58,30 +44,8 @@ export class ItemService {
     }));
   }
 
-  getWeaponStats(weaponId: Number): Observable<WeaponProgression> {
-    return this.client.request(this.weaponStatsUrl + "/" + weaponId).get();
-  }
-
-  private getMapGraph(): Observable<Graph> {
-    return forkJoin({ nodes: this.getAllMaps(), links: this.getAllMapConnections(), categories: of([{ name: 'Location' }]) })
-  }
-
-  private getAllMaps(): Observable<Node[]> {
-    return this.client.request(this.mapUrl).pageSize(100).order('name', 'asc').get()
-      .pipe(map((response) => (response as Response<Map>).content.map(this.toNode)));
-  }
-
-  private getAllMapConnections(): Observable<Link[]> {
-    return this.client.request(this.mapConnectionUrl).pageSize(100).get()
-      .pipe(map((response) => (response as Response<MapConnection>).content.map(this.toLink)));
-  }
-
-  private toNode(data: Map): Node {
-    return { label: data.name, name: data.name, id: data.id.toString(), category: 2 };
-  }
-
-  private toLink(data: MapConnection): Link {
-    return { source: data.id.toString(), target: data.connection.toString() };
+  getWeaponStats(itemId: Number): Observable<WeaponProgression> {
+    return this.client.request(this.itemUrl + "/" + itemId + "/stats/weapons").get();
   }
 
 }
