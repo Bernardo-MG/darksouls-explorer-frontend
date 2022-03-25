@@ -4,11 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { GraphModule } from '@app/graph/graph.module';
 import { ItemSourceGraphComponent } from './item-source-graph/item-source-graph.component';
 import { WeaponStatsComponent } from './weapon-stats/weapon-stats.component';
+import { ArmorStatsComponent } from './armor-stats/armor-stats.component';
 
 @NgModule({
   declarations: [
     WeaponStatsComponent,
-    ItemSourceGraphComponent
+    ItemSourceGraphComponent,
+    ArmorStatsComponent
   ],
   imports: [
     CommonModule,

@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Line } from '@app/graph/models/line';
-import { WeaponPathProgression } from '@app/models/weaponPathProgression';
-import { WeaponPathProgressionLevel } from '@app/models/weaponPathProgressionLevel';
+import { WeaponProgressionPath } from '@app/models/weaponProgressionPath';
+import { WeaponProgressionPathLevel } from '@app/models/weaponProgressionPathLevel';
 import { WeaponProgression } from '@app/models/weaponProgression';
 
 @Component({
@@ -14,7 +14,7 @@ export class WeaponStatsComponent implements OnChanges {
   @Input() stats: WeaponProgression = { weapon: '', paths: [] };
 
   // TODO: split component. The path and stats should be in two components
-  path: WeaponPathProgression = { path: '', levels: [] };
+  path: WeaponProgressionPath = { path: '', levels: [] };
 
   levels: string[] = [];
 
@@ -58,7 +58,7 @@ export class WeaponStatsComponent implements OnChanges {
     return levels;
   }
 
-  private getMaxLevel(paths: WeaponPathProgression[]): number {
+  private getMaxLevel(paths: WeaponProgressionPath[]): number {
     let maxLevel = 0;
     for (let i = 0; i < paths.length; i++) {
       let path = paths[i];
@@ -71,7 +71,7 @@ export class WeaponStatsComponent implements OnChanges {
     return maxLevel;
   }
 
-  private buildLine(levels: WeaponPathProgressionLevel[], name: string, selector: (arg: WeaponPathProgressionLevel) => number): Line {
+  private buildLine(levels: WeaponProgressionPathLevel[], name: string, selector: (arg: WeaponProgressionPathLevel) => number): Line {
     const data = levels.map(level => selector(level)).map(this.removeZeros);
 
     return {
