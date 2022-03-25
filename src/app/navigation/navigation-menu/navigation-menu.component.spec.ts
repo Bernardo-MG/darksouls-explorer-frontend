@@ -1,4 +1,3 @@
-import { LayoutModule } from '@angular/cdk/layout';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -14,7 +13,6 @@ describe('NavigationMenuComponent', () => {
       declarations: [NavigationMenuComponent],
       imports: [
         NoopAnimationsModule,
-        LayoutModule,
         RouterTestingModule
       ]
     }).compileComponents();

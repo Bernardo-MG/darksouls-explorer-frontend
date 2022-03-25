@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationMenuComponent } from './navigation-menu/navigation-menu.component';
 
-import { LayoutModule } from '@angular/cdk/layout';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { NavigationDropdownComponent } from './navigation-dropdown/navigation-dropdown.component';
@@ -15,7 +14,6 @@ import { NavigationDropdownComponent } from './navigation-dropdown/navigation-dr
   imports: [
     CommonModule,
     NoopAnimationsModule,
-    LayoutModule,
     RouterModule
   ],
   exports: [
