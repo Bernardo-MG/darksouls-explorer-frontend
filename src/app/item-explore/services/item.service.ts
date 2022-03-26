@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Response } from '@app/api/models/response';
 import { RequestClient } from '@app/api/request/request-client';
 import { Graph } from '@app/graph/models/graph';
+import { ArmorProgression } from '@app/models/armorProgression';
 import { Item } from '@app/models/item';
 import { ItemSource } from '@app/models/itemSource';
 import { WeaponProgression } from '@app/models/weaponProgression';
@@ -42,6 +43,10 @@ export class ItemService {
 
       return { nodes: nodes, links: [...itemSources, ...sourceLocations], categories: [{ name: 'Item' }, { name: 'Source' }, { name: 'Location' }] }
     }));
+  }
+
+  getArmorStats(itemId: Number): Observable<ArmorProgression> {
+    return this.client.request(this.itemUrl + "/" + itemId + "/levels/armor").get();
   }
 
   getWeaponStats(itemId: Number): Observable<WeaponProgression> {

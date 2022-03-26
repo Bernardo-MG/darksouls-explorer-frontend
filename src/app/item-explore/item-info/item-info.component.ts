@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Graph } from '@app/graph/models/graph';
+import { ArmorProgression } from '@app/models/armorProgression';
 import { Item } from '@app/models/item';
 import { ItemSource } from '@app/models/itemSource';
 import { WeaponProgression } from '@app/models/weaponProgression';
@@ -14,7 +15,9 @@ export class ItemInfoComponent implements OnChanges {
 
   @Input() data: Item = { id: -1, name: '', description: [], tags: [] };
 
-  @Input() stats: WeaponProgression = { weapon: '', paths: [] };
+  @Input() weaponProgression: WeaponProgression = { weapon: '', paths: [] };
+
+  @Input() armorProgression: ArmorProgression = { armor: '', levels: [] };
 
   sources: ItemSource[] = [];
 

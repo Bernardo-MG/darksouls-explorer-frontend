@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ArmorProgression } from '@app/models/armorProgression';
 import { Item } from '@app/models/item';
 import { ItemSearch } from '@app/models/itemSearch';
 import { WeaponProgression } from '@app/models/weaponProgression';
@@ -20,7 +21,9 @@ export class ItemViewComponent implements OnInit {
 
   selected: Item = { id: -1, name: '', description: [], tags: [] }
 
-  stats: WeaponProgression = { weapon: "", paths: [] };
+  weaponProgression: WeaponProgression = { weapon: "", paths: [] };
+
+  armorProgression: ArmorProgression = { armor: "", levels: [] };
 
   page: number = 0;
 
@@ -43,7 +46,8 @@ export class ItemViewComponent implements OnInit {
 
   selectItem(data: Item) {
     this.selected = data;
-    this.service.getWeaponStats(this.selected.id).subscribe(data => this.stats = data);
+    this.service.getWeaponStats(this.selected.id).subscribe(data => this.weaponProgression = data);
+    this.service.getArmorStats(this.selected.id).subscribe(data => this.armorProgression = data);
   }
 
   toggleSearch() {
