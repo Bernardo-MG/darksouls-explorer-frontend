@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ItemGraphModule } from '@app/item-graph/item-graph.module';
 import { PaginationModule } from '@app/pagination/pagination.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ItemExploreRoutingModule } from './item-explore-routing.module';
 import { ItemInfoComponent } from './item-info/item-info.component';
 import { ItemListComponent } from './item-list/item-list.component';
@@ -23,7 +24,8 @@ import { ItemService } from './services/item.service';
     CommonModule,
     PaginationModule,
     FormsModule,
-    ItemGraphModule
+    ItemGraphModule,
+    FontAwesomeModule
   ],
   providers: [
     ItemService,

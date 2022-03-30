@@ -1,9 +1,10 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { Graph } from '@app/graph/models/graph';
 import { ArmorProgression } from '@app/models/armorProgression';
 import { Item } from '@app/models/item';
 import { ItemSource } from '@app/models/itemSource';
 import { WeaponProgression } from '@app/models/weaponProgression';
+import { faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
 import { ItemService } from '../services/item.service';
 
 @Component({
@@ -19,11 +20,15 @@ export class ItemInfoComponent implements OnChanges {
 
   @Input() armorProgression: ArmorProgression = { armor: '', levels: [] };
 
+  @Output() back = new EventEmitter<void>();
+
   sources: ItemSource[] = [];
 
   sourcesGraph: Graph = { nodes: [], links: [], categories: [] };
 
   sourcesTitle: string = "Item sources";
+  
+  public backIcon = faArrowLeftLong;
 
   constructor(
     private service: ItemService
@@ -32,6 +37,10 @@ export class ItemInfoComponent implements OnChanges {
   ngOnChanges(): void {
     this.service.getItemSources(this.data.id).subscribe(response => this.sources = response.content);
     this.service.getItemSourcesGraph(this.data.id).subscribe(graph => this.sourcesGraph = graph);
+  }
+
+  goBack(): void {
+    this.back.emit();
   }
 
 }

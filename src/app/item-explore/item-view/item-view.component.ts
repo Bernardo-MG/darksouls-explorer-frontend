@@ -19,7 +19,7 @@ export class ItemViewComponent implements OnInit {
 
   items: Item[] = [];
 
-  selected: Item = { id: -1, name: '', description: [], tags: [] }
+  selected: Item | null = null
 
   weaponProgression: WeaponProgression = { weapon: "", paths: [] };
 
@@ -57,6 +57,10 @@ export class ItemViewComponent implements OnInit {
   applySearch(search: ItemSearch) {
     this.paginator = new DefaultPaginator((page) => this.service.getItems(search.name, search.tags, page));
     this.paginator.firstPage();
+  }
+
+  deselect() {
+    this.selected = null;
   }
 
 }
