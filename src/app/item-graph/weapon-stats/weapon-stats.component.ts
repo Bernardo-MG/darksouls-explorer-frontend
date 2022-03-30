@@ -1,8 +1,9 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Line } from '@app/graph/models/line';
+import { WeaponProgression } from '@app/models/weaponProgression';
 import { WeaponProgressionPath } from '@app/models/weaponProgressionPath';
 import { WeaponProgressionPathLevel } from '@app/models/weaponProgressionPathLevel';
-import { WeaponProgression } from '@app/models/weaponProgression';
+import { LineSelection } from '../models/line-selector';
 
 @Component({
   selector: 'weapon-stats',
@@ -13,37 +14,31 @@ export class WeaponStatsComponent implements OnChanges {
 
   @Input() stats: WeaponProgression = { weapon: '', paths: [] };
 
-  // TODO: split component. The path and stats should be in two components
-  path: WeaponProgressionPath = { path: '', levels: [] };
+  @Input() selectors: LineSelection[] = [];
 
   levels: string[] = [];
 
   lines: Line[] = [];
 
+  selected: string = '';
+
   constructor() { }
 
   ngOnChanges(): void {
     if (this.stats.paths.length > 0) {
-      this.path = this.stats.paths[0];
-      this.loadPath();
+      const path = this.stats.paths[0];
+      this.loadPath(path);
+    } else {
+      this.levels = [];
     }
   }
 
-  loadPath(): void {
-    let line;
+  loadPath(path: WeaponProgressionPath): void {
     this.lines = [];
 
-    line = this.buildLine(this.path.levels, 'Fire', (level) => level.fireDamage);
-    this.lines.push(line);
+    this.selected = path.path;
 
-    line = this.buildLine(this.path.levels, 'Lightning', (level) => level.lightningDamage);
-    this.lines.push(line);
-
-    line = this.buildLine(this.path.levels, 'Magic', (level) => level.magicDamage);
-    this.lines.push(line);
-
-    line = this.buildLine(this.path.levels, 'Physical', (level) => level.physicalDamage);
-    this.lines.push(line);
+    this.lines = this.selectors.map(s => this.buildLine(path.levels, s.name, s.selector));
 
     let maxLevel = this.getMaxLevel(this.stats.paths);
     this.levels = this.getLevels(maxLevel);
@@ -72,12 +67,31 @@ export class WeaponStatsComponent implements OnChanges {
   }
 
   private buildLine(levels: WeaponProgressionPathLevel[], name: string, selector: (arg: WeaponProgressionPathLevel) => number): Line {
-    const data = levels.map(level => selector(level)).map(this.removeZeros);
+    let padding: (number | null)[];
+    const values: (number | null)[] = levels.map(level => selector(level)).map(this.removeZeros);
+
+    if (levels.length) {
+      padding = this.linePadding(levels[0].pathLevel);
+    } else {
+      padding = [];
+    }
+
+    const data = padding.concat(values);
 
     return {
       name,
       data
     }
+  }
+
+  private linePadding(index: number): (number | null)[] {
+    const padding = [];
+
+    for (var i = 0; i <= index; i += 1) {
+      padding.push(null);
+    }
+
+    return padding;
   }
 
   private removeZeros(value: number): number | null {
