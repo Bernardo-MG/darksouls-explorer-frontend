@@ -46,7 +46,7 @@ export class ItemService {
   }
 
   getArmorStats(itemId: Number): Observable<ArmorProgression> {
-    return this.client.request(this.itemUrl + "/" + itemId + "/levels/armor").get();
+    return this.client.request(this.itemUrl + "/" + itemId + "/levels/armors").get();
   }
 
   getWeaponStats(itemId: Number): Observable<WeaponProgression> {

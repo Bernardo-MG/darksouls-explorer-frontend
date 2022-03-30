@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { Line } from '@app/graph/models/line';
 import { ArmorLevel } from '@app/models/armorLevel';
 import { ArmorProgression } from '@app/models/armorProgression';
@@ -8,7 +8,7 @@ import { ArmorProgression } from '@app/models/armorProgression';
   templateUrl: './armor-stats.component.html',
   styleUrls: ['./armor-stats.component.sass']
 })
-export class ArmorStatsComponent {
+export class ArmorStatsComponent implements OnChanges {
 
   @Input() stats: ArmorProgression = { armor: '', levels: [] };
 
@@ -18,7 +18,7 @@ export class ArmorStatsComponent {
 
   constructor() { }
 
-  loadPath(): void {
+  ngOnChanges(): void {
     let line;
     this.lines = [];
 

@@ -19,6 +19,7 @@ import { ArmorStatsComponent } from './armor-stats/armor-stats.component';
   ],
   exports: [
     WeaponStatsComponent,
+    ArmorStatsComponent,
     ItemSourceGraphComponent
   ]
 })
