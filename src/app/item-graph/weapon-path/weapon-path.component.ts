@@ -6,11 +6,11 @@ import { WeaponProgressionPathLevel } from '@app/models/weaponProgressionPathLev
 import { LineSelection } from '../models/line-selector';
 
 @Component({
-  selector: 'weapon-stats',
-  templateUrl: './weapon-stats.component.html',
-  styleUrls: ['./weapon-stats.component.sass']
+  selector: 'weapon-path',
+  templateUrl: './weapon-path.component.html',
+  styleUrls: ['./weapon-path.component.sass']
 })
-export class WeaponStatsComponent implements OnChanges {
+export class WeaponPathComponent implements OnChanges {
 
   @Input() stats: WeaponProgression = { weapon: '', paths: [] };
 
@@ -19,8 +19,6 @@ export class WeaponStatsComponent implements OnChanges {
   levels: string[] = [];
 
   lines: Line[] = [];
-
-  selected: string = '';
 
   constructor() { }
 
@@ -35,8 +33,6 @@ export class WeaponStatsComponent implements OnChanges {
 
   loadPath(path: WeaponProgressionPath): void {
     this.lines = [];
-
-    this.selected = path.path;
 
     this.lines = this.selectors.map(s => this.buildLine(path.levels, s.name, s.selector));
 

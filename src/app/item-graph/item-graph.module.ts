@@ -3,18 +3,20 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GraphModule } from '@app/graph/graph.module';
 import { ItemSourceGraphComponent } from './item-source-graph/item-source-graph.component';
-import { WeaponStatsComponent } from './weapon-stats/weapon-stats.component';
+import { WeaponPathComponent } from './weapon-path/weapon-path.component';
 import { ArmorStatsComponent } from './armor-stats/armor-stats.component';
 import { WeaponPathDamageComponent } from './weapon-path-damage/weapon-path-damage.component';
 import { WeaponPathDefenseComponent } from './weapon-path-defense/weapon-path-defense.component';
+import { WeaponPathSelectorComponent } from './weapon-path-selector/weapon-path-selector.component';
 
 @NgModule({
   declarations: [
-    WeaponStatsComponent,
+    WeaponPathComponent,
     ItemSourceGraphComponent,
     ArmorStatsComponent,
     WeaponPathDamageComponent,
-    WeaponPathDefenseComponent
+    WeaponPathDefenseComponent,
+    WeaponPathSelectorComponent
   ],
   imports: [
     CommonModule,

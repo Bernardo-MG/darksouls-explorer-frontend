@@ -1,4 +1,3 @@
-<chart-stacked [scale]="levels" [lines]="lines"></chart-stacked>
 <div class="btn-group">
     <ng-template ngFor let-p [ngForOf]="stats.paths">
         <a (click)="loadPath(p)" class="btn btn-primary" [ngClass]="{ 'active': p.path === selected }">{{ p.path }}</a>
