@@ -57,7 +57,7 @@ export class WeaponStatsComponent implements OnChanges {
     let maxLevel = 0;
     for (let i = 0; i < paths.length; i++) {
       let path = paths[i];
-      let pathMax = path.levels[path.levels.length - 1].level;
+      let pathMax = path.levels[path.levels.length - 1].pathLevel;
       if (pathMax > maxLevel) {
         maxLevel = pathMax;
       }
@@ -87,7 +87,7 @@ export class WeaponStatsComponent implements OnChanges {
   private linePadding(index: number): (number | null)[] {
     const padding = [];
 
-    for (var i = 0; i <= index; i += 1) {
+    for (var i = 0; i < index; i += 1) {
       padding.push(null);
     }
 
