@@ -1,0 +1,14 @@
+<ng-template [ngIf]="searchActive" [ngIfElse]="select">
+    <item-search [tags]="tags" (search)="applySearch($event)"></item-search>
+</ng-template>
+<ng-template #select>
+    <div class="row">
+        <div class="row">
+            <button type="button" class="btn btn-primary" (click)="toggleSearch()">Search</button>
+            <item-list [selection]="paginator.data" (pickOption)="selectItem($event)"></item-list>
+        </div>
+        <div class="d-flex justify-content-center">
+            <pagination-navigation [paginator]="paginator"></pagination-navigation>
+        </div>
+    </div>
+</ng-template>

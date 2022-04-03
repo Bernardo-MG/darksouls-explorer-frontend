@@ -1,11 +1,16 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ItemViewComponent } from './item-view/item-view.component';
+import { RouterModule, Routes } from '@angular/router';
+import { ItemInfoViewComponent } from './views/item-info-view/item-info-view.component';
+import { ItemListViewComponent } from './views/item-list-view/item-list-view.component';
 
 
 const routes: Routes = [
     {
-        path: '', component: ItemViewComponent
+        path: '',
+        children: [
+            { path: '', component: ItemListViewComponent },
+            { path: ':id', component: ItemInfoViewComponent }
+        ]
     }
 ];
 

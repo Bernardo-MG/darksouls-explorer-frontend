@@ -5,14 +5,14 @@ import { Item } from '@app/models/item';
 import { ItemSource } from '@app/models/itemSource';
 import { WeaponProgression } from '@app/models/weaponProgression';
 import { faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
-import { ItemService } from '../services/item.service';
+import { ItemService } from '../../services/item.service';
 
 @Component({
   selector: 'item-info',
   templateUrl: './item-info.component.html',
   styleUrls: ['./item-info.component.sass']
 })
-export class ItemInfoComponent implements OnChanges {
+export class ItemInfoComponent {
 
   @Input() data: Item = { id: -1, name: '', description: [], tags: [] };
 
@@ -22,22 +22,15 @@ export class ItemInfoComponent implements OnChanges {
 
   @Output() back = new EventEmitter<void>();
 
-  sources: ItemSource[] = [];
+  @Input() sources: ItemSource[] = [];
 
-  sourcesGraph: Graph = { nodes: [], links: [], categories: [] };
+  @Input() sourcesGraph: Graph = { nodes: [], links: [], categories: [] };
 
   sourcesTitle: string = "Item sources";
   
   public backIcon = faArrowLeftLong;
 
-  constructor(
-    private service: ItemService
-  ) { }
-
-  ngOnChanges(): void {
-    this.service.getItemSources(this.data.id).subscribe(response => this.sources = response.content);
-    this.service.getItemSourcesGraph(this.data.id).subscribe(graph => this.sourcesGraph = graph);
-  }
+  constructor() { }
 
   goBack(): void {
     this.back.emit();

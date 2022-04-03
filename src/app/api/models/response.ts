@@ -2,7 +2,7 @@ import { Pageable } from "./pageable";
 import { Sort } from "./sort";
 
 export interface Response<T> {
-    content: T[];
+    content: T;
     empty: boolean;
     first: boolean;
     last: boolean;

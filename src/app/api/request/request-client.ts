@@ -92,9 +92,9 @@ export class RequestClient {
     );
   }
 
-  private getPaged<T>(): Observable<Response<T>> {
-    return this.http.get<Response<T>>(this.url, this.params).pipe(
-      map((response: Response<T>) => { return response })
+  private getPaged<T>(): Observable<Response<T[]>> {
+    return this.http.get<Response<T[]>>(this.url, this.params).pipe(
+      map((response: Response<T[]>) => { return response })
     ).pipe(
       catchError(this.handleErrorPaged<T>())
     );
@@ -125,7 +125,7 @@ export class RequestClient {
   }
 
   private handleErrorPaged<T>() {
-    return (error: any): Observable<Response<T>> => {
+    return (error: any): Observable<Response<T[]>> => {
 
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead

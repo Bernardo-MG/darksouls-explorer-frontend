@@ -1,29 +1,24 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ItemSearchService } from '@app/item-explore/services/item-search.service';
+import { ItemService } from '@app/item-explore/services/item.service';
 import { ArmorProgression } from '@app/models/armorProgression';
 import { Item } from '@app/models/item';
 import { ItemSearch } from '@app/models/itemSearch';
 import { WeaponProgression } from '@app/models/weaponProgression';
 import { DefaultPaginator } from '@app/pagination/paginator/default-paginator';
 import { Paginator } from '@app/pagination/paginator/paginator';
-import { ItemSearchService } from '../services/item-search.service';
-import { ItemService } from '../services/item.service';
 
 @Component({
-  selector: 'item-view',
-  templateUrl: './item-view.component.html',
-  styleUrls: ['./item-view.component.sass']
+  selector: 'app-item-list-view',
+  templateUrl: './item-list-view.component.html',
+  styleUrls: ['./item-list-view.component.sass']
 })
-export class ItemViewComponent implements OnInit {
+export class ItemListViewComponent implements OnInit {
 
   paginator: Paginator;
 
   items: Item[] = [];
-
-  selected: Item | null = null
-
-  weaponProgression: WeaponProgression = { weapon: "", paths: [] };
-
-  armorProgression: ArmorProgression = { armor: "", levels: [] };
 
   page: number = 0;
 
@@ -33,7 +28,9 @@ export class ItemViewComponent implements OnInit {
 
   constructor(
     private service: ItemService,
-    private searchService: ItemSearchService
+    private searchService: ItemSearchService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {
     // By default it will search for all the items
     this.paginator = new DefaultPaginator((page) => this.service.getAllItems(page));
@@ -45,9 +42,7 @@ export class ItemViewComponent implements OnInit {
   }
 
   selectItem(data: Item) {
-    this.selected = data;
-    this.service.getWeaponStats(this.selected.id).subscribe(data => this.weaponProgression = data);
-    this.service.getArmorStats(this.selected.id).subscribe(data => this.armorProgression = data);
+    this.router.navigate([data.id], { relativeTo: this.activatedRoute });
   }
 
   toggleSearch() {
@@ -57,10 +52,6 @@ export class ItemViewComponent implements OnInit {
   applySearch(search: ItemSearch) {
     this.paginator = new DefaultPaginator((page) => this.service.getItems(search.name, search.tags, page));
     this.paginator.firstPage();
-  }
-
-  deselect() {
-    this.selected = null;
   }
 
 }

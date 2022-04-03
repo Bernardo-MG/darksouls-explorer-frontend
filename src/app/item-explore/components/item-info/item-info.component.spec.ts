@@ -1,14 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ItemSearchService } from '../services/item-search.service';
-import { ItemService } from '../services/item.service';
+import { ItemService } from '../../services/item.service';
 
-import { ItemViewComponent } from './item-view.component';
+import { ItemInfoComponent } from './item-info.component';
 
-describe('ItemViewComponent', () => {
-  let component: ItemViewComponent;
-  let fixture: ComponentFixture<ItemViewComponent>;
+describe('ItemInfoComponent', () => {
+  let component: ItemInfoComponent;
+  let fixture: ComponentFixture<ItemInfoComponent>;
   let httpClient: HttpClient;
 
   beforeEach(async () => {
@@ -17,19 +16,18 @@ describe('ItemViewComponent', () => {
         HttpClientTestingModule
       ],
       declarations: [
-        ItemViewComponent
+        ItemInfoComponent
       ],
       providers: [
-        ItemService,
-        ItemSearchService
+        ItemService
       ]
     })
-      .compileComponents();
+    .compileComponents();
     httpClient = TestBed.inject(HttpClient);
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ItemViewComponent);
+    fixture = TestBed.createComponent(ItemInfoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
