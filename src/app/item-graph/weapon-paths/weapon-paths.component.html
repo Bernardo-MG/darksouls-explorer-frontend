@@ -1,0 +1,10 @@
+<weapon-path [selectors]="selectors" [path]="selectedPath" [maxLevel]="maxLevel"></weapon-path>
+<div class="row">
+    <div class="btn-group">
+        <a (click)="loadDamageSelectors()" class="btn btn-primary" [ngClass]="{ 'active': selectedDamage}">Damage</a>
+        <a (click)="loadDefenseSelectors()" class="btn btn-primary" [ngClass]="{ 'active': selectedDefense}">Defense</a>
+    </div>
+</div>
+<div class="row">
+    <weapon-path-selector [stats]="stats" (selectPath)="selectPath($event)"></weapon-path-selector>
+</div>
