@@ -1,7 +1,7 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { Response } from '../models/response';
 
 @Injectable({
@@ -131,34 +131,7 @@ export class RequestClient {
       console.error(error); // log to console instead
 
       // Let the app keep running by returning an empty result.
-      return of({
-        content: [],
-        empty: true,
-        first: true,
-        last: true,
-        number: 0,
-        numberOfElements: 0,
-        pageable: {
-          offset: 0,
-          pageNumber: 0,
-          pageSize: 0,
-          paged: false,
-          sort: {
-            empty: true,
-            sorted: false,
-            unsorted: true
-          },
-          unpaged: true
-        },
-        size: 0,
-        sort: {
-          empty: true,
-          sorted: false,
-          unsorted: true
-        },
-        totalElements: 0,
-        totalPages: 0
-      });
+      return of(new Response<T[]>([]));
     };
   }
 

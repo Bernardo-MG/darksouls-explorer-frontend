@@ -59,7 +59,7 @@ export class DefaultPaginator implements Paginator {
     }
 
     private loadData(response: Response<any>){
-      this._currentPage = response.number;
+      this._currentPage = response.pageNumber;
       this._data = response.content;
       this._totalPages = response.totalPages;
   

@@ -1,4 +1,4 @@
-import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Graph } from '@app/graph/models/graph';
 import { ItemService } from '@app/item-explore/services/item.service';
@@ -43,15 +43,16 @@ export class ItemInfoViewComponent implements OnInit {
     if (id) {
       const identifier: number = Number(id);
       this.service.getItem(identifier)
+        .pipe(map(r => r.content))
         .subscribe(item => {
-          if(item){
+          if (item) {
             this.data = item
           } else {
             this.data = { id: -1, name: '', description: [], tags: [] };
           }
         });
-      this.service.getWeaponStats(identifier).subscribe(data => this.weaponProgression = data);
-      this.service.getArmorStats(identifier).subscribe(data => this.armorProgression = data);
+      this.service.getWeaponStats(identifier).pipe(map(r => r.content)).subscribe(data => this.weaponProgression = data);
+      this.service.getArmorStats(identifier).pipe(map(r => r.content)).subscribe(data => this.armorProgression = data);
       this.service.getItemSources(identifier).subscribe(response => this.sources = response.content);
       this.service.getItemSourcesGraph(identifier).subscribe(graph => this.sourcesGraph = graph);
     }

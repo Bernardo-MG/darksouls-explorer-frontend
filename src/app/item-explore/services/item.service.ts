@@ -26,7 +26,7 @@ export class ItemService {
     return this.client.request(this.itemUrl).parameter("name", name).parameter("tags", tags).page(page).order('name', 'asc').get();
   }
 
-  getItem(id: number): Observable<Item> {
+  getItem(id: number): Observable<Response<Item>> {
     return this.client.request(this.itemUrl + `/${id}`).get();
   }
 
@@ -49,11 +49,11 @@ export class ItemService {
     }));
   }
 
-  getArmorStats(itemId: Number): Observable<ArmorProgression> {
+  getArmorStats(itemId: Number): Observable<Response<ArmorProgression>> {
     return this.client.request(this.itemUrl + "/" + itemId + "/levels/armors").get();
   }
 
-  getWeaponStats(itemId: Number): Observable<WeaponProgression> {
+  getWeaponStats(itemId: Number): Observable<Response<WeaponProgression>> {
     return this.client.request(this.itemUrl + "/" + itemId + "/levels/weapons").get();
   }
 

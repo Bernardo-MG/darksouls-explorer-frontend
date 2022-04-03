@@ -1,16 +1,16 @@
-import { Pageable } from "./pageable";
-import { Sort } from "./sort";
 
-export interface Response<T> {
+export class Response<T> {
+
+    constructor(cont: T) {
+        this.content = cont;
+    }
+
     content: T;
-    empty: boolean;
-    first: boolean;
-    last: boolean;
-    number: number;
-    numberOfElements: number;
-    pageable: Pageable;
-    size: number;
-    sort: Sort;
-    totalElements: number;
-    totalPages: number;
+    first: boolean = false;
+    last: boolean = false;
+    pageNumber: number = 0;
+    elementsInPage: number = 0;
+    size: number = 0;
+    totalElements: number = 0;
+    totalPages: number = 0;
 }
