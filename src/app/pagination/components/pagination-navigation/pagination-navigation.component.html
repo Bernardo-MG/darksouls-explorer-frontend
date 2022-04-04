@@ -11,8 +11,8 @@
             </li>
         </ng-template>
         <ng-template ngFor let-page [ngForOf]="pages">
-            <li class="page-item" [ngClass]="{'active': page.selected}">
-                <button type="button" (click)="moveToPage(page.number)" class="page-link">{{page.number}}</button>
+            <li class="page-item" [ngClass]="{'active': page === currentPage}">
+                <button type="button" (click)="moveToPage(page)" class="page-link">{{page}}</button>
             </li>
         </ng-template>
         <ng-template [ngIf]="skipAfter">

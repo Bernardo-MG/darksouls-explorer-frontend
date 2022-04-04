@@ -24,7 +24,7 @@ export class PaginationNavigationComponent implements OnChanges {
 
   rangeSize = 2;
 
-  pages: SelectionPage[] = [];
+  pages: number[] = [];
 
   skipBefore: boolean = false;
 
@@ -61,7 +61,7 @@ export class PaginationNavigationComponent implements OnChanges {
 
     this.pages = [];
     for (var i = start; i <= end; i++) {
-      this.pages.push({ number: i, selected: i == this.currentPage });
+      this.pages.push(i);
     }
   }
 
