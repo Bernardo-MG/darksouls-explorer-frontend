@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { SelectionPage } from '@app/pagination/models/SelectionPage';
+import { SelectionPage } from '@app/pagination/models/selection-page';
 
 @Component({
   selector: 'pagination-root-navigation',
