@@ -1,11 +1,10 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Graph } from '@app/graph/models/graph';
 import { ArmorProgression } from '@app/models/armorProgression';
 import { Item } from '@app/models/item';
 import { ItemSource } from '@app/models/itemSource';
 import { WeaponProgression } from '@app/models/weaponProgression';
 import { faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
-import { ItemService } from '../../services/item.service';
 
 @Component({
   selector: 'item-info',

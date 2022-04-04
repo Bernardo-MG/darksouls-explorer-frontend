@@ -6,7 +6,6 @@ import { ArmorProgression } from '@app/models/armorProgression';
 import { Item } from '@app/models/item';
 import { ItemSource } from '@app/models/itemSource';
 import { WeaponProgression } from '@app/models/weaponProgression';
-import { map } from 'rxjs';
 
 @Component({
   selector: 'app-item-info-view',

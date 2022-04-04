@@ -6,7 +6,6 @@ import { Item } from '@app/models/item';
 import { ItemSearch } from '@app/models/itemSearch';
 import { DefaultPaginator } from '@app/pagination/paginator/default-paginator';
 import { Paginator } from '@app/pagination/paginator/paginator';
-import { map } from 'rxjs';
 
 @Component({
   selector: 'app-item-list-view',

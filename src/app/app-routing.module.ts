@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 const itemModule = () => import('@app/item-explore/item-explore.module').then(m => m.ItemExploreModule);
 const mapModule = () => import('@app/map/map.module').then(m => m.MapModule);
