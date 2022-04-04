@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PaginatedResponse } from '@app/api/models/paginated-response';
 import { Response } from '@app/api/models/response';
-import { RequestClient } from '@app/api/request/request-client';
+import { PaginatedRequestClient } from '@app/api/request/paginated-request-client';
 import { Graph } from '@app/graph/models/graph';
 import { ArmorProgression } from '@app/models/armorProgression';
 import { Item } from '@app/models/item';
@@ -16,7 +16,7 @@ export class ItemService {
   private itemUrl = environment.apiUrl + "/items";
 
   constructor(
-    private client: RequestClient
+    private client: PaginatedRequestClient
   ) { }
 
   getAllItems(page: number): Observable<PaginatedResponse<Item[]>> {

@@ -9,6 +9,7 @@ import { Map } from '@app/models/map';
 import { Link } from '@app/graph/models/link';
 import { Response } from '@app/api/models/response';
 import { Graph } from '@app/graph/models/graph';
+import { PaginatedRequestClient } from '@app/api/request/paginated-request-client';
 
 @Injectable()
 export class MapService {
@@ -18,7 +19,7 @@ export class MapService {
   private mapConnectionUrl = environment.apiUrl + "/maps/connections";
 
   constructor(
-    private client: RequestClient
+    private client: PaginatedRequestClient
   ) { }
 
   getMapGraph(): Observable<Graph> {
