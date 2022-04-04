@@ -5,11 +5,11 @@ import { DefaultPaginator } from '../paginator/default-paginator';
 import { Paginator } from '../paginator/paginator';
 
 @Component({
-  selector: 'pagination-navigation',
-  templateUrl: './paginator-navigation.component.html',
-  styleUrls: ['./paginator-navigation.component.sass']
+  selector: 'pagination-paginator-navigation',
+  templateUrl: './pagination-paginator-navigation.component.html',
+  styleUrls: ['./pagination-paginator-navigation.component.sass']
 })
-export class PaginatorNavigationComponent {
+export class PaginationPaginatorNavigationComponent {
 
   @Input() paginator: Paginator = new DefaultPaginator((number) => of(new PaginatedResponse<any>(number)));
   

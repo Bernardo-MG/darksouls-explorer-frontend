@@ -24,18 +24,27 @@ export class ItemListViewComponent implements OnInit {
 
   tags: string[] = [];
 
+  path: string = "/items";
+
   constructor(
     private service: ItemService,
     private searchService: ItemSearchService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private route: ActivatedRoute
   ) {
     // By default it will search for all the items
     this.paginator = new DefaultPaginator((page) => this.service.getAllItems(page));
   }
 
   ngOnInit(): void {
-    this.paginator.firstPage();
+    this.route.queryParamMap.subscribe(params => {
+      if(params.has('page')){
+        this.paginator.toPage(Number(params.get('page')));
+      } else {
+        this.paginator.firstPage();
+      }
+    });
     this.searchService.getTags().subscribe(data => this.tags = data);
   }
 

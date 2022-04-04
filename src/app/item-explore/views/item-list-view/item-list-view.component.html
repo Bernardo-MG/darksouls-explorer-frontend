@@ -8,7 +8,7 @@
             <item-list [selection]="paginator.data" (pickOption)="selectItem($event)"></item-list>
         </div>
         <div class="d-flex justify-content-center">
-            <pagination-navigation [paginator]="paginator"></pagination-navigation>
+            <pagination-route-navigation [paginator]="paginator" [path]="path"></pagination-route-navigation>
         </div>
     </div>
 </ng-template>

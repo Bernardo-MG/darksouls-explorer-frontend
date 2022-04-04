@@ -65,4 +65,16 @@ export class PaginationNavigationComponent implements OnChanges {
     }
   }
 
+  public moveToPage(page: number) {
+    this.toPage.emit(page);
+  }
+
+  public movePrevious() {
+    this.previousPage.emit(this.currentPage);
+  }
+  
+  public moveNext() {
+    this.nextPage.emit(this.currentPage);
+  }
+
 }
