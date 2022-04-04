@@ -3,12 +3,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { PaginatedResponse } from '../models/paginated-response';
-import { AbstractClient } from './abstract-request-client';
+import { RequestClient } from './request-client';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PaginatedRequestClient extends AbstractClient {
+export class PaginatedRequestClient extends RequestClient {
   
   constructor(
     http: HttpClient

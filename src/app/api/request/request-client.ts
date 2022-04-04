@@ -3,17 +3,19 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Response } from '../models/response';
-import { AbstractClient } from './abstract-request-client';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RequestClient extends AbstractClient {
+export class RequestClient {
+  
+  protected params: { params?: HttpParams } = {};
+
+  protected url: string = "";
   
   constructor(
-    http: HttpClient
+    protected http: HttpClient
   ) {
-    super(http);
   }
 
   get<T>(): Observable<Response<T>> {
@@ -22,6 +24,59 @@ export class RequestClient extends AbstractClient {
     ).pipe(
       catchError(this.handleErrorPaged())
     );
+  }
+
+  request(url: string) {
+    this.params = {};
+
+    this.url = url;
+    return this;
+  }
+
+  order(field: string, direction: string) {
+    let prms: HttpParams;
+
+    prms = this.getHttpParams();
+
+    prms = prms.append('sort', `${field},${direction}`);
+
+    this.params = { params: prms };
+
+    return this;
+  }
+
+  parameter(name: string, value: any) {
+    let prms: HttpParams;
+
+    prms = this.getHttpParams();
+
+    prms = prms.append(name, value);
+
+    this.params = { params: prms };
+
+    return this;
+  }
+
+  protected getHttpParams() {
+    let prms: HttpParams;
+
+    if (this.params.params) {
+      prms = this.params.params;
+    } else {
+      prms = new HttpParams();
+      this.params = { params: prms };
+    }
+
+    return prms;
+  }
+
+  protected handleErrorPaged() {
+    return (error: any) => {
+
+      console.error(error);
+
+      throw new Error(error);
+    };
   }
 
 }
