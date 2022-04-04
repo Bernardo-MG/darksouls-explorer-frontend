@@ -33,12 +33,6 @@ export class StackedChartComponent implements OnChanges {
           return a.name;
         })
       },
-      grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-      },
       xAxis: {
         type: 'category',
         boundaryGap: false,
@@ -49,7 +43,8 @@ export class StackedChartComponent implements OnChanges {
       }
     };
   }
-  ngOnChanges(changes: SimpleChanges): void {
+
+  ngOnChanges(): void {
     this.loading = true;
 
     this.mergeOption = {
@@ -61,7 +56,7 @@ export class StackedChartComponent implements OnChanges {
       xAxis: {
         data: this.scale
       },
-      series:  this.lines.map(function (l) {
+      series: this.lines.map(function (l) {
         return {
           name: l.name,
           type: 'line',
