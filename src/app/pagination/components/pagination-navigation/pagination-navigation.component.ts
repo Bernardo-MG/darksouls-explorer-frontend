@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { SelectionPage } from '@app/pagination/models/selection-page';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 
 @Component({
   selector: 'pagination-root-navigation',
@@ -32,7 +31,7 @@ export class PaginationNavigationComponent implements OnChanges {
 
   constructor() { }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     var start: number;
     var end: number;
     const totalp = this.totalPages - 1;
