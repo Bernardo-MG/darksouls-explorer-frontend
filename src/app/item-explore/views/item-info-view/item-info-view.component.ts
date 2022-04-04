@@ -43,7 +43,6 @@ export class ItemInfoViewComponent implements OnInit {
     if (id) {
       const identifier: number = Number(id);
       this.service.getItem(identifier)
-        .pipe(map(r => r.content))
         .subscribe(item => {
           if (item) {
             this.data = item
@@ -51,9 +50,9 @@ export class ItemInfoViewComponent implements OnInit {
             this.data = { id: -1, name: '', description: [], tags: [] };
           }
         });
-      this.service.getWeaponStats(identifier).pipe(map(r => r.content)).subscribe(data => this.weaponProgression = data);
-      this.service.getArmorStats(identifier).pipe(map(r => r.content)).subscribe(data => this.armorProgression = data);
-      this.service.getItemSources(identifier).subscribe(response => this.sources = response.content);
+      this.service.getWeaponStats(identifier).subscribe(data => this.weaponProgression = data);
+      this.service.getArmorStats(identifier).subscribe(data => this.armorProgression = data);
+      this.service.getItemSources(identifier).subscribe(response => this.sources = response);
       this.service.getItemSourcesGraph(identifier).subscribe(graph => this.sourcesGraph = graph);
     }
   }

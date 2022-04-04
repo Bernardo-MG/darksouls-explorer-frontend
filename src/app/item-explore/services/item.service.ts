@@ -27,35 +27,35 @@ export class ItemService {
     return this.client.request(this.itemUrl).parameter("name", name).parameter("tags", tags).page(page).order('name', 'asc').get();
   }
 
-  getItem(id: number): Observable<Response<Item>> {
-    return this.client.request(this.itemUrl + `/${id}`).get();
+  getItem(id: number): Observable<Item> {
+    return this.client.request(this.itemUrl + `/${id}`).get<Item>().pipe(map(r => r.content));
   }
 
-  getItemSources(itemId: number): Observable<Response<ItemSource[]>> {
-    return this.client.request(this.itemUrl + "/" + itemId + "/sources").get();
+  getItemSources(itemId: number): Observable<ItemSource[]> {
+    return this.client.request(this.itemUrl + "/" + itemId + "/sources").get<ItemSource[]>().pipe(map(r => r.content));
   }
 
   getItemSourcesGraph(itemId: number): Observable<Graph> {
     return this.getItemSources(itemId).pipe(map((sources) => {
-      const itemNodes = sources.content.map((s) => { return { id: s.itemId.toString(), name: s.item, label: s.item, category: 0 } })
-      const sourceNodes = sources.content.map((s) => { return { id: s.sourceId.toString(), name: s.source, label: s.source, category: 1 } })
-      const locationNodes = sources.content.map((s) => { return { id: s.locationId.toString(), name: s.location, label: s.location, category: 2 } })
+      const itemNodes = sources.map((s) => { return { id: s.itemId.toString(), name: s.item, label: s.item, category: 0 } })
+      const sourceNodes = sources.map((s) => { return { id: s.sourceId.toString(), name: s.source, label: s.source, category: 1 } })
+      const locationNodes = sources.map((s) => { return { id: s.locationId.toString(), name: s.location, label: s.location, category: 2 } })
       var nodes = [...itemNodes, ...locationNodes, ...sourceNodes];
       nodes = Array.from(nodes.reduce((m, t) => m.set(t.name, t), new Map()).values());
 
-      const itemSources = sources.content.map((s) => { return { source: s.itemId.toString(), target: s.sourceId.toString() } })
-      const sourceLocations = sources.content.map((s) => { return { source: s.sourceId.toString(), target: s.locationId.toString() } })
+      const itemSources = sources.map((s) => { return { source: s.itemId.toString(), target: s.sourceId.toString() } })
+      const sourceLocations = sources.map((s) => { return { source: s.sourceId.toString(), target: s.locationId.toString() } })
 
       return { nodes: nodes, links: [...itemSources, ...sourceLocations], categories: [{ name: 'Item' }, { name: 'Source' }, { name: 'Location' }] }
     }));
   }
 
-  getArmorStats(itemId: Number): Observable<Response<ArmorProgression>> {
-    return this.client.request(this.itemUrl + "/" + itemId + "/levels/armors").get();
+  getArmorStats(itemId: Number): Observable<ArmorProgression> {
+    return this.client.request(this.itemUrl + "/" + itemId + "/levels/armors").get<ArmorProgression>().pipe(map(r => r.content));
   }
 
-  getWeaponStats(itemId: Number): Observable<Response<WeaponProgression>> {
-    return this.client.request(this.itemUrl + "/" + itemId + "/levels/weapons").get();
+  getWeaponStats(itemId: Number): Observable<WeaponProgression> {
+    return this.client.request(this.itemUrl + "/" + itemId + "/levels/weapons").get<WeaponProgression>().pipe(map(r => r.content));
   }
 
 }

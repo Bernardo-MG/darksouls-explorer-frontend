@@ -37,7 +37,7 @@ export class ItemListViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.paginator.firstPage();
-    this.searchService.getTags().pipe(map(r => r.content)).subscribe(data => this.tags = data);
+    this.searchService.getTags().subscribe(data => this.tags = data);
   }
 
   selectItem(data: Item) {
