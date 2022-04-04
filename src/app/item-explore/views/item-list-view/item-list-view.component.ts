@@ -2,12 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ItemSearchService } from '@app/item-explore/services/item-search.service';
 import { ItemService } from '@app/item-explore/services/item.service';
-import { ArmorProgression } from '@app/models/armorProgression';
 import { Item } from '@app/models/item';
 import { ItemSearch } from '@app/models/itemSearch';
-import { WeaponProgression } from '@app/models/weaponProgression';
 import { DefaultPaginator } from '@app/pagination/paginator/default-paginator';
 import { Paginator } from '@app/pagination/paginator/paginator';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-item-list-view',
@@ -38,7 +37,7 @@ export class ItemListViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.paginator.firstPage();
-    this.searchService.getTags().subscribe(data => this.tags = data);
+    this.searchService.getTags().pipe(map(r => r.content)).subscribe(data => this.tags = data);
   }
 
   selectItem(data: Item) {
