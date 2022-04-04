@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { PaginationNavigationComponent } from './pagination-navigation/pagination-navigation.component';
-import { PaginationRouteNavigationComponent } from './pagination-route-navigation/pagination-route-navigation.component';
-import { PaginationPaginatorNavigationComponent } from './pagination-paginator-navigation/pagination-paginator-navigation.component';
+import { PaginationNavigationComponent } from './components/pagination-navigation/pagination-navigation.component';
+import { PaginationRouteNavigationComponent } from './components/pagination-route-navigation/pagination-route-navigation.component';
+import { PaginationPaginatorNavigationComponent } from './components/pagination-paginator-navigation/pagination-paginator-navigation.component';
 
 
 

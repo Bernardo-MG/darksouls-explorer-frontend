@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PaginatedResponse } from '@app/api/models/paginated-response';
 import { of } from 'rxjs';
-import { DefaultPaginator } from '../paginator/default-paginator';
-import { Paginator } from '../paginator/paginator';
+import { DefaultPaginator } from '../../paginator/default-paginator';
+import { Paginator } from '../../paginator/paginator';
 
 @Component({
   selector: 'pagination-route-navigation',
