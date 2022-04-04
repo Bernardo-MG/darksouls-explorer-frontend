@@ -1,5 +1,5 @@
+import { PaginatedResponse } from "@app/api/models/paginated-response";
 import { Observable } from "rxjs";
-import { Response } from '@app/api/models/response';
 import { Paginator } from "./paginator";
 
 export class DefaultPaginator implements Paginator {
@@ -14,10 +14,10 @@ export class DefaultPaginator implements Paginator {
   
     _nextEnabled: boolean = false;
 
-    loader: (page: number) => Observable<Response<any>>;
+    loader: (page: number) => Observable<PaginatedResponse<any>>;
 
     constructor(
-        load: (page: number) => Observable<Response<any>>
+        load: (page: number) => Observable<PaginatedResponse<any>>
     ) {
         this.loader = load;
     }
@@ -58,7 +58,7 @@ export class DefaultPaginator implements Paginator {
         this.loader(page).subscribe(response => this.loadData(response));
     }
 
-    private loadData(response: Response<any>){
+    private loadData(response: PaginatedResponse<any>){
       this._currentPage = response.pageNumber;
       this._data = response.content;
       this._totalPages = response.totalPages;

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { PaginatedResponse } from '@app/api/models/paginated-response';
 import { Response } from '@app/api/models/response';
 import { RequestClient } from '@app/api/request/request-client';
 import { Graph } from '@app/graph/models/graph';
@@ -18,11 +19,11 @@ export class ItemService {
     private client: RequestClient
   ) { }
 
-  getAllItems(page: number): Observable<Response<Item[]>> {
+  getAllItems(page: number): Observable<PaginatedResponse<Item[]>> {
     return this.client.request(this.itemUrl).page(page).order('name', 'asc').get();
   }
 
-  getItems(name: string, tags: string[], page: number): Observable<Response<Item[]>> {
+  getItems(name: string, tags: string[], page: number): Observable<PaginatedResponse<Item[]>> {
     return this.client.request(this.itemUrl).parameter("name", name).parameter("tags", tags).page(page).order('name', 'asc').get();
   }
 

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
+import { PaginatedResponse } from '@app/api/models/paginated-response';
 import { of } from 'rxjs';
-import { Response } from '@app/api/models/response';
 import { DefaultPaginator } from '../paginator/default-paginator';
 import { Paginator } from '../paginator/paginator';
 
@@ -11,7 +11,7 @@ import { Paginator } from '../paginator/paginator';
 })
 export class PaginatorNavigationComponent {
 
-  @Input() paginator: Paginator = new DefaultPaginator((number) => of(new Response<any>(number)));
+  @Input() paginator: Paginator = new DefaultPaginator((number) => of(new PaginatedResponse<any>(number)));
   
   constructor() { }
 
