@@ -40,7 +40,7 @@ export class PaginatedRequestClient extends RequestClient {
     return this;
   }
 
-  get<T>(): Observable<PaginatedResponse<T>> {
+  getResponse<T>(): Observable<PaginatedResponse<T>> {
     return this.http.get<PaginatedResponse<T>>(this.url, this.params).pipe(
       map((response: PaginatedResponse<T>) => { return response })
     ).pipe(

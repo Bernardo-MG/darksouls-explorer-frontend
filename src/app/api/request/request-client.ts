@@ -18,12 +18,16 @@ export class RequestClient {
   ) {
   }
 
-  get<T>(): Observable<Response<T>> {
+  getResponse<T>(): Observable<Response<T>> {
     return this.http.get<Response<T>>(this.url, this.params).pipe(
       map((response: Response<T>) => { return response })
     ).pipe(
       catchError(this.handleErrorPaged())
     );
+  }
+
+  get<T>(): Observable<T> {
+    return this.getResponse<T>().pipe(map(r => r.content));
   }
 
   request(url: string) {

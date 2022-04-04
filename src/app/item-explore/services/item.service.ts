@@ -20,19 +20,19 @@ export class ItemService {
   ) { }
 
   getAllItems(page: number): Observable<PaginatedResponse<Item[]>> {
-    return this.client.request(this.itemUrl).page(page).order('name', 'asc').get();
+    return this.client.request(this.itemUrl).page(page).order('name', 'asc').getResponse();
   }
 
   getItems(name: string, tags: string[], page: number): Observable<PaginatedResponse<Item[]>> {
-    return this.client.request(this.itemUrl).parameter("name", name).parameter("tags", tags).page(page).order('name', 'asc').get();
+    return this.client.request(this.itemUrl).parameter("name", name).parameter("tags", tags).page(page).order('name', 'asc').getResponse();
   }
 
   getItem(id: number): Observable<Item> {
-    return this.client.request(this.itemUrl + `/${id}`).get<Item>().pipe(map(r => r.content));
+    return this.client.request(this.itemUrl + `/${id}`).get();
   }
 
   getItemSources(itemId: number): Observable<ItemSource[]> {
-    return this.client.request(this.itemUrl + "/" + itemId + "/sources").get<ItemSource[]>().pipe(map(r => r.content));
+    return this.client.request(this.itemUrl + "/" + itemId + "/sources").get();
   }
 
   getItemSourcesGraph(itemId: number): Observable<Graph> {
@@ -51,11 +51,11 @@ export class ItemService {
   }
 
   getArmorStats(itemId: Number): Observable<ArmorProgression> {
-    return this.client.request(this.itemUrl + "/" + itemId + "/levels/armors").get<ArmorProgression>().pipe(map(r => r.content));
+    return this.client.request(this.itemUrl + "/" + itemId + "/levels/armors").get();
   }
 
   getWeaponStats(itemId: Number): Observable<WeaponProgression> {
-    return this.client.request(this.itemUrl + "/" + itemId + "/levels/weapons").get<WeaponProgression>().pipe(map(r => r.content));
+    return this.client.request(this.itemUrl + "/" + itemId + "/levels/weapons").get();
   }
 
 }

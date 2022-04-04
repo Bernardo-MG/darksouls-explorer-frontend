@@ -15,7 +15,7 @@ export class ProblemService {
   ) { }
 
   getProblems(page: number): Observable<PaginatedResponse<Problem>> {
-    return this.client.request(this.problemUrl).page(page).order('id', 'asc').get();
+    return this.client.request(this.problemUrl).page(page).order('id', 'asc').getResponse();
   }
 
 }

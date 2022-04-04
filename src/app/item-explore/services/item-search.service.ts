@@ -14,7 +14,7 @@ export class ItemSearchService {
   ) { }
 
   getTags():  Observable<string[]> {
-    return this.client.request(this.itemTagsUrl).get<string[]>().pipe(map(r => r.content));
+    return this.client.request(this.itemTagsUrl).get();
   }
 
 }
