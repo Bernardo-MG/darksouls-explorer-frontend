@@ -1,4 +1,4 @@
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Paginator } from "./paginator";
 
 export class RoutePaginator implements Paginator {
@@ -7,9 +7,18 @@ export class RoutePaginator implements Paginator {
 
     constructor(
         private wrapped: Paginator,
-        private router: Router
+        private router: Router,
+        route: ActivatedRoute
     ) {
         this.path = this.router.url.split('?')[0];
+
+        route.queryParamMap.subscribe(params => {
+            if (params.has('page')) {
+                this.wrapped.toPage(Number(params.get('page')));
+            } else {
+                this.wrapped.toFirstPage();
+            }
+        });
     }
 
     get data(): any[] {

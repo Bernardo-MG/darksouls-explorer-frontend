@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PaginatedResponse } from '@app/api/models/paginated-response';
 import { ItemSearchService } from '@app/item-explore/services/item-search.service';
 import { ItemService } from '@app/item-explore/services/item.service';
 import { Item } from '@app/models/item';
@@ -7,6 +8,8 @@ import { ItemSearch } from '@app/models/itemSearch';
 import { DefaultPaginator } from '@app/pagination/paginator/default-paginator';
 import { Paginator } from '@app/pagination/paginator/paginator';
 import { RoutePaginator } from '@app/pagination/paginator/route-paginator';
+import { dataTool } from 'echarts';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-item-list-view',
@@ -27,6 +30,8 @@ export class ItemListViewComponent implements OnInit {
 
   tags: string[] = [];
 
+  private itemSearch: ItemSearch | undefined = undefined;
+
   constructor(
     private service: ItemService,
     private searchService: ItemSearchService,
@@ -34,18 +39,11 @@ export class ItemListViewComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     // By default it will search for all the items
-    this.paginator = new DefaultPaginator((page) => this.service.getAllItems(page));
-    this.routePaginator = new RoutePaginator(this.paginator, router);
+    this.paginator = new DefaultPaginator((page) => this.getItems(page));
+    this.routePaginator = new RoutePaginator(this.paginator, router, route);
   }
 
   ngOnInit(): void {
-    this.route.queryParamMap.subscribe(params => {
-      if(params.has('page')){
-        this.paginator.toPage(Number(params.get('page')));
-      } else {
-        this.paginator.toFirstPage();
-      }
-    });
     this.searchService.getTags().subscribe(data => this.tags = data);
   }
 
@@ -58,8 +56,19 @@ export class ItemListViewComponent implements OnInit {
   }
 
   applySearch(search: ItemSearch) {
-    this.paginator = new DefaultPaginator((page) => this.service.getItems(search.name, search.tags, page));
     this.paginator.toFirstPage();
+  }
+
+  private getItems(page: number): Observable<PaginatedResponse<Item[]>> {
+    let data: Observable<PaginatedResponse<Item[]>>;
+
+    if(this.itemSearch){
+      data = this.service.getItems(this.itemSearch.name, this.itemSearch.tags, page);
+    } else {
+      data = this.service.getAllItems(page);
+    }
+
+    return data;
   }
 
 }
