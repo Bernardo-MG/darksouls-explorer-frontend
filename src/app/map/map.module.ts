@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { GraphModule } from '@app/graph/graph.module';
+import { MapRoutingModule } from './map-routing.module';
 import { MapViewComponent } from './map-view/map-view.component';
 import { MapService } from './services/map.service';
-import { MapRoutingModule } from './map-routing.module';
-import { GraphModule } from '@app/graph/graph.module';
 
 
 

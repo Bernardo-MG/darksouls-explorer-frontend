@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
+import { Response } from '@app/api/models/response';
+import { PaginatedRequestClient } from '@app/api/request/paginated-request-client';
+import { Graph } from '@app/graph/models/graph';
+import { Link } from '@app/graph/models/link';
+import { Node } from '@app/graph/models/node';
+import { Map } from '@app/models/map';
+import { MapConnection } from '@app/models/mapConnection';
+import { environment } from 'environments/environment';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { RequestClient } from '@app/api/request/request-client';
-import { environment } from 'environments/environment';
-import { Node } from '@app/graph/models/node';
-import { MapConnection } from '@app/models/mapConnection';
-import { Map } from '@app/models/map';
-import { Link } from '@app/graph/models/link';
-import { Response } from '@app/api/models/response';
-import { Graph } from '@app/graph/models/graph';
 
 @Injectable()
 export class MapService {
@@ -18,7 +18,7 @@ export class MapService {
   private mapConnectionUrl = environment.apiUrl + "/maps/connections";
 
   constructor(
-    private client: RequestClient
+    private client: PaginatedRequestClient
   ) { }
 
   getMapGraph(): Observable<Graph> {
@@ -26,13 +26,13 @@ export class MapService {
   }
 
   private getAllMaps(): Observable<Node[]> {
-    return this.client.request(this.mapUrl).pageSize(100).order('name', 'asc').get()
-      .pipe(map((response) => (response as Response<Map>).content.map(this.toNode)));
+    return this.client.request(this.mapUrl).pageSize(100).order('name', 'asc').getResponse()
+      .pipe(map((response) => (response as Response<Map[]>).content.map(this.toNode)));
   }
 
   private getAllMapConnections(): Observable<Link[]> {
-    return this.client.request(this.mapConnectionUrl).pageSize(100).get()
-      .pipe(map((response) => (response as Response<MapConnection>).content.map(this.toLink)));
+    return this.client.request(this.mapConnectionUrl).pageSize(100).getResponse()
+      .pipe(map((response) => (response as Response<MapConnection[]>).content.map(this.toLink)));
   }
 
   private toNode(data: Map): Node {

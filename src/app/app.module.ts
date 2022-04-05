@@ -1,12 +1,9 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-
+import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
-import { GraphModule } from './graph/graph.module';
 import { NavigationModule } from './navigation/navigation.module';
-import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -15,7 +12,6 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     AppRoutingModule,
     BrowserModule,
-    GraphModule,
     NavigationModule,
     HttpClientModule
   ],

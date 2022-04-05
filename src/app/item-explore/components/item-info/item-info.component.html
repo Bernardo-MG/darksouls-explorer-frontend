@@ -1,0 +1,41 @@
+<div class="col-1">
+    <div class="btn-group" role="group">
+        <button (click)="goBack()" type="button" class="btn btn-default">
+            <fa-icon [icon]="backIcon"></fa-icon>
+        </button>
+    </div>
+</div>
+<h1>{{data.name}}</h1>
+<ng-template ngFor let-tag [ngForOf]="data.tags">
+    <span class="badge rounded-pill bg-primary">{{tag}}</span>
+</ng-template>
+<ng-template ngFor let-desc [ngForOf]="data.description">
+    <p>{{desc}}
+</ng-template>
+<ng-template [ngIf]="sources && sources.length > 0">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Source</th>
+                <th scope="col">Relationship</th>
+                <th scope="col">Location</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-template ngFor let-source [ngForOf]="sources">
+                <tr>
+                    <td>{{source.source}}</td>
+                    <td>{{source.relationship}}</td>
+                    <td>{{source.location}}</td>
+                </tr>
+            </ng-template>
+        </tbody>
+    </table>
+    <item-source-graph [graph]="sourcesGraph"></item-source-graph>
+</ng-template>
+<ng-template [ngIf]="weaponProgression && weaponProgression.paths && weaponProgression.paths.length > 0">
+    <weapon-paths [stats]="weaponProgression"></weapon-paths>
+</ng-template>
+<ng-template [ngIf]="armorProgression && armorProgression.levels && armorProgression.levels.length > 0">
+    <app-armor-stats [stats]="armorProgression"></app-armor-stats>
+</ng-template>

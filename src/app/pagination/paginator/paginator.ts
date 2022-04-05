@@ -10,11 +10,11 @@ export interface Paginator {
   
     get currentPage(): number;
     
-    firstPage(): void;
+    toFirstPage(): void;
 
-    previousPage(): void;
+    toPreviousPage(): void;
 
-    nextPage(): void;
+    toNextPage(): void;
 
     toPage(page: number): void;
 

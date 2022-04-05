@@ -1,29 +1,33 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ItemInfoComponent } from './item-info/item-info.component';
-import { ItemService } from './services/item.service';
-import { ItemExploreRoutingModule } from './item-explore-routing.module';
-import { ItemListComponent } from './item-list/item-list.component';
-import { ItemViewComponent } from './item-view/item-view.component';
-import { PaginationModule } from '@app/pagination/pagination.module';
-import { ItemSearchComponent } from './item-search/item-search.component';
-import { ItemSearchService } from './services/item-search.service';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { GraphModule } from '@app/graph/graph.module';
+import { ItemGraphModule } from '@app/item-graph/item-graph.module';
+import { PaginationModule } from '@app/pagination/pagination.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ItemInfoComponent } from './components/item-info/item-info.component';
+import { ItemListComponent } from './components/item-list/item-list.component';
+import { ItemSearchComponent } from './components/item-search/item-search.component';
+import { ItemExploreRoutingModule } from './item-explore-routing.module';
+import { ItemSearchService } from './services/item-search.service';
+import { ItemService } from './services/item.service';
+import { ItemInfoViewComponent } from './views/item-info-view/item-info-view.component';
+import { ItemListViewComponent } from './views/item-list-view/item-list-view.component';
 
 @NgModule({
   declarations: [
     ItemInfoComponent,
     ItemListComponent,
-    ItemViewComponent,
-    ItemSearchComponent
+    ItemSearchComponent,
+    ItemListViewComponent,
+    ItemInfoViewComponent
   ],
   imports: [
     ItemExploreRoutingModule,
     CommonModule,
     PaginationModule,
     FormsModule,
-    GraphModule
+    ItemGraphModule,
+    FontAwesomeModule
   ],
   providers: [
     ItemService,

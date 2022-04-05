@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ProblemService } from '../services/problem.service';
 import { DefaultPaginator } from '@app/pagination/paginator/default-paginator';
 import { Paginator } from '@app/pagination/paginator/paginator';
+import { ProblemService } from '../services/problem.service';
 
 @Component({
   selector: 'problem-view',
@@ -17,7 +17,7 @@ export class ProblemViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.paginator.firstPage();
+    this.paginator.toFirstPage();
   }
 
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MapService } from '../services/map.service';
-import { Category } from '@app/graph/models/category';
 import { Graph } from '@app/graph/models/graph';
+import { MapService } from '../services/map.service';
 
 @Component({
   selector: 'app-map-view',
