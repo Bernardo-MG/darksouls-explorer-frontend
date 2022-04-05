@@ -35,7 +35,7 @@ export class ItemListViewComponent implements OnInit {
   ) {
     // By default it will search for all the items
     this.paginator = new DefaultPaginator((page) => this.service.getAllItems(page));
-    this.routePaginator = new RoutePaginator(this.paginator, "/items", router);
+    this.routePaginator = new RoutePaginator(this.paginator, router);
   }
 
   ngOnInit(): void {

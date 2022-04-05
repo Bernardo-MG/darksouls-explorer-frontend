@@ -3,11 +3,14 @@ import { Paginator } from "./paginator";
 
 export class RoutePaginator implements Paginator {
 
+    private path: string;
+
     constructor(
         private wrapped: Paginator,
-        private path: String,
         private router: Router
-    ) { }
+    ) {
+        this.path = this.router.url.split('?')[0];
+    }
 
     get data(): any[] {
         return this.wrapped.data;
