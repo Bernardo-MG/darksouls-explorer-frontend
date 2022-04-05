@@ -56,6 +56,7 @@ export class ItemListViewComponent implements OnInit {
   }
 
   applySearch(search: ItemSearch) {
+    this.itemSearch = search;
     this.paginator.toFirstPage();
   }
 
