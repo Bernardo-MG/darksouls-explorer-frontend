@@ -1,12 +1,19 @@
-<div class="row">
-    <div class="input-group">
-        <input type="text" class="form-control" placeholder="Name" aria-label="Name" aria-describedby="basic-addon1" [(ngModel)]="name">
-    </div>
-    <ng-template ngFor let-option [ngForOf]="selection">
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value={{option.value}} id={{option.value}} [(ngModel)]="option.selected">
-            <label class="form-check-label" for={{option.value}}>{{option.value}}</label>
+<form [formGroup]="form">
+    <div class="form-group row">
+        <label for="name" class="col-sm-2 col-form-label">Name</label>
+        <div class="col-sm-10">
+            <input formControlName="name" type="text" class="form-control" id="name">
         </div>
-    </ng-template>
+    </div>
+    <div formArrayName="tags">
+        <ng-template ngFor let-tag let-i="index" [ngForOf]="tagOptions.controls">
+            <div [formGroupName]="i">
+                <div class="form-check">
+                    <label for="{{'tag'+i}}" class="form-check-label">{{tag.value.name}}</label>
+                    <input formControlName="selected" class="form-check-input" type="checkbox" id="{{'tag'+i}}">
+                </div>
+            </div>
+        </ng-template>
+    </div>
     <button class="btn btn-primary" (click)="applySearch()">Search</button>
-</div>
+</form>

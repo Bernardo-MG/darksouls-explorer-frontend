@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ItemGraphModule } from '@app/item-graph/item-graph.module';
 import { PaginationModule } from '@app/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -26,6 +26,7 @@ import { ItemListViewComponent } from './views/item-list-view/item-list-view.com
     CommonModule,
     PaginationModule,
     FormsModule,
+    ReactiveFormsModule,
     ItemGraphModule,
     FontAwesomeModule
   ],
