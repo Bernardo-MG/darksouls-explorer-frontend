@@ -15,4 +15,16 @@ export class PaginationPaginatorNavigationComponent {
   
   constructor() { }
 
+  public moveToPage(page: number) {
+    this.paginator.toPage(page);
+  }
+
+  public movePrevious(page: number) {
+    this.paginator.toPreviousPage();
+  }
+
+  public moveNext(page: number) {
+    this.paginator.toNextPage();
+  }
+
 }

@@ -4,67 +4,43 @@ import { Paginator } from "./paginator";
 
 export class DefaultPaginator implements Paginator {
 
-    _data: any[] = [];
+    public data: any[] = [];
 
-    _currentPage: number = 0;
+    public currentPage: number = 0;
 
-    _totalPages: number = 0;
+    public totalPages: number = 0;
 
-    _previousEnabled: boolean = false;
-  
-    _nextEnabled: boolean = false;
+    public previousEnabled: boolean = false;
 
-    loader: (page: number) => Observable<PaginatedResponse<any>>;
+    public nextEnabled: boolean = false;
 
     constructor(
-        load: (page: number) => Observable<PaginatedResponse<any>>
-    ) {
-        this.loader = load;
-    }
+        private onPageChange: (page: number) => Observable<PaginatedResponse<any>>
+    ) { }
 
-    get data(): any[] {
-        return this._data;
-    }
-
-    get currentPage(): number {
-        return this._currentPage;
-    }
-
-    get totalPages(): number {
-        return this._totalPages;
-    }
-
-    get previousEnabled(): boolean {
-        return this._previousEnabled;
-    }
-
-    get nextEnabled(): boolean {
-        return this._nextEnabled;
-    }
-
-    public firstPage(): void {
+    public toFirstPage(): void {
         this.toPage(0);
     }
 
-    public previousPage(): void {
-        this.toPage(this._currentPage - 1);
+    public toPreviousPage(): void {
+        this.toPage(this.currentPage - 1);
     }
 
-    public nextPage(): void {
-        this.toPage(this._currentPage + 1);
+    public toNextPage(): void {
+        this.toPage(this.currentPage + 1);
     }
 
     public toPage(page: number): void {
-        this.loader(page).subscribe(response => this.loadData(response));
+        this.onPageChange(page).subscribe(response => this.readResponse(response));
     }
 
-    private loadData(response: PaginatedResponse<any>){
-      this._currentPage = response.pageNumber;
-      this._data = response.content;
-      this._totalPages = response.totalPages;
-  
-      this._previousEnabled = !response.first;
-      this._nextEnabled = !response.last;
+    private readResponse(response: PaginatedResponse<any>) {
+        this.currentPage = response.pageNumber;
+        this.data = response.content;
+        this.totalPages = response.totalPages;
+
+        this.previousEnabled = !response.first;
+        this.nextEnabled = !response.last;
     }
 
 }

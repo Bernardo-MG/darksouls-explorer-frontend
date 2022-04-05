@@ -17,7 +17,7 @@ export class ProblemViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.paginator.firstPage();
+    this.paginator.toFirstPage();
   }
 
 }
