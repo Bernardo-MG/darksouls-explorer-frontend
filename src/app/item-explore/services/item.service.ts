@@ -4,6 +4,7 @@ import { PaginatedRequestClient } from '@app/api/request/paginated-request-clien
 import { Graph } from '@app/graph/models/graph';
 import { ArmorProgression } from '@app/models/armorProgression';
 import { Item } from '@app/models/item';
+import { ItemSearch } from '@app/models/itemSearch';
 import { ItemSource } from '@app/models/itemSource';
 import { WeaponProgression } from '@app/models/weaponProgression';
 import { environment } from 'environments/environment';
@@ -22,8 +23,31 @@ export class ItemService {
     return this.client.request(this.itemUrl).page(page).order('name', 'asc').getResponse();
   }
 
-  getItems(name: string, tags: string[], page: number): Observable<PaginatedResponse<Item[]>> {
-    return this.client.request(this.itemUrl).parameter("name", name).parameter("tags", tags).page(page).order('name', 'asc').getResponse();
+  getItems(search: ItemSearch, page: number): Observable<PaginatedResponse<Item[]>> {
+    const tags = [];
+    const clt: PaginatedRequestClient = this.client.request(this.itemUrl);
+
+    if (search.name) {
+      clt.parameter("name", search.name);
+    }
+
+    if (search.selectors.armor) {
+      tags.push("Armor");
+    } else if (search.selectors.item) {
+      tags.push("Item");
+    } else if (search.selectors.shield) {
+      tags.push("Shield");
+    } else if (search.selectors.spell) {
+      tags.push("Spell");
+    } else if (search.selectors.weapon) {
+      tags.push("Weapon");
+    }
+
+    if (tags.length) {
+      clt.parameter("tags", tags);
+    }
+
+    return clt.page(page).order('name', 'asc').getResponse();
   }
 
   getItem(id: number): Observable<Item> {

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PaginatedResponse } from '@app/api/models/paginated-response';
-import { ItemSearchService } from '@app/item-explore/services/item-search.service';
 import { ItemService } from '@app/item-explore/services/item.service';
 import { Item } from '@app/models/item';
 import { ItemSearch } from '@app/models/itemSearch';
@@ -15,7 +14,7 @@ import { Observable } from 'rxjs';
   templateUrl: './item-list-view.component.html',
   styleUrls: ['./item-list-view.component.sass']
 })
-export class ItemListViewComponent implements OnInit {
+export class ItemListViewComponent {
 
   paginator: Paginator;
 
@@ -27,23 +26,16 @@ export class ItemListViewComponent implements OnInit {
 
   searchActive: boolean = false;
 
-  tags: string[] = [];
-
   private itemSearch: ItemSearch | undefined = undefined;
 
   constructor(
     private service: ItemService,
-    private searchService: ItemSearchService,
     private router: Router,
     private route: ActivatedRoute
   ) {
     // By default it will search for all the items
     this.paginator = new DefaultPaginator((page) => this.getItems(page));
     this.routePaginator = new RoutePaginator(this.paginator, router, route);
-  }
-
-  ngOnInit(): void {
-    this.searchService.getTags().subscribe(data => this.tags = data);
   }
 
   selectItem(data: Item) {
@@ -64,7 +56,7 @@ export class ItemListViewComponent implements OnInit {
     let data: Observable<PaginatedResponse<Item[]>>;
 
     if(this.itemSearch){
-      data = this.service.getItems(this.itemSearch.name, this.itemSearch.tags, page);
+      data = this.service.getItems(this.itemSearch, page);
     } else {
       data = this.service.getAllItems(page);
     }

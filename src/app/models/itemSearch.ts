@@ -1,4 +1,10 @@
 export interface ItemSearch {
     name: string,
-    tags: string[]
+    selectors: {
+        armor: boolean,
+        item: boolean,
+        shield: boolean,
+        spell: boolean,
+        weapon: boolean
+    }
 }

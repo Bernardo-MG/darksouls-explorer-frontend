@@ -1,7 +1,6 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ItemSearch } from '@app/models/itemSearch';
-import { ValueSelection } from '@app/models/valueSelection';
 
 
 @Component({
@@ -9,9 +8,7 @@ import { ValueSelection } from '@app/models/valueSelection';
   templateUrl: './item-search.component.html',
   styleUrls: ['./item-search.component.sass']
 })
-export class ItemSearchComponent implements OnChanges {
-
-  @Input() tags: string[] = [];
+export class ItemSearchComponent {
 
   @Output() search = new EventEmitter<ItemSearch>();
 
@@ -22,7 +19,13 @@ export class ItemSearchComponent implements OnChanges {
   ) {
     this.form = this.formBuilder.group({
       name: [""],
-      tags: this.formBuilder.array([])
+      selectors: this.formBuilder.group({
+        weapon: new FormControl(false),
+        shield: new FormControl(false),
+        armor: new FormControl(false),
+        magic: new FormControl(false),
+        item: new FormControl(false)
+      })
     });
   }
 
@@ -30,29 +33,8 @@ export class ItemSearchComponent implements OnChanges {
     return <FormArray>this.form.get('tags');
   }
 
-  ngOnChanges(): void {
-    const selection = this.tags.map(this.toSelection);
-    this.form = this.formBuilder.group({
-      name: [""],
-      tags: this.formBuilder.array(selection.map(s => this.toTagGroup(this.formBuilder, s)))
-    });
-  }
-
   applySearch() {
-    const selectedTags = this.form.value.tags.filter((t: any) => t.selected).map((t: any) => t.name);
-    const name = this.form.value.name;
-    this.search.emit({ name, tags: selectedTags });
-  }
-
-  private toSelection(tag: string): ValueSelection {
-    return { value: tag, selected: false };
-  }
-
-  private toTagGroup(fb: FormBuilder, selection: ValueSelection) {
-    return fb.group({
-      name: [selection.value],
-      selected: [selection.selected]
-    });
+    this.search.emit(this.form.value);
   }
 
 }

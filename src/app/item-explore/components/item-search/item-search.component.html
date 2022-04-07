@@ -1,19 +1,39 @@
 <form [formGroup]="form">
-    <div class="form-group row">
-        <label for="name" class="col-sm-2 col-form-label">Name</label>
-        <div class="col-sm-10">
-            <input formControlName="name" type="text" class="form-control" id="name">
-        </div>
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input formControlName="name" type="text" class="form-control" id="name">
     </div>
-    <div formArrayName="tags">
-        <ng-template ngFor let-tag let-i="index" [ngForOf]="tagOptions.controls">
-            <div [formGroupName]="i">
-                <div class="form-check">
-                    <label for="{{'tag'+i}}" class="form-check-label">{{tag.value.name}}</label>
-                    <input formControlName="selected" class="form-check-input" type="checkbox" id="{{'tag'+i}}">
-                </div>
-            </div>
-        </ng-template>
+    <div formGroupName="selectors">
+        <div class="form-check">
+            <input formControlName="weapon" class="form-check-input" type="checkbox" value="" id="checkWeapon">
+            <label class="form-check-label" for="checkWeapon">
+                Weapon
+            </label>
+        </div>
+        <div class="form-check">
+            <input formControlName="shield" class="form-check-input" type="checkbox" value="" id="checkShield">
+            <label class="form-check-label" for="checkShield">
+                Shield
+            </label>
+        </div>
+        <div class="form-check">
+            <input formControlName="armor" class="form-check-input" type="checkbox" value="" id="checkArmor">
+            <label class="form-check-label" for="checkArmor">
+                Armor
+            </label>
+        </div>
+        <div class="form-check">
+            <input formControlName="magic" class="form-check-input" type="checkbox" value="" id="checkMagic">
+            <label class="form-check-label" for="checkMagic">
+                Spell
+            </label>
+        </div>
+        <div class="form-check">
+            <input formControlName="item" class="form-check-input" type="checkbox" value="" id="checkItem">
+            <label class="form-check-label" for="checkItem">
+                Items
+            </label>
+        </div>
     </div>
     <button class="btn btn-primary" (click)="applySearch()">Search</button>
 </form>

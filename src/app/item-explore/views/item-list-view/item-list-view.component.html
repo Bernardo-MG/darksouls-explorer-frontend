@@ -1,5 +1,5 @@
 <ng-template [ngIf]="searchActive" [ngIfElse]="select">
-    <item-search [tags]="tags" (search)="applySearch($event)"></item-search>
+    <item-search (search)="applySearch($event)"></item-search>
 </ng-template>
 <ng-template #select>
     <div class="row">
