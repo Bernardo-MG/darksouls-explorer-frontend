@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
+import { RequestClient } from '@app/api/request/handlers/request-client';
+import { RequestClientOperations } from '@app/api/request/handlers/request-client-operations';
 import { PaginatedResponse } from '@app/api/request/models/paginated-response';
-import { PaginatedRequestClient } from '@app/api/request/handlers/paginated-request-client';
 import { Graph } from '@app/graph/models/graph';
 import { ArmorProgression } from '@app/models/armorProgression';
 import { Item } from '@app/models/item';
@@ -16,16 +17,16 @@ export class ItemService {
   private itemUrl = environment.apiUrl + "/items";
 
   constructor(
-    private client: PaginatedRequestClient
+    private client: RequestClient
   ) { }
 
   getAllItems(page: number): Observable<PaginatedResponse<Item[]>> {
-    return this.client.request(this.itemUrl).page(page).order('name', 'asc').getResponse();
+    return this.client.get(this.itemUrl).page(page).order('name', 'asc').getResponse();
   }
 
   getItems(search: ItemSearch, page: number): Observable<PaginatedResponse<Item[]>> {
     const selectors = [];
-    const clt: PaginatedRequestClient = this.client.request(this.itemUrl);
+    const clt: RequestClientOperations = this.client.get(this.itemUrl);
 
     if (search.name) {
       clt.parameter("name", search.name);
@@ -45,11 +46,11 @@ export class ItemService {
   }
 
   getItem(id: number): Observable<Item> {
-    return this.client.request(this.itemUrl + `/${id}`).get();
+    return this.client.get(this.itemUrl + `/${id}`).get();
   }
 
   getItemSources(itemId: number): Observable<ItemSource[]> {
-    return this.client.request(this.itemUrl + "/" + itemId + "/sources").get();
+    return this.client.get(this.itemUrl + "/" + itemId + "/sources").get();
   }
 
   getItemSourcesGraph(itemId: number): Observable<Graph> {
@@ -68,11 +69,11 @@ export class ItemService {
   }
 
   getArmorStats(itemId: Number): Observable<ArmorProgression> {
-    return this.client.request(this.itemUrl + "/" + itemId + "/levels/armors").get();
+    return this.client.get(this.itemUrl + "/" + itemId + "/levels/armors").get();
   }
 
   getWeaponStats(itemId: Number): Observable<WeaponProgression> {
-    return this.client.request(this.itemUrl + "/" + itemId + "/levels/weapons").get();
+    return this.client.get(this.itemUrl + "/" + itemId + "/levels/weapons").get();
   }
 
 }

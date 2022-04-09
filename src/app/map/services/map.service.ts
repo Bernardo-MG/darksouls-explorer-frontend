@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { RequestClient } from '@app/api/request/handlers/request-client';
 import { Response } from '@app/api/request/models/response';
-import { PaginatedRequestClient } from '@app/api/request/handlers/paginated-request-client';
 import { Graph } from '@app/graph/models/graph';
 import { Link } from '@app/graph/models/link';
 import { Node } from '@app/graph/models/node';
@@ -18,7 +18,7 @@ export class MapService {
   private mapConnectionUrl = environment.apiUrl + "/maps/connections";
 
   constructor(
-    private client: PaginatedRequestClient
+    private client: RequestClient
   ) { }
 
   getMapGraph(): Observable<Graph> {
@@ -26,12 +26,12 @@ export class MapService {
   }
 
   private getAllMaps(): Observable<Node[]> {
-    return this.client.request(this.mapUrl).pageSize(100).order('name', 'asc').getResponse()
+    return this.client.get(this.mapUrl).pageSize(100).order('name', 'asc').getResponse()
       .pipe(map((response) => (response as Response<Map[]>).content.map(this.toNode)));
   }
 
   private getAllMapConnections(): Observable<Link[]> {
-    return this.client.request(this.mapConnectionUrl).pageSize(100).getResponse()
+    return this.client.get(this.mapConnectionUrl).pageSize(100).getResponse()
       .pipe(map((response) => (response as Response<MapConnection[]>).content.map(this.toLink)));
   }
 

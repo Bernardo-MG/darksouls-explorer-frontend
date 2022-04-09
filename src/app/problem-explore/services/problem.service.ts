@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { RequestClient } from '@app/api/request/handlers/request-client';
 import { PaginatedResponse } from '@app/api/request/models/paginated-response';
-import { PaginatedRequestClient } from '@app/api/request/handlers/paginated-request-client';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { Problem } from '../models/Problem';
@@ -11,11 +11,11 @@ export class ProblemService {
   private problemUrl = environment.apiUrl + "/problems";
 
   constructor(
-    private client: PaginatedRequestClient
+    private client: RequestClient
   ) { }
 
   getProblems(page: number): Observable<PaginatedResponse<Problem>> {
-    return this.client.request(this.problemUrl).page(page).order('id', 'asc').getResponse();
+    return this.client.get(this.problemUrl).page(page).order('id', 'asc').getResponse();
   }
 
 }

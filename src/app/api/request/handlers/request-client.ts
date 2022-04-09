@@ -1,31 +1,18 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { Response } from '../models/response';
-import { AbstractClient } from './abstract-request-client';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { RequestClientOperations } from "./request-client-operations";
 
 @Injectable({
   providedIn: 'root'
 })
-export class RequestClient extends AbstractClient {
-
-  protected params: { params?: HttpParams } = {};
-
-  protected url: string = "";
+export class RequestClient {
 
   constructor(
-    http: HttpClient
-  ) {
-    super(http);
-  }
+    private http: HttpClient
+  ) { }
 
-  public getResponse<T>(): Observable<Response<T>> {
-    return this.http.get<Response<T>>(this.url, this.params).pipe(
-      map((response: Response<T>) => { return response })
-    ).pipe(
-      catchError(this.handleErrorPaged())
-    );
+  public get(url: string): RequestClientOperations {
+    return new RequestClientOperations(this.http, url);
   }
 
 }
