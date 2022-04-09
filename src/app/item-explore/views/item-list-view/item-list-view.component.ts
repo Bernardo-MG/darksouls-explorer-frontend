@@ -4,9 +4,9 @@ import { PaginatedResponse } from '@app/api/models/paginated-response';
 import { ItemService } from '@app/item-explore/services/item.service';
 import { Item } from '@app/models/item';
 import { ItemSearch } from '@app/models/itemSearch';
-import { DefaultPaginator } from '@app/pagination/paginator/default-paginator';
-import { Paginator } from '@app/pagination/paginator/paginator';
-import { RoutePaginator } from '@app/pagination/paginator/route-paginator';
+import { DefaultPaginator } from '@app/pagination/handlers/default-paginator';
+import { Paginator } from '@app/pagination/handlers/paginator';
+import { RoutePaginator } from '@app/pagination/handlers/route-paginator';
 import { Observable } from 'rxjs';
 
 @Component({

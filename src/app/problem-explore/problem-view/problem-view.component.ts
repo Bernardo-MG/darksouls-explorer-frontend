@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DefaultPaginator } from '@app/pagination/paginator/default-paginator';
-import { Paginator } from '@app/pagination/paginator/paginator';
+import { DefaultPaginator } from '@app/pagination/handlers/default-paginator';
+import { Paginator } from '@app/pagination/handlers/paginator';
 import { ProblemService } from '../services/problem.service';
 
 @Component({
