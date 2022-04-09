@@ -26,7 +26,7 @@ export class MapService {
   }
 
   private getAllMaps(): Observable<Node[]> {
-    return this.client.get(this.mapUrl).pageSize(100).order('name', 'asc').request()
+    return this.client.get(this.mapUrl).pageSize(100).orderAscendingBy('name').request()
       .pipe(map((response) => (response as Response<Map[]>).content.map(this.toNode)));
   }
 

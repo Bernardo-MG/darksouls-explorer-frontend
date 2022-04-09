@@ -21,7 +21,7 @@ export class ItemService {
   ) { }
 
   getAllItems(page: number): Observable<Response<Item[]>> {
-    return this.client.get(this.itemUrl).page(page).order('name', 'asc').request();
+    return this.client.get(this.itemUrl).page(page).orderAscendingBy('name').request();
   }
 
   getItems(search: ItemSearch, page: number): Observable<Response<Item[]>> {
@@ -42,7 +42,7 @@ export class ItemService {
       clt.parameter("selectors", selectors);
     }
 
-    return clt.parameter("search", search).page(page).order('name', 'asc').request();
+    return clt.parameter("search", search).page(page).orderAscendingBy('name').request();
   }
 
   getItem(id: number): Observable<Item> {

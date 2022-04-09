@@ -15,7 +15,7 @@ export class ProblemService {
   ) { }
 
   getProblems(page: number): Observable<Response<Problem>> {
-    return this.client.get(this.problemUrl).page(page).order('id', 'asc').request();
+    return this.client.get(this.problemUrl).page(page).orderAscendingBy('id').request();
   }
 
 }

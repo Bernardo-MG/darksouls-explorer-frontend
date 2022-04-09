@@ -23,17 +23,13 @@ export class GetOperations {
   public requestUnwrapped<T>(): Observable<T> {
     return this.request<T>().pipe(map(r => r.content));
   }
-
-  public order(field: string, direction: string): GetOperations {
-    let prms: HttpParams;
-
-    prms = this.getHttpParams();
-
-    prms = prms.append('sort', `${field},${direction}`);
-
-    this.params = { params: prms };
-
-    return this;
+  
+  public orderAscendingBy(field: string): GetOperations {
+    return this.orderBy(field, "asc");
+  }
+  
+  public orderDescendingBy(field: string): GetOperations {
+    return this.orderBy(field, "desc");
   }
 
   public page(page: number): GetOperations {
@@ -66,6 +62,18 @@ export class GetOperations {
     prms = this.getHttpParams();
 
     prms = prms.append(name, value);
+
+    this.params = { params: prms };
+
+    return this;
+  }
+
+  private orderBy(field: string, direction: string): GetOperations {
+    let prms: HttpParams;
+
+    prms = this.getHttpParams();
+
+    prms = prms.append('sort', `${field},${direction}`);
 
     this.params = { params: prms };
 
