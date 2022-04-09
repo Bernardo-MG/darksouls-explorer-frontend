@@ -20,29 +20,27 @@ export class ItemService {
     private client: RequestClient
   ) { }
 
-  getAllItems(page: number): Observable<Response<Item[]>> {
-    return this.client.get(this.itemUrl).page(page).orderAscendingBy('name').request();
-  }
-
-  getItems(search: ItemSearch, page: number): Observable<Response<Item[]>> {
+  getItems(search: ItemSearch | undefined, page: number): Observable<Response<Item[]>> {
     const selectors = [];
     const clt: GetOperations = this.client.get(this.itemUrl);
 
-    if (search.name) {
-      clt.parameter("name", search.name);
-    }
-
-    for (const [key, val] of Object.entries(search.selectors)) {
-      if (val) {
-        selectors.push(key);
+    if(search){
+      if (search.name) {
+        clt.parameter("name", search.name);
+      }
+  
+      for (const [key, val] of Object.entries(search.selectors)) {
+        if (val) {
+          selectors.push(key);
+        }
+      }
+  
+      if (selectors.length) {
+        clt.parameter("selectors", selectors);
       }
     }
 
-    if (selectors.length) {
-      clt.parameter("selectors", selectors);
-    }
-
-    return clt.parameter("search", search).page(page).orderAscendingBy('name').request();
+    return clt.page(page).orderAscendingBy('name').request();
   }
 
   getItem(id: number): Observable<Item> {

@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, Query } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Paginator } from '@app/api/pagination/handlers/paginator';
 import { RoutePaginator } from '@app/api/pagination/handlers/route-paginator';
+import { QueryHandler } from '@app/api/query/handlers/query';
 import { Response } from '@app/api/request/models/response';
 import { ItemService } from '@app/item-explore/services/item.service';
 import { Item } from '@app/models/item';
 import { ItemSearch } from '@app/models/itemSearch';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 @Component({
   selector: 'app-item-list-view',
@@ -35,21 +36,7 @@ export class ItemListViewComponent {
     // By default it will search for all the items
     this.paginator = new RoutePaginator(router);
 
-    route.queryParamMap.subscribe(params => {
-      if (params.has('page')) {
-        const pageNumber = Number(params.get('page'));
-        this.paginator.currentPage = pageNumber;
-      } else {
-        this.paginator.currentPage = 0;
-      }
-
-      this.getItems(this.paginator.currentPage).subscribe(r => this.handleResponse(r));
-    });
-  }
-
-  private handleResponse(response: Response<Item[]>){
-    this.data = response.content;
-    this.paginator.setPagination(response);
+    const query = new QueryHandler(route, (page) => this.getItems(page), this.paginator);
   }
 
   selectItem(data: Item) {
@@ -67,15 +54,7 @@ export class ItemListViewComponent {
   }
 
   private getItems(page: number): Observable<Response<Item[]>> {
-    let data: Observable<Response<Item[]>>;
-
-    if (this.itemSearch) {
-      data = this.service.getItems(this.itemSearch, page);
-    } else {
-      data = this.service.getAllItems(page);
-    }
-
-    return data;
+    return this.service.getItems(this.itemSearch, page).pipe(tap(r => this.data = r.content));
   }
 
 }
