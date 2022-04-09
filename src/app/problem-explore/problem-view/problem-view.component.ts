@@ -13,7 +13,7 @@ export class ProblemViewComponent implements OnInit {
 
   data: Problem[] = [];
 
-  paginator: Paginator = new DefaultPaginator((page) => this.service.getProblems(page));
+  paginator: Paginator = new DefaultPaginator();
 
   constructor(
     private service: ProblemService

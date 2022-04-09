@@ -1,36 +1,32 @@
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { PageInfo } from "../models/page-info";
-import { Paginator } from "./paginator";
+import { DefaultPaginator } from "./default-paginator";
 
-export class RoutePaginator implements Paginator {
+export class RoutePaginator extends DefaultPaginator {
+
+    public currentPage: number = 0;
+
+    public totalPages: number = 0;
+
+    public previousEnabled: boolean = false;
+
+    public nextEnabled: boolean = false;
 
     private path: string;
 
     constructor(
-        private wrapped: Paginator,
         private router: Router
     ) {
+        super();
         this.path = this.router.url.split('?')[0];
     }
 
-    get currentPage(): number {
-        return this.wrapped.currentPage;
-    }
-
-    get previousEnabled(): boolean {
-        return this.wrapped.previousEnabled;
-    }
-
-    get nextEnabled(): boolean {
-        return this.wrapped.nextEnabled;
-    }
-
-    get totalPages(): number {
-        return this.wrapped.totalPages;
-    }
-
     public setPagination(page: PageInfo): void {
-        this.wrapped.setPagination(page);
+        this.currentPage = page.pageNumber;
+        this.totalPages = page.totalPages;
+
+        this.previousEnabled = !page.first;
+        this.nextEnabled = !page.last;
     }
 
     public toFirstPage(): void {
@@ -38,11 +34,11 @@ export class RoutePaginator implements Paginator {
     }
 
     public toPreviousPage(): void {
-        this.toPage(this.wrapped.currentPage - 1);
+        this.toPage(this.currentPage - 1);
     }
 
     public toNextPage(): void {
-        this.toPage(this.wrapped.currentPage + 1);
+        this.toPage(this.currentPage + 1);
     }
 
     public toPage(page: number): void {

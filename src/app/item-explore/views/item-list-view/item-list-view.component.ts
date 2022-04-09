@@ -1,14 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PaginatedResponse } from '@app/api/models/paginated-response';
 import { ItemService } from '@app/item-explore/services/item.service';
 import { Item } from '@app/models/item';
 import { ItemSearch } from '@app/models/itemSearch';
-import { DefaultPaginator } from '@app/pagination/handlers/default-paginator';
 import { Paginator } from '@app/pagination/handlers/paginator';
 import { RoutePaginator } from '@app/pagination/handlers/route-paginator';
-import { PageInfo } from '@app/pagination/models/page-info';
-import { map, Observable, tap, window } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-item-list-view',
@@ -18,8 +16,6 @@ import { map, Observable, tap, window } from 'rxjs';
 export class ItemListViewComponent {
 
   paginator: Paginator;
-
-  routePaginator: Paginator;
 
   items: Item[] = [];
 
@@ -37,8 +33,7 @@ export class ItemListViewComponent {
     private route: ActivatedRoute
   ) {
     // By default it will search for all the items
-    this.paginator = new DefaultPaginator((page) => this.getItems(page));
-    this.routePaginator = new RoutePaginator(this.paginator, router);
+    this.paginator = new RoutePaginator(router);
 
     route.queryParamMap.subscribe(params => {
       if (params.has('page')) {
