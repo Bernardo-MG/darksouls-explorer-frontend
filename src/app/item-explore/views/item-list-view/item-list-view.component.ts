@@ -33,10 +33,8 @@ export class ItemListViewComponent {
     private router: Router,
     private route: ActivatedRoute
   ) {
-    // By default it will search for all the items
-    this.paginator = new RoutePaginator(router);
-
-    const query = new QueryHandler(route, (page) => this.getItems(page), this.paginator);
+    const query = new QueryHandler(router, route, (page) => this.getItems(page));
+    this.paginator = query.paginator;
   }
 
   selectItem(data: Item) {
