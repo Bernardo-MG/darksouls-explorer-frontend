@@ -1,24 +1,30 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { map, Observable } from 'rxjs';
+import { Response } from '../models/response';
 
 export abstract class AbstractClient {
 
   protected params: { params?: HttpParams } = {};
 
   protected url: string = "";
-  
+
   constructor(
     protected http: HttpClient
   ) {
   }
 
-  request(url: string) {
+  public get<T>(): Observable<T> {
+    return this.getResponse<T>().pipe(map(r => r.content));
+  }
+
+  public request(url: string) {
     this.params = {};
 
     this.url = url;
     return this;
   }
 
-  order(field: string, direction: string) {
+  public order(field: string, direction: string) {
     let prms: HttpParams;
 
     prms = this.getHttpParams();
@@ -30,7 +36,7 @@ export abstract class AbstractClient {
     return this;
   }
 
-  parameter(name: string, value: any) {
+  public parameter(name: string, value: any) {
     let prms: HttpParams;
 
     prms = this.getHttpParams();
@@ -41,6 +47,8 @@ export abstract class AbstractClient {
 
     return this;
   }
+
+  protected abstract getResponse<T>(): Observable<Response<T>>;
 
   protected getHttpParams() {
     let prms: HttpParams;

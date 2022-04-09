@@ -3,20 +3,20 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { PaginatedResponse } from '../models/paginated-response';
-import { RequestClient } from './request-client';
+import { AbstractClient } from './abstract-request-client';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PaginatedRequestClient extends RequestClient {
-  
+export class PaginatedRequestClient extends AbstractClient {
+
   constructor(
     http: HttpClient
   ) {
     super(http);
   }
 
-  page(page: number) {
+  public page(page: number) {
     let prms: HttpParams;
 
     prms = this.getHttpParams();
@@ -28,7 +28,7 @@ export class PaginatedRequestClient extends RequestClient {
     return this;
   }
 
-  pageSize(size: number) {
+  public pageSize(size: number) {
     let prms: HttpParams;
 
     prms = this.getHttpParams();
@@ -40,7 +40,7 @@ export class PaginatedRequestClient extends RequestClient {
     return this;
   }
 
-  getResponse<T>(): Observable<PaginatedResponse<T>> {
+  public getResponse<T>(): Observable<PaginatedResponse<T>> {
     return this.http.get<PaginatedResponse<T>>(this.url, this.params).pipe(
       map((response: PaginatedResponse<T>) => { return response })
     ).pipe(
