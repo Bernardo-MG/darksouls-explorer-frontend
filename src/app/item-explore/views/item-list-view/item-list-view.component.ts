@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PaginatedResponse } from '@app/api/models/paginated-response';
+import { PaginatedResponse } from '@app/api/request/models/paginated-response';
 import { ItemService } from '@app/item-explore/services/item.service';
 import { Item } from '@app/models/item';
 import { ItemSearch } from '@app/models/itemSearch';
-import { Paginator } from '@app/pagination/handlers/paginator';
-import { RoutePaginator } from '@app/pagination/handlers/route-paginator';
+import { Paginator } from '@app/api/pagination/handlers/paginator';
+import { RoutePaginator } from '@app/api/pagination/handlers/route-paginator';
 import { Observable } from 'rxjs';
 
 @Component({

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { PaginatedResponse } from '@app/api/models/paginated-response';
-import { PaginatedRequestClient } from '@app/api/request/paginated-request-client';
+import { PaginatedResponse } from '@app/api/request/models/paginated-response';
+import { PaginatedRequestClient } from '@app/api/request/handlers/paginated-request-client';
 import { Graph } from '@app/graph/models/graph';
 import { ArmorProgression } from '@app/models/armorProgression';
 import { Item } from '@app/models/item';

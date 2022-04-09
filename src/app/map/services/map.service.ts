@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@app/api/models/response';
-import { PaginatedRequestClient } from '@app/api/request/paginated-request-client';
+import { Response } from '@app/api/request/models/response';
+import { PaginatedRequestClient } from '@app/api/request/handlers/paginated-request-client';
 import { Graph } from '@app/graph/models/graph';
 import { Link } from '@app/graph/models/link';
 import { Node } from '@app/graph/models/node';

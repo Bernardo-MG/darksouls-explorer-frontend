@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { PaginatedResponse } from '@app/api/models/paginated-response';
-import { PaginatedRequestClient } from '@app/api/request/paginated-request-client';
+import { PaginatedResponse } from '@app/api/request/models/paginated-response';
+import { PaginatedRequestClient } from '@app/api/request/handlers/paginated-request-client';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { Problem } from '../models/Problem';

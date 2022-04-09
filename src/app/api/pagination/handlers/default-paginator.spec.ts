@@ -1,4 +1,4 @@
-import { PaginatedResponse } from '@app/api/models/paginated-response';
+import { PaginatedResponse } from '@app/api/request/models/paginated-response';
 import { of } from 'rxjs';
 import { DefaultPaginator } from './default-paginator';
 
