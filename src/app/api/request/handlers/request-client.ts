@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { RequestClientOperations } from "./request-client-operations";
+import { GetOperations } from "./get-operations";
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +11,8 @@ export class RequestClient {
     private http: HttpClient
   ) { }
 
-  public get(url: string): RequestClientOperations {
-    return new RequestClientOperations(this.http, url);
+  public get(url: string): GetOperations {
+    return new GetOperations(this.http, url);
   }
 
 }

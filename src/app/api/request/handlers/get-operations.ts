@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Response } from '../models/response';
 
-export class RequestClientOperations {
+export class GetOperations {
 
   protected params: { params?: HttpParams } = {};
 
@@ -12,11 +12,19 @@ export class RequestClientOperations {
     private queryUrl: string
   ) { }
 
-  public get<T>(): Observable<T> {
-    return this.getResponse<T>().pipe(map(r => r.content));
+  public request<T>(): Observable<Response<T>> {
+    return this.http.get<Response<T>>(this.queryUrl, this.params).pipe(
+      map((response: Response<T>) => { return response })
+    ).pipe(
+      catchError(this.handleError())
+    );
   }
 
-  public order(field: string, direction: string): RequestClientOperations {
+  public requestUnwrapped<T>(): Observable<T> {
+    return this.request<T>().pipe(map(r => r.content));
+  }
+
+  public order(field: string, direction: string): GetOperations {
     let prms: HttpParams;
 
     prms = this.getHttpParams();
@@ -28,19 +36,7 @@ export class RequestClientOperations {
     return this;
   }
 
-  public parameter(name: string, value: any): RequestClientOperations {
-    let prms: HttpParams;
-
-    prms = this.getHttpParams();
-
-    prms = prms.append(name, value);
-
-    this.params = { params: prms };
-
-    return this;
-  }
-
-  public page(page: number): RequestClientOperations {
+  public page(page: number): GetOperations {
     let prms: HttpParams;
 
     prms = this.getHttpParams();
@@ -52,7 +48,7 @@ export class RequestClientOperations {
     return this;
   }
 
-  public pageSize(size: number): RequestClientOperations {
+  public pageSize(size: number): GetOperations {
     let prms: HttpParams;
 
     prms = this.getHttpParams();
@@ -64,12 +60,16 @@ export class RequestClientOperations {
     return this;
   }
 
-  public getResponse<T>(): Observable<Response<T>> {
-    return this.http.get<Response<T>>(this.queryUrl, this.params).pipe(
-      map((response: Response<T>) => { return response })
-    ).pipe(
-      catchError(this.handleErrorPaged())
-    );
+  public parameter(name: string, value: any): GetOperations {
+    let prms: HttpParams;
+
+    prms = this.getHttpParams();
+
+    prms = prms.append(name, value);
+
+    this.params = { params: prms };
+
+    return this;
   }
 
   private getHttpParams(): HttpParams {
@@ -85,7 +85,7 @@ export class RequestClientOperations {
     return prms;
   }
 
-  private handleErrorPaged() {
+  private handleError() {
     return (error: any) => {
 
       console.error(error);
