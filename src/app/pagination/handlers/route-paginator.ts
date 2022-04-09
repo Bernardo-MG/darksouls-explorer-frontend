@@ -1,4 +1,5 @@
 import { ActivatedRoute, Router } from "@angular/router";
+import { PageInfo } from "../models/page-info";
 import { Paginator } from "./paginator";
 
 export class RoutePaginator implements Paginator {
@@ -7,22 +8,9 @@ export class RoutePaginator implements Paginator {
 
     constructor(
         private wrapped: Paginator,
-        private router: Router,
-        route: ActivatedRoute
+        private router: Router
     ) {
         this.path = this.router.url.split('?')[0];
-
-        route.queryParamMap.subscribe(params => {
-            if (params.has('page')) {
-                this.wrapped.toPage(Number(params.get('page')));
-            } else {
-                this.wrapped.toFirstPage();
-            }
-        });
-    }
-
-    get data(): any[] {
-        return this.wrapped.data;
     }
 
     get currentPage(): number {
@@ -39,6 +27,10 @@ export class RoutePaginator implements Paginator {
 
     get totalPages(): number {
         return this.wrapped.totalPages;
+    }
+
+    public setPagination(page: PageInfo): void {
+        this.wrapped.setPagination(page);
     }
 
     public toFirstPage(): void {
