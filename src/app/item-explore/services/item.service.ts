@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { RequestClient } from '@app/api/request/handlers/request-client';
 import { RequestClientOperations } from '@app/api/request/handlers/request-client-operations';
-import { PaginatedResponse } from '@app/api/request/models/paginated-response';
+import { Response } from '@app/api/request/models/response';
 import { Graph } from '@app/graph/models/graph';
 import { ArmorProgression } from '@app/models/armorProgression';
 import { Item } from '@app/models/item';
@@ -20,11 +20,11 @@ export class ItemService {
     private client: RequestClient
   ) { }
 
-  getAllItems(page: number): Observable<PaginatedResponse<Item[]>> {
+  getAllItems(page: number): Observable<Response<Item[]>> {
     return this.client.get(this.itemUrl).page(page).order('name', 'asc').getResponse();
   }
 
-  getItems(search: ItemSearch, page: number): Observable<PaginatedResponse<Item[]>> {
+  getItems(search: ItemSearch, page: number): Observable<Response<Item[]>> {
     const selectors = [];
     const clt: RequestClientOperations = this.client.get(this.itemUrl);
 

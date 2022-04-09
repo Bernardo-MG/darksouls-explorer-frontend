@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PaginatedResponse } from '@app/api/request/models/paginated-response';
+import { Paginator } from '@app/api/pagination/handlers/paginator';
+import { RoutePaginator } from '@app/api/pagination/handlers/route-paginator';
+import { Response } from '@app/api/request/models/response';
 import { ItemService } from '@app/item-explore/services/item.service';
 import { Item } from '@app/models/item';
 import { ItemSearch } from '@app/models/itemSearch';
-import { Paginator } from '@app/api/pagination/handlers/paginator';
-import { RoutePaginator } from '@app/api/pagination/handlers/route-paginator';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -47,7 +47,7 @@ export class ItemListViewComponent {
     });
   }
 
-  private handleResponse(response: PaginatedResponse<Item[]>){
+  private handleResponse(response: Response<Item[]>){
     this.data = response.content;
     this.paginator.setPagination(response);
   }
@@ -66,8 +66,8 @@ export class ItemListViewComponent {
     this.searchActive = false;
   }
 
-  private getItems(page: number): Observable<PaginatedResponse<Item[]>> {
-    let data: Observable<PaginatedResponse<Item[]>>;
+  private getItems(page: number): Observable<Response<Item[]>> {
+    let data: Observable<Response<Item[]>>;
 
     if (this.itemSearch) {
       data = this.service.getItems(this.itemSearch, page);

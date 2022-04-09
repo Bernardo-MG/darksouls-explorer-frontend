@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { PaginatedResponse } from '../models/paginated-response';
+import { Response } from '../models/response';
 
 export class RequestClientOperations {
 
@@ -64,9 +64,9 @@ export class RequestClientOperations {
     return this;
   }
 
-  public getResponse<T>(): Observable<PaginatedResponse<T>> {
-    return this.http.get<PaginatedResponse<T>>(this.queryUrl, this.params).pipe(
-      map((response: PaginatedResponse<T>) => { return response })
+  public getResponse<T>(): Observable<Response<T>> {
+    return this.http.get<Response<T>>(this.queryUrl, this.params).pipe(
+      map((response: Response<T>) => { return response })
     ).pipe(
       catchError(this.handleErrorPaged())
     );

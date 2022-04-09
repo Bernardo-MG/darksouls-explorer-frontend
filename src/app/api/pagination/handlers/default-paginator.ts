@@ -14,8 +14,16 @@ export class DefaultPaginator implements Paginator {
     constructor() { }
 
     public setPagination(page: PageInfo): void {
-        this.currentPage = page.pageNumber;
-        this.totalPages = page.totalPages;
+        if(page.pageNumber){
+            this.currentPage = page.pageNumber;
+        } else {
+            this.currentPage = 0;
+        }
+        if(page.totalPages){
+            this.totalPages = page.totalPages;
+        } else {
+            this.totalPages = 0;
+        }
 
         this.previousEnabled = !page.first;
         this.nextEnabled = !page.last;
