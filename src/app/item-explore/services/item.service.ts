@@ -24,30 +24,24 @@ export class ItemService {
   }
 
   getItems(search: ItemSearch, page: number): Observable<PaginatedResponse<Item[]>> {
-    const tags = [];
+    const selectors = [];
     const clt: PaginatedRequestClient = this.client.request(this.itemUrl);
 
     if (search.name) {
       clt.parameter("name", search.name);
     }
 
-    if (search.selectors.armor) {
-      tags.push("Armor");
-    } else if (search.selectors.item) {
-      tags.push("Item");
-    } else if (search.selectors.shield) {
-      tags.push("Shield");
-    } else if (search.selectors.spell) {
-      tags.push("Spell");
-    } else if (search.selectors.weapon) {
-      tags.push("Weapon");
+    for (const [key, val] of Object.entries(search.selectors)) {
+      if (val) {
+        selectors.push(key);
+      }
     }
 
-    if (tags.length) {
-      clt.parameter("tags", tags);
+    if (selectors.length) {
+      clt.parameter("selectors", selectors);
     }
 
-    return clt.page(page).order('name', 'asc').getResponse();
+    return clt.parameter("search", search).page(page).order('name', 'asc').getResponse();
   }
 
   getItem(id: number): Observable<Item> {

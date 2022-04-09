@@ -23,7 +23,7 @@ export class ItemSearchComponent {
         weapon: new FormControl(false),
         shield: new FormControl(false),
         armor: new FormControl(false),
-        magic: new FormControl(false),
+        spell: new FormControl(false),
         item: new FormControl(false)
       })
     });
