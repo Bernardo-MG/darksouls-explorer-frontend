@@ -40,15 +40,15 @@ export class ItemService {
       }
     }
 
-    return clt.page({ page, size: 20 }).sort({property:'name',order:'asc'}).request();
+    return clt.page({ page, size: 20 }).sort({property:'name',order:'asc'}).fetch();
   }
 
   getItem(id: number): Observable<Item> {
-    return this.client.get<Item>(this.itemUrl + `/${id}`).requestOneUnwrapped();
+    return this.client.get<Item>(this.itemUrl + `/${id}`).fetchOneUnwrapped();
   }
 
   getItemSources(itemId: number): Observable<ItemSource[]> {
-    return this.client.get<ItemSource[]>(this.itemUrl + "/" + itemId + "/sources").requestOneUnwrapped();
+    return this.client.get<ItemSource[]>(this.itemUrl + "/" + itemId + "/sources").fetchOneUnwrapped();
   }
 
   getItemSourcesGraph(itemId: number): Observable<Graph> {
@@ -67,11 +67,11 @@ export class ItemService {
   }
 
   getArmorStats(itemId: Number): Observable<ArmorProgression> {
-    return this.client.get<ArmorProgression>(this.itemUrl + "/" + itemId + "/levels/armors").requestOneUnwrapped();
+    return this.client.get<ArmorProgression>(this.itemUrl + "/" + itemId + "/levels/armors").fetchOneUnwrapped();
   }
 
   getWeaponStats(itemId: Number): Observable<WeaponProgression> {
-    return this.client.get<WeaponProgression>(this.itemUrl + "/" + itemId + "/levels/weapons").requestOneUnwrapped();
+    return this.client.get<WeaponProgression>(this.itemUrl + "/" + itemId + "/levels/weapons").fetchOneUnwrapped();
   }
 
 }

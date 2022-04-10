@@ -15,7 +15,7 @@ export class ProblemService {
   ) { }
 
   getProblems(page: number): Observable<Response<Problem[]>> {
-    return this.client.get<Problem>(this.problemUrl).page({ page, size: 20 }).sort({ property: 'id', order: 'asc' }).request();
+    return this.client.get<Problem>(this.problemUrl).page({ page, size: 20 }).sort({ property: 'id', order: 'asc' }).fetch();
   }
 
 }

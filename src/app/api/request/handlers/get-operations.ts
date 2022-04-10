@@ -14,7 +14,7 @@ export class GetOperations<T> {
     private queryUrl: string
   ) { }
 
-  public request(): Observable<Response<T[]>> {
+  public fetch(): Observable<Response<T[]>> {
     return this.http.get<Response<T[]>>(this.queryUrl, this.params).pipe(
       map((response: Response<T[]>) => { return response })
     ).pipe(
@@ -22,11 +22,11 @@ export class GetOperations<T> {
     );
   }
 
-  public requestUnwrapped(): Observable<T[]> {
-    return this.request().pipe(map(r => r.content));
+  public fetchUnwrapped(): Observable<T[]> {
+    return this.fetch().pipe(map(r => r.content));
   }
 
-  public requestOne(): Observable<Response<T>> {
+  public fetchOne(): Observable<Response<T>> {
     return this.http.get<Response<T>>(this.queryUrl, this.params).pipe(
       map((response: Response<T>) => { return response })
     ).pipe(
@@ -34,10 +34,10 @@ export class GetOperations<T> {
     );
   }
 
-  public requestOneUnwrapped(): Observable<T> {
-    return this.requestOne().pipe(map(r => r.content));
+  public fetchOneUnwrapped(): Observable<T> {
+    return this.fetchOne().pipe(map(r => r.content));
   }
-  
+
   public sort(sort: Sort<T>): GetOperations<T> {
     let prms: HttpParams;
 

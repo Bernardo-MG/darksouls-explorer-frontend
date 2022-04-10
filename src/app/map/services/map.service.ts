@@ -26,12 +26,12 @@ export class MapService {
   }
 
   private getAllMaps(): Observable<Node[]> {
-    return this.client.get<Map>(this.mapUrl).sort({property:'name',order:'asc'}).request()
+    return this.client.get<Map>(this.mapUrl).sort({property:'name',order:'asc'}).fetch()
       .pipe(map((response) => (response as Response<Map[]>).content.map(this.toNode)));
   }
 
   private getAllMapConnections(): Observable<Link[]> {
-    return this.client.get(this.mapConnectionUrl).request()
+    return this.client.get(this.mapConnectionUrl).fetch()
       .pipe(map((response) => (response as Response<MapConnection[]>).content.map(this.toLink)));
   }
 
