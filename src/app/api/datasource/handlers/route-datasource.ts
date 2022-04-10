@@ -4,7 +4,7 @@ import { RoutePaginator } from "@app/api/pagination/handlers/route-paginator";
 import { Response } from '@app/api/request/models/response';
 import { Observable, tap } from "rxjs";
 
-export class Datasource {
+export class RouteDatasource {
 
   public paginator: Paginator;
 

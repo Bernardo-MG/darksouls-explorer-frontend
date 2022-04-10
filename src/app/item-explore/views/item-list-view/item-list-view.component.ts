@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Datasource } from '@app/api/datasource/handlers/datasource';
+import { RouteDatasource } from '@app/api/datasource/handlers/route-datasource';
 import { DatasourceBuilder } from '@app/api/datasource/handlers/datasource-builder';
 import { Paginator } from '@app/api/pagination/handlers/paginator';
 import { ItemService } from '@app/item-explore/services/item.service';
@@ -16,11 +16,9 @@ export class ItemListViewComponent {
 
   paginator: Paginator;
 
-  items: Item[] = [];
-
   searchActive: boolean = false;
 
-  datasource: Datasource;
+  datasource: RouteDatasource;
 
   constructor(
     private service: ItemService,
