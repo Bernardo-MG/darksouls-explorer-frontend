@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { DatasourceBuilder } from '@app/api/datasource/handlers/datasource-builder';
+import { RouteDatasource } from '@app/api/datasource/handlers/route-datasource';
 import { DefaultPaginator } from '@app/api/pagination/handlers/default-paginator';
 import { Paginator } from '@app/api/pagination/handlers/paginator';
-import { Problem } from '../../models/Problem';
 import { ProblemService } from '../../services/problem.service';
 
 @Component({
@@ -11,13 +12,17 @@ import { ProblemService } from '../../services/problem.service';
 })
 export class ProblemViewComponent implements OnInit {
 
-  data: Problem[] = [];
-
   paginator: Paginator = new DefaultPaginator();
 
+  datasource: RouteDatasource;
+
   constructor(
-    private service: ProblemService
-  ) { }
+    private service: ProblemService,
+    datasourceBuilder: DatasourceBuilder
+  ) {
+    this.datasource = datasourceBuilder.build((page, search) => this.service.getProblems(page));
+    this.paginator = this.datasource.paginator;
+  }
 
   ngOnInit(): void {
     this.paginator.toFirstPage();
