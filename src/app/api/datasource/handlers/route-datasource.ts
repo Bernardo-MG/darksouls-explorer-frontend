@@ -4,16 +4,16 @@ import { RoutePaginator } from "@app/api/pagination/handlers/route-paginator";
 import { Response } from '@app/api/request/models/response';
 import { Observable, tap } from "rxjs";
 
-export class RouteDatasource {
+export class RouteDatasource<Type> {
 
   public paginator: Paginator;
 
-  public data: any;
+  public data: Type[] = [];
 
   constructor(
     router: Router,
     route: ActivatedRoute,
-    private read: (page: number, search: any) => Observable<Response<any>>
+    private read: (page: number, search: any) => Observable<Response<Type[]>>
   ) {
     this.paginator = new RoutePaginator(router);
 

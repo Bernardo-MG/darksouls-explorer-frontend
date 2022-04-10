@@ -18,7 +18,7 @@ export class ItemListViewComponent {
 
   searchActive: boolean = false;
 
-  datasource: RouteDatasource;
+  datasource: RouteDatasource<Item>;
 
   constructor(
     private service: ItemService,

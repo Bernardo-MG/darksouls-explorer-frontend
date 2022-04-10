@@ -3,6 +3,7 @@ import { DatasourceBuilder } from '@app/api/datasource/handlers/datasource-build
 import { RouteDatasource } from '@app/api/datasource/handlers/route-datasource';
 import { DefaultPaginator } from '@app/api/pagination/handlers/default-paginator';
 import { Paginator } from '@app/api/pagination/handlers/paginator';
+import { Problem } from '@app/problem-explore/models/Problem';
 import { ProblemService } from '../../services/problem.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class ProblemViewComponent implements OnInit {
 
   paginator: Paginator = new DefaultPaginator();
 
-  datasource: RouteDatasource;
+  datasource: RouteDatasource<Problem>;
 
   constructor(
     private service: ProblemService,

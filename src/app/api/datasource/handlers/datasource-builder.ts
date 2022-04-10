@@ -14,7 +14,7 @@ export class DatasourceBuilder {
     private route: ActivatedRoute
   ) {}
 
-  public build(read: (page: number, search: any) => Observable<Response<any>>): RouteDatasource {
+  public build(read: (page: number, search: any) => Observable<Response<any>>): RouteDatasource<any> {
       return new RouteDatasource(this.router, this.route, read);
   }
 
