@@ -2,17 +2,18 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Paginator } from "@app/api/pagination/handlers/paginator";
 import { RoutePaginator } from "@app/api/pagination/handlers/route-paginator";
 import { Response } from '@app/api/request/models/response';
-import { Item } from "@app/models/item";
-import { Observable } from "rxjs";
+import { Observable, tap } from "rxjs";
 
-export class QueryHandler {
+export class Datasource {
 
   public paginator: Paginator;
+
+  public data: any;
 
   constructor(
     router: Router,
     route: ActivatedRoute,
-    private read: (page: number) => Observable<Response<any>>
+    private read: (page: number, search: any) => Observable<Response<any>>
   ) {
     this.paginator = new RoutePaginator(router);
 
@@ -24,12 +25,18 @@ export class QueryHandler {
         pageNumber = 0;
       }
 
-      this.read(pageNumber).subscribe(r => this.handleResponse(r));
+      this.read(pageNumber, undefined)
+        .pipe(tap(r => this.paginator.setPagination(r)))
+        .pipe(tap(r => this.data = r.content))
+        .subscribe();
     });
   }
 
-  private handleResponse(response: Response<Item[]>) {
-    this.paginator.setPagination(response);
+  public search(query: any){
+    this.read(this.paginator.currentPage, query)
+      .pipe(tap(r => this.paginator.setPagination(r)))
+      .pipe(tap(r => this.data = r.content))
+      .subscribe();
   }
 
 }

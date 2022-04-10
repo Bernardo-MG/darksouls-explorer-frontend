@@ -1,8 +1,8 @@
-import { Component, Query } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Datasource } from '@app/api/datasource/handlers/datasource';
+import { DatasourceBuilder } from '@app/api/datasource/handlers/datasource-builder';
 import { Paginator } from '@app/api/pagination/handlers/paginator';
-import { RoutePaginator } from '@app/api/pagination/handlers/route-paginator';
-import { QueryHandler } from '@app/api/query/handlers/query';
 import { Response } from '@app/api/request/models/response';
 import { ItemService } from '@app/item-explore/services/item.service';
 import { Item } from '@app/models/item';
@@ -20,21 +20,18 @@ export class ItemListViewComponent {
 
   items: Item[] = [];
 
-  page: number = 0;
-
   searchActive: boolean = false;
 
-  data: Item[] = [];
-
-  private itemSearch: ItemSearch | undefined = undefined;
+  datasource: Datasource;
 
   constructor(
     private service: ItemService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    datasourceBuilder: DatasourceBuilder
   ) {
-    const query = new QueryHandler(router, route, (page) => this.getItems(page));
-    this.paginator = query.paginator;
+    this.datasource = datasourceBuilder.build((page, search) => this.service.getItems(search, page));
+    this.paginator = this.datasource.paginator;
   }
 
   selectItem(data: Item) {
@@ -46,13 +43,8 @@ export class ItemListViewComponent {
   }
 
   applySearch(search: ItemSearch) {
-    this.itemSearch = search;
-    this.paginator.toFirstPage();
+    this.datasource.search(search);
     this.searchActive = false;
-  }
-
-  private getItems(page: number): Observable<Response<Item[]>> {
-    return this.service.getItems(this.itemSearch, page).pipe(tap(r => this.data = r.content));
   }
 
 }
