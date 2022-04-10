@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { ProblemService } from '../../services/problem.service';
 
 import { ProblemViewComponent } from './problem-view.component';
@@ -13,7 +14,8 @@ describe('ProblemViewComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        RouterTestingModule
       ],
       declarations: [
         ProblemViewComponent
@@ -22,7 +24,7 @@ describe('ProblemViewComponent', () => {
         ProblemService
       ]
     })
-    .compileComponents();
+      .compileComponents();
     httpClient = TestBed.inject(HttpClient);
   });
 
