@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Problem } from '../models/Problem';
+import { Problem } from '../../models/Problem';
 
 @Component({
   selector: 'problem-list',

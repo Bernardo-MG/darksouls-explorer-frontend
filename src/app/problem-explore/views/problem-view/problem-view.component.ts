@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DefaultPaginator } from '@app/api/pagination/handlers/default-paginator';
 import { Paginator } from '@app/api/pagination/handlers/paginator';
-import { Problem } from '../models/Problem';
-import { ProblemService } from '../services/problem.service';
+import { Problem } from '../../models/Problem';
+import { ProblemService } from '../../services/problem.service';
 
 @Component({
   selector: 'problem-view',

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ProblemService } from '../services/problem.service';
+import { ProblemService } from '../../services/problem.service';
 
 import { ProblemViewComponent } from './problem-view.component';
 
