@@ -13,6 +13,8 @@ import { ProblemService } from '../../services/problem.service';
 })
 export class ProblemViewComponent implements OnInit {
 
+  data: Problem[] = [];
+
   paginator: Paginator = new DefaultPaginator();
 
   datasource: RouteDatasource<Problem>;
@@ -22,11 +24,12 @@ export class ProblemViewComponent implements OnInit {
     datasourceBuilder: DatasourceBuilder
   ) {
     this.datasource = datasourceBuilder.build((page, search) => this.service.getProblems(page));
+    this.datasource.data.subscribe(d => this.data = d);
     this.paginator = this.datasource.paginator;
   }
 
   ngOnInit(): void {
-    this.paginator.toFirstPage();
+    this.datasource.fetch(undefined);
   }
 
 }

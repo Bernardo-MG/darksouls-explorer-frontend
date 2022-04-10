@@ -14,9 +14,11 @@ import { ItemSearch } from '@app/models/itemSearch';
 })
 export class ItemListViewComponent {
 
-  paginator: Paginator;
-
   searchActive: boolean = false;
+
+  data: Item[] = [];
+
+  paginator: Paginator;
 
   datasource: RouteDatasource<Item>;
 
@@ -27,6 +29,7 @@ export class ItemListViewComponent {
     datasourceBuilder: DatasourceBuilder
   ) {
     this.datasource = datasourceBuilder.build((page, search) => this.service.getItems(search, page));
+    this.datasource.data.subscribe(d => this.data = d);
     this.paginator = this.datasource.paginator;
   }
 
