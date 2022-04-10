@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RouteDatasource } from '@app/api/datasource/handlers/route-datasource';
-import { DatasourceBuilder } from '@app/api/datasource/handlers/datasource-builder';
 import { Paginator } from '@app/api/pagination/handlers/paginator';
 import { ItemService } from '@app/item-explore/services/item.service';
 import { Item } from '@app/models/item';
@@ -20,17 +18,13 @@ export class ItemListViewComponent {
 
   paginator: Paginator;
 
-  datasource: RouteDatasource<Item>;
-
   constructor(
     private service: ItemService,
     private router: Router,
-    private route: ActivatedRoute,
-    datasourceBuilder: DatasourceBuilder
+    private route: ActivatedRoute
   ) {
-    this.datasource = datasourceBuilder.build((page, search) => this.service.getItems(search, page));
-    this.datasource.data.subscribe(d => this.data = d);
-    this.paginator = this.datasource.paginator;
+    this.service.getItems().subscribe(d => this.data = d);
+    this.paginator = this.service.paginator;
   }
 
   selectItem(data: Item) {
@@ -42,7 +36,7 @@ export class ItemListViewComponent {
   }
 
   applySearch(search: ItemSearch) {
-    this.datasource.fetch(search);
+    this.service.searchItems(search);
     this.searchActive = false;
   }
 
