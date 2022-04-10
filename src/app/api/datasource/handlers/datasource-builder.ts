@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Observable } from "rxjs";
 import { RouteDatasource } from "./route-datasource";
-import { Response } from '@app/api/request/models/response';
+import { Response } from '@app/api/models/response';
 
 @Injectable({
     providedIn: 'root'

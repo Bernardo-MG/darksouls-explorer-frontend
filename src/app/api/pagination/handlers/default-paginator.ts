@@ -1,4 +1,4 @@
-import { PageInfo } from "../models/page-info";
+import { PageInfo } from "../../models/page-info";
 import { Paginator } from "./paginator";
 
 export class DefaultPaginator implements Paginator {

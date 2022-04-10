@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { RequestClient } from '@app/api/request/handlers/request-client';
 import { GetOperations } from '@app/api/request/handlers/get-operations';
-import { Response } from '@app/api/request/models/response';
+import { Response } from '@app/api/models/response';
 import { Graph } from '@app/graph/models/graph';
 import { ArmorProgression } from '@app/models/armorProgression';
 import { Item } from '@app/models/item';
@@ -22,7 +22,7 @@ export class ItemService {
 
   getItems(search: ItemSearch | undefined, page: number): Observable<Response<Item[]>> {
     const selectors = [];
-    const clt: GetOperations = this.client.get(this.itemUrl);
+    const clt: GetOperations<Item> = this.client.get(this.itemUrl);
 
     if(search){
       if (search.name) {
@@ -40,15 +40,15 @@ export class ItemService {
       }
     }
 
-    return clt.page(page).orderAscendingBy('name').request();
+    return clt.page({ page, size: 20 }).sort({property:'name',order:'asc'}).request();
   }
 
   getItem(id: number): Observable<Item> {
-    return this.client.get(this.itemUrl + `/${id}`).requestUnwrapped();
+    return this.client.get<Item>(this.itemUrl + `/${id}`).requestOneUnwrapped();
   }
 
   getItemSources(itemId: number): Observable<ItemSource[]> {
-    return this.client.get(this.itemUrl + "/" + itemId + "/sources").requestUnwrapped();
+    return this.client.get<ItemSource[]>(this.itemUrl + "/" + itemId + "/sources").requestOneUnwrapped();
   }
 
   getItemSourcesGraph(itemId: number): Observable<Graph> {
@@ -67,11 +67,11 @@ export class ItemService {
   }
 
   getArmorStats(itemId: Number): Observable<ArmorProgression> {
-    return this.client.get(this.itemUrl + "/" + itemId + "/levels/armors").requestUnwrapped();
+    return this.client.get<ArmorProgression>(this.itemUrl + "/" + itemId + "/levels/armors").requestOneUnwrapped();
   }
 
   getWeaponStats(itemId: Number): Observable<WeaponProgression> {
-    return this.client.get(this.itemUrl + "/" + itemId + "/levels/weapons").requestUnwrapped();
+    return this.client.get<WeaponProgression>(this.itemUrl + "/" + itemId + "/levels/weapons").requestOneUnwrapped();
   }
 
 }

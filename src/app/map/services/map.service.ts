@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RequestClient } from '@app/api/request/handlers/request-client';
-import { Response } from '@app/api/request/models/response';
+import { Response } from '@app/api/models/response';
 import { Graph } from '@app/graph/models/graph';
 import { Link } from '@app/graph/models/link';
 import { Node } from '@app/graph/models/node';
@@ -26,12 +26,12 @@ export class MapService {
   }
 
   private getAllMaps(): Observable<Node[]> {
-    return this.client.get(this.mapUrl).pageSize(100).orderAscendingBy('name').request()
+    return this.client.get<Map>(this.mapUrl).sort({property:'name',order:'asc'}).request()
       .pipe(map((response) => (response as Response<Map[]>).content.map(this.toNode)));
   }
 
   private getAllMapConnections(): Observable<Link[]> {
-    return this.client.get(this.mapConnectionUrl).pageSize(100).request()
+    return this.client.get(this.mapConnectionUrl).request()
       .pipe(map((response) => (response as Response<MapConnection[]>).content.map(this.toLink)));
   }
 

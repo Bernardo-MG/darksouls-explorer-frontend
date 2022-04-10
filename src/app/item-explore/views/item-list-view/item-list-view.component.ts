@@ -39,7 +39,7 @@ export class ItemListViewComponent {
   }
 
   applySearch(search: ItemSearch) {
-    this.datasource.search(search);
+    this.datasource.fetch(search);
     this.searchActive = false;
   }
 

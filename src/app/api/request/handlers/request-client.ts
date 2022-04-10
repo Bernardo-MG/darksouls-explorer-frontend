@@ -11,7 +11,7 @@ export class RequestClient {
     private http: HttpClient
   ) { }
 
-  public get(url: string): GetOperations {
+  public get<T>(url: string): GetOperations<T> {
     return new GetOperations(this.http, url);
   }
 
