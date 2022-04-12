@@ -3,7 +3,7 @@ import { Pagination } from '@app/api/models/pagination';
 import { Sort } from '@app/api/models/sort';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { ApiResponse } from '../../models/api-response';
+import { ApiResponse } from '../models/api-response';
 
 export class GetOperations<T> {
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RequestClient } from '@app/api/request/handlers/request-client';
+import { RequestClient } from '@app/api/request/request-client';
 import { ApiResponse } from '@app/api/models/api-response';
 import { Graph } from '@app/graph/models/graph';
 import { Link } from '@app/graph/models/link';
