@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { DefaultPaginationController } from '../../api/pagination/default-pagination-controller';
 import { PaginationController } from '../../api/pagination/pagination-controller';
 
 @Component({
@@ -9,7 +8,7 @@ import { PaginationController } from '../../api/pagination/pagination-controller
 })
 export class PaginationPaginatorNavigationComponent {
 
-  @Input() paginator: PaginationController = new DefaultPaginationController();
+  @Input() paginator: PaginationController = new PaginationController();
   
   constructor() { }
 

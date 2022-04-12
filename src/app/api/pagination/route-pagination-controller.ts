@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import { RouteApiActuator } from "../actuator/route-api-actuator";
-import { DefaultPaginationController } from "./default-pagination-controller";
+import { PaginationController } from "./pagination-controller";
 
 @Injectable({
     providedIn: 'root'
 })
-export class RoutePaginationController extends DefaultPaginationController {
+export class RoutePaginationController extends PaginationController {
 
     constructor(
         apiActuator: RouteApiActuator

@@ -1,31 +1,50 @@
+import { ReplaySubject } from "rxjs";
 import { PageInfo } from "../models/page-info";
 
-export interface PaginationController {
+export class PaginationController {
 
-    get previousEnabled(): boolean;
-  
-    set previousEnabled(enabled: boolean);
-    
-    get nextEnabled(): boolean;
-  
-    set nextEnabled(enabled: boolean);
+    public currentPage: number = 0;
 
-    get totalPages(): number;
-  
-    set totalPages(total: number);
-  
-    get currentPage(): number;
-  
-    set currentPage(page: number);
+    public totalPages: number = 0;
 
-    setPagination(page: PageInfo): void;
-    
-    toFirstPage(): void;
+    public previousEnabled: boolean = false;
 
-    toPreviousPage(): void;
+    public nextEnabled: boolean = false;
 
-    toNextPage(): void;
+    public page = new ReplaySubject<number>();
 
-    toPage(page: number): void;
+    constructor() { }
+
+    public setPagination(page: PageInfo): void {
+        if (page.pageNumber) {
+            this.currentPage = page.pageNumber;
+        } else {
+            this.currentPage = 0;
+        }
+        if (page.totalPages) {
+            this.totalPages = page.totalPages;
+        } else {
+            this.totalPages = 0;
+        }
+
+        this.previousEnabled = !page.first;
+        this.nextEnabled = !page.last;
+    }
+
+    public toFirstPage(): void {
+        this.toPage(0);
+    }
+
+    public toPreviousPage(): void {
+        this.toPage(this.currentPage - 1);
+    }
+
+    public toNextPage(): void {
+        this.toPage(this.currentPage + 1);
+    }
+
+    public toPage(page: number): void {
+        this.page.next(page);
+    }
 
 }
