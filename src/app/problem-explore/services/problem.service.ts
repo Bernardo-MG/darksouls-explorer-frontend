@@ -1,38 +1,33 @@
 import { Injectable } from '@angular/core';
-import { DatasourceBuilder } from '@app/api/datasource/handlers/datasource-builder';
+import { ActivatedRoute } from '@angular/router';
 import { RouteDatasource } from '@app/api/datasource/handlers/route-datasource';
+import { ApiRequest } from "@app/api/models/api-request";
 import { ApiResponse } from '@app/api/models/api-response';
-import { Paginator } from '@app/api/pagination/handlers/paginator';
 import { RequestClient } from '@app/api/request/handlers/request-client';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { Problem } from '../models/Problem';
-import { ApiRequest } from "@app/api/models/api-request";
-import { Pagination } from '@app/api/models/pagination';
 
 @Injectable()
 export class ProblemService {
 
   private problemUrl = environment.apiUrl + "/problems";
 
-  paginator: Paginator;
-
   datasource: RouteDatasource<Problem>;
 
   constructor(
     private client: RequestClient,
-    datasourceBuilder: DatasourceBuilder
+    route: ActivatedRoute
   ) {
-    this.datasource = datasourceBuilder.build<Problem>((request: ApiRequest<Problem>) => this.requestProblems(request.pagination));
-    this.paginator = this.datasource.paginator;
+    this.datasource = new RouteDatasource<Problem>(route, (request: ApiRequest<Problem>) => this.requestProblems(request));
   }
   
   public getProblems(): Observable<Problem[]> {
     return this.datasource.data;
   }
 
-  private requestProblems(pagination?: Pagination): Observable<ApiResponse<Problem[]>> {
-    return this.client.get<Problem>(this.problemUrl).page(pagination).sort({ property: 'id', order: 'asc' }).fetch();
+  private requestProblems(request: ApiRequest<Problem>): Observable<ApiResponse<Problem[]>> {
+    return this.client.get<Problem>(this.problemUrl).page(request.pagination).sort({ property: 'id', order: 'asc' }).fetch();
   }
 
 }

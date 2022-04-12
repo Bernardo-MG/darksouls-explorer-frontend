@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { DatasourceBuilder } from '@app/api/datasource/handlers/datasource-builder';
+import { ActivatedRoute } from '@angular/router';
 import { RouteDatasource } from '@app/api/datasource/handlers/route-datasource';
-import { Pagination } from '@app/api/models/pagination';
 import { ApiRequest } from "@app/api/models/api-request";
 import { ApiResponse } from '@app/api/models/api-response';
-import { Paginator } from '@app/api/pagination/handlers/paginator';
+import { PageInfo } from '@app/api/models/page-info';
 import { GetOperations } from '@app/api/request/handlers/get-operations';
 import { RequestClient } from '@app/api/request/handlers/request-client';
 import { Graph } from '@app/graph/models/graph';
@@ -21,20 +20,21 @@ export class ItemService {
 
   private itemUrl = environment.apiUrl + "/items";
 
-  paginator: Paginator;
-
   datasource: RouteDatasource<Item>;
 
   constructor(
     private client: RequestClient,
-    datasourceBuilder: DatasourceBuilder
+    route: ActivatedRoute
   ) {
-    this.datasource = datasourceBuilder.build<Item>((request: ApiRequest<Item>) => this.requestItems(request.search, request.pagination));
-    this.paginator = this.datasource.paginator;
+    this.datasource = new RouteDatasource<Item>(route, (request: ApiRequest<Item>) => this.requestItems(request));
   }
 
   public getItems(): Observable<Item[]> {
     return this.datasource.data;
+  }
+
+  public getItemsPageInfo(): Observable<PageInfo> {
+    return this.datasource.pageInfo;
   }
 
   public searchItems(search: ItemSearch | undefined) {
@@ -72,16 +72,16 @@ export class ItemService {
     return this.client.get<WeaponProgression>(this.itemUrl + "/" + itemId + "/levels/weapons").fetchOneUnwrapped();
   }
 
-  private requestItems(search: ItemSearch | undefined, pagination: Pagination | undefined): Observable<ApiResponse<Item[]>> {
+  private requestItems(request: ApiRequest<Item>): Observable<ApiResponse<Item[]>> {
     const selectors = [];
     const clt: GetOperations<Item> = this.client.get(this.itemUrl);
 
-    if (search) {
-      if (search.name) {
-        clt.parameter("name", search.name);
+    if (request.search) {
+      if (request.search.name) {
+        clt.parameter("name", request.search.name);
       }
 
-      for (const [key, val] of Object.entries(search.selectors)) {
+      for (const [key, val] of Object.entries(request.search.selectors)) {
         if (val) {
           selectors.push(key);
         }
@@ -92,7 +92,7 @@ export class ItemService {
       }
     }
 
-    return clt.page(pagination).sort({ property: 'name', order: 'asc' }).fetch();
+    return clt.page(request.pagination).sort({ property: 'name', order: 'asc' }).fetch();
   }
 
 }

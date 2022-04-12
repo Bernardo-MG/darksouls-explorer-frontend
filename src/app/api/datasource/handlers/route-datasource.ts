@@ -1,23 +1,22 @@
-import { ActivatedRoute, Router } from "@angular/router";
-import { Endpoint } from "@app/api/models/endpoint";
-import { Pagination } from "@app/api/models/pagination";
-import { Paginator } from "@app/api/pagination/handlers/paginator";
-import { RoutePaginator } from "@app/api/pagination/handlers/route-paginator";
-import { ReplaySubject, tap } from "rxjs";
+import { ActivatedRoute } from "@angular/router";
 import { ApiRequest } from '@app/api/models/api-request';
+import { Endpoint } from "@app/api/models/endpoint";
+import { PageInfo } from "@app/api/models/page-info";
+import { Pagination } from "@app/api/models/pagination";
+import { ReplaySubject, tap } from "rxjs";
 
 export class RouteDatasource<T> {
 
-  public paginator: Paginator;
-
   public data = new ReplaySubject<T[]>();
+  
+  public pageInfo = new ReplaySubject<PageInfo>();
+
+  private currentPage: number = 0;
 
   constructor(
-    router: Router,
     route: ActivatedRoute,
     private endpoint: Endpoint<T>
   ) {
-    this.paginator = new RoutePaginator(router);
 
     // Initialized with route parameters
     route.queryParamMap.subscribe(params => {
@@ -28,24 +27,25 @@ export class RouteDatasource<T> {
         pageNumber = 0;
       }
 
-      this.paginator.currentPage = pageNumber;
-
+      this.currentPage = pageNumber;
       this.fetch(undefined);
     });
   }
 
   public fetch(query: any) {
     const page: Pagination = {
-      page: this.paginator.currentPage,
+      page: this.currentPage,
       size: 20
     }
+
     const request: ApiRequest<T> = {
       pagination: page,
       search: query
     }
+
     this.endpoint(request)
-      .pipe(tap(r => this.paginator.setPagination(r)))
       .pipe(tap(r => this.data.next(r.content)))
+      .pipe(tap(r => this.pageInfo.next(r)))
       .subscribe();
   }
 

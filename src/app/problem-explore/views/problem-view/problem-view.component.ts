@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { DefaultPaginator } from '@app/api/pagination/handlers/default-paginator';
 import { Paginator } from '@app/api/pagination/handlers/paginator';
+import { RoutePaginator } from '@app/api/pagination/handlers/route-paginator';
 import { Problem } from '@app/problem-explore/models/Problem';
 import { ProblemService } from '../../services/problem.service';
 
@@ -16,10 +18,11 @@ export class ProblemViewComponent {
   paginator: Paginator = new DefaultPaginator();
 
   constructor(
-    private service: ProblemService
+    private service: ProblemService,
+    router: Router
   ) {
     this.service.getProblems().subscribe(d => this.data = d);
-    this.paginator = this.service.paginator;
+    this.paginator = new RoutePaginator(router);
   }
 
 }
