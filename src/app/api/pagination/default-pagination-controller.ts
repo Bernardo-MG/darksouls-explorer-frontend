@@ -1,3 +1,4 @@
+import { ReplaySubject } from "rxjs";
 import { PageInfo } from "../models/page-info";
 import { PaginationController } from "./pagination-controller";
 
@@ -11,15 +12,17 @@ export class DefaultPaginationController implements PaginationController {
 
     public nextEnabled: boolean = false;
 
+    public page = new ReplaySubject<number>();
+
     constructor() { }
 
     public setPagination(page: PageInfo): void {
-        if(page.pageNumber){
+        if (page.pageNumber) {
             this.currentPage = page.pageNumber;
         } else {
             this.currentPage = 0;
         }
-        if(page.totalPages){
+        if (page.totalPages) {
             this.totalPages = page.totalPages;
         } else {
             this.totalPages = 0;
@@ -41,6 +44,8 @@ export class DefaultPaginationController implements PaginationController {
         this.toPage(this.currentPage + 1);
     }
 
-    public toPage(page: number): void {}
+    public toPage(page: number): void {
+        this.page.next(page);
+    }
 
 }

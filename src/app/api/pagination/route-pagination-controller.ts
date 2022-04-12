@@ -1,20 +1,18 @@
-import { Router } from "@angular/router";
+import { Injectable } from "@angular/core";
+import { RouteApiActuator } from "../actuator/route-api-actuator";
 import { DefaultPaginationController } from "./default-pagination-controller";
 
+@Injectable({
+    providedIn: 'root'
+})
 export class RoutePaginationController extends DefaultPaginationController {
 
-    private path: string;
-
     constructor(
-        private router: Router
+        apiActuator: RouteApiActuator
     ) {
         super();
 
-        this.path = this.router.url.split('?')[0];
-    }
-
-    public toPage(page: number): void {
-        this.router.navigate([this.path], { queryParams: { page } });
+        this.page.subscribe(p => apiActuator.toPage(p));
     }
 
 }

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PaginationController } from '@app/api/pagination/pagination-controller';
 import { RoutePaginationController } from '@app/api/pagination/route-pagination-controller';
 import { ItemService } from '@app/item-explore/services/item.service';
 import { Item } from '@app/models/item';
@@ -17,17 +16,14 @@ export class ItemListViewComponent {
 
   data: Item[] = [];
 
-  paginator: PaginationController;
-
   constructor(
     private service: ItemService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public paginationController: RoutePaginationController
   ) {
-    this.paginator = new RoutePaginationController(router);
-
     this.service.getItems().subscribe(d => this.data = d);
-    this.service.getItemsPageInfo().subscribe(p => this.paginator.setPagination(p));
+    this.service.getItemsPageInfo().subscribe(p => paginationController.setPagination(p));
   }
 
   selectItem(data: Item) {
