@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { Response } from '@app/api/models/response';
-import { Request } from "./request";
+import { ApiResponse } from '@app/api/models/api-response';
+import { ApiRequest } from "./api-request";
 
-export type Endpoint<T> = (request: Request<T>) => Observable<Response<T[]>>;
+export type Endpoint<T> = (request: ApiRequest<T>) => Observable<ApiResponse<T[]>>;

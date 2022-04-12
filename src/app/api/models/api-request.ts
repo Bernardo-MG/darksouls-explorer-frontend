@@ -1,7 +1,7 @@
 import { Pagination } from "./pagination"
 import { Sort } from "./sort"
 
-export interface Request<T> {
+export interface ApiRequest<T> {
     pagination?: Pagination,
     sort?: Sort<T>,
     search?: any

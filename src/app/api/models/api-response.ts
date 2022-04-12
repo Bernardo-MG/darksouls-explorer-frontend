@@ -1,5 +1,5 @@
 
-export class Response<T> {
+export class ApiResponse<T> {
 
     constructor(cont: T) {
         this.content = cont;

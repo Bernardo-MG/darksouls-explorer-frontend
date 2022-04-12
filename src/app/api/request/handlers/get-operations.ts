@@ -3,7 +3,7 @@ import { Pagination } from '@app/api/models/pagination';
 import { Sort } from '@app/api/models/sort';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Response } from '../../models/response';
+import { ApiResponse } from '../../models/api-response';
 
 export class GetOperations<T> {
 
@@ -14,9 +14,9 @@ export class GetOperations<T> {
     private queryUrl: string
   ) { }
 
-  public fetch(): Observable<Response<T[]>> {
-    return this.http.get<Response<T[]>>(this.queryUrl, this.params).pipe(
-      map((response: Response<T[]>) => { return response })
+  public fetch(): Observable<ApiResponse<T[]>> {
+    return this.http.get<ApiResponse<T[]>>(this.queryUrl, this.params).pipe(
+      map((response: ApiResponse<T[]>) => { return response })
     ).pipe(
       catchError(this.handleError())
     );
@@ -26,9 +26,9 @@ export class GetOperations<T> {
     return this.fetch().pipe(map(r => r.content));
   }
 
-  public fetchOne(): Observable<Response<T>> {
-    return this.http.get<Response<T>>(this.queryUrl, this.params).pipe(
-      map((response: Response<T>) => { return response })
+  public fetchOne(): Observable<ApiResponse<T>> {
+    return this.http.get<ApiResponse<T>>(this.queryUrl, this.params).pipe(
+      map((response: ApiResponse<T>) => { return response })
     ).pipe(
       catchError(this.handleError())
     );

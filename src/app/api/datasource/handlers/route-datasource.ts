@@ -4,7 +4,7 @@ import { Pagination } from "@app/api/models/pagination";
 import { Paginator } from "@app/api/pagination/handlers/paginator";
 import { RoutePaginator } from "@app/api/pagination/handlers/route-paginator";
 import { ReplaySubject, tap } from "rxjs";
-import { Request } from '@app/api/models/request';
+import { ApiRequest } from '@app/api/models/api-request';
 
 export class RouteDatasource<T> {
 
@@ -39,7 +39,7 @@ export class RouteDatasource<T> {
       page: this.paginator.currentPage,
       size: 20
     }
-    const request: Request<T> = {
+    const request: ApiRequest<T> = {
       pagination: page,
       search: query
     }
