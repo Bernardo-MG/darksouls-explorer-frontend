@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
+import { Sort } from "../models/sort";
 
 @Injectable({
     providedIn: 'root'
@@ -14,8 +15,16 @@ export class RouteApiActuator {
         this.path = this.router.url.split('?')[0];
     }
 
-    public toPage(page: number): void {
-        this.router.navigate([this.path], { queryParams: { page } });
+    public setPage(page: number): void {
+        this.setParameter({ page });
+    }
+
+    public setOrder(sort: Sort<any>): void {
+        this.setParameter({ property: sort.property, order: sort.order });
+    }
+
+    private setParameter(params: any): void {
+        this.router.navigate([this.path], { queryParams: params });
     }
 
 }

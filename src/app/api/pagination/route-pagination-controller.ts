@@ -12,7 +12,7 @@ export class RoutePaginationController extends DefaultPaginationController {
     ) {
         super();
 
-        this.page.subscribe(p => apiActuator.toPage(p));
+        this.page.subscribe(p => apiActuator.setPage(p));
     }
 
 }
