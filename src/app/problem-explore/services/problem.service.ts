@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RouteDatasource } from '@app/api/datasource/handlers/route-datasource';
+import { RouteDatasource } from '@app/api/datasource/route-datasource';
 import { ApiRequest } from "@app/api/models/api-request";
 import { ApiResponse } from '@app/api/models/api-response';
 import { RequestClient } from '@app/api/request/handlers/request-client';
