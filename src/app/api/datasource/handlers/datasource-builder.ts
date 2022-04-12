@@ -1,8 +1,7 @@
 import { Injectable } from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
-import { Observable } from "rxjs";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Endpoint } from "@app/api/models/endpoint";
 import { RouteDatasource } from "./route-datasource";
-import { Response } from '@app/api/models/response';
 
 @Injectable({
     providedIn: 'root'
@@ -14,8 +13,8 @@ export class DatasourceBuilder {
     private route: ActivatedRoute
   ) {}
 
-  public build(read: (page: number, search: any) => Observable<Response<any>>): RouteDatasource<any> {
-      return new RouteDatasource(this.router, this.route, read);
+  public build<T>(endpoint: Endpoint<T>): RouteDatasource<T> {
+      return new RouteDatasource(this.router, this.route, endpoint);
   }
 
 }

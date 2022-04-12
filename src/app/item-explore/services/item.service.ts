@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { DatasourceBuilder } from '@app/api/datasource/handlers/datasource-builder';
 import { RouteDatasource } from '@app/api/datasource/handlers/route-datasource';
+import { Pagination } from '@app/api/models/pagination';
+import { Request } from "@app/api/models/request";
 import { Response } from '@app/api/models/response';
 import { Paginator } from '@app/api/pagination/handlers/paginator';
 import { GetOperations } from '@app/api/request/handlers/get-operations';
@@ -27,7 +29,7 @@ export class ItemService {
     private client: RequestClient,
     datasourceBuilder: DatasourceBuilder
   ) {
-    this.datasource = datasourceBuilder.build((page, search) => this.requestItems(search, page));
+    this.datasource = datasourceBuilder.build<Item>((request: Request<Item>) => this.requestItems(request.search, request.pagination));
     this.paginator = this.datasource.paginator;
   }
 
@@ -70,7 +72,7 @@ export class ItemService {
     return this.client.get<WeaponProgression>(this.itemUrl + "/" + itemId + "/levels/weapons").fetchOneUnwrapped();
   }
 
-  private requestItems(search: ItemSearch | undefined, page: number): Observable<Response<Item[]>> {
+  private requestItems(search: ItemSearch | undefined, pagination: Pagination | undefined): Observable<Response<Item[]>> {
     const selectors = [];
     const clt: GetOperations<Item> = this.client.get(this.itemUrl);
 
@@ -90,7 +92,7 @@ export class ItemService {
       }
     }
 
-    return clt.page({ page, size: 20 }).sort({ property: 'name', order: 'asc' }).fetch();
+    return clt.page(pagination).sort({ property: 'name', order: 'asc' }).fetch();
   }
 
 }

@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { PageRequest } from '@app/api/models/page-request';
+import { Pagination } from '@app/api/models/pagination';
 import { Sort } from '@app/api/models/sort';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -50,15 +50,17 @@ export class GetOperations<T> {
     return this;
   }
 
-  public page(page: PageRequest): GetOperations<T> {
+  public page(pagination: Pagination| undefined): GetOperations<T> {
     let prms: HttpParams;
 
-    prms = this.getHttpParams();
-
-    prms = prms.set('page', page.page);
-    prms = prms.set('size', page.size);
-
-    this.params = { params: prms };
+    if(pagination){
+      prms = this.getHttpParams();
+  
+      prms = prms.set('page', pagination.page);
+      prms = prms.set('size', pagination.size);
+  
+      this.params = { params: prms };
+    }
 
     return this;
   }

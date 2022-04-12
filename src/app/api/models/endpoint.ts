@@ -1,4 +1,5 @@
 import { Observable } from "rxjs";
 import { Response } from '@app/api/models/response';
+import { Request } from "./request";
 
-export type Endpoint<T> = (page: number, search: any) => Observable<Response<T[]>>;
+export type Endpoint<T> = (request: Request<T>) => Observable<Response<T[]>>;

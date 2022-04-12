@@ -1,8 +1,10 @@
 import { ActivatedRoute, Router } from "@angular/router";
 import { Endpoint } from "@app/api/models/endpoint";
+import { Pagination } from "@app/api/models/pagination";
 import { Paginator } from "@app/api/pagination/handlers/paginator";
 import { RoutePaginator } from "@app/api/pagination/handlers/route-paginator";
 import { ReplaySubject, tap } from "rxjs";
+import { Request } from '@app/api/models/request';
 
 export class RouteDatasource<T> {
 
@@ -33,7 +35,15 @@ export class RouteDatasource<T> {
   }
 
   public fetch(query: any) {
-    this.endpoint(this.paginator.currentPage, query)
+    const page: Pagination = {
+      page: this.paginator.currentPage,
+      size: 20
+    }
+    const request: Request<T> = {
+      pagination: page,
+      search: query
+    }
+    this.endpoint(request)
       .pipe(tap(r => this.paginator.setPagination(r)))
       .pipe(tap(r => this.data.next(r.content)))
       .subscribe();

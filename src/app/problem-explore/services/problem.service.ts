@@ -7,6 +7,8 @@ import { RequestClient } from '@app/api/request/handlers/request-client';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { Problem } from '../models/Problem';
+import { Request } from "@app/api/models/request";
+import { Pagination } from '@app/api/models/pagination';
 
 @Injectable()
 export class ProblemService {
@@ -21,7 +23,7 @@ export class ProblemService {
     private client: RequestClient,
     datasourceBuilder: DatasourceBuilder
   ) {
-    this.datasource = datasourceBuilder.build((page, search) => this.requestProblems(page));
+    this.datasource = datasourceBuilder.build<Problem>((request: Request<Problem>) => this.requestProblems(request.pagination));
     this.paginator = this.datasource.paginator;
   }
   
@@ -29,8 +31,8 @@ export class ProblemService {
     return this.datasource.data;
   }
 
-  private requestProblems(page: number): Observable<Response<Problem[]>> {
-    return this.client.get<Problem>(this.problemUrl).page({ page, size: 20 }).sort({ property: 'id', order: 'asc' }).fetch();
+  private requestProblems(pagination?: Pagination): Observable<Response<Problem[]>> {
+    return this.client.get<Problem>(this.problemUrl).page(pagination).sort({ property: 'id', order: 'asc' }).fetch();
   }
 
 }
