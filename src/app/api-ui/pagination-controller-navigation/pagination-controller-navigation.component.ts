@@ -3,8 +3,8 @@ import { PaginationController } from '../../api/pagination/pagination-controller
 
 @Component({
   selector: 'pagination-controller-navigation',
-  templateUrl: './pagination-paginator-navigation.component.html',
-  styleUrls: ['./pagination-paginator-navigation.component.sass']
+  templateUrl: './pagination-controller-navigation.component.html',
+  styleUrls: ['./pagination-controller-navigation.component.sass']
 })
 export class PaginationPaginatorNavigationComponent {
 

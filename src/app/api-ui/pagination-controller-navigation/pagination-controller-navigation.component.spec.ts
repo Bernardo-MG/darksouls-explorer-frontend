@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PaginationPaginatorNavigationComponent } from './pagination-paginator-navigation.component';
+import { PaginationPaginatorNavigationComponent } from './pagination-controller-navigation.component';
 
 describe('PaginationPaginatorNavigationComponent', () => {
   let component: PaginationPaginatorNavigationComponent;
