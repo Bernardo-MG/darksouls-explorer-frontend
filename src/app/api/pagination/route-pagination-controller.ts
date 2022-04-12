@@ -1,7 +1,7 @@
 import { Router } from "@angular/router";
-import { DefaultPaginator } from "./default-paginator";
+import { DefaultPaginationController } from "./default-pagination-controller";
 
-export class RoutePaginator extends DefaultPaginator {
+export class RoutePaginationController extends DefaultPaginationController {
 
     private path: string;
 

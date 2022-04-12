@@ -1,6 +1,6 @@
-import { PageInfo } from "../../models/page-info";
+import { PageInfo } from "../models/page-info";
 
-export interface Paginator {
+export interface PaginationController {
 
     get previousEnabled(): boolean;
   

@@ -1,7 +1,7 @@
-import { PageInfo } from "../../models/page-info";
-import { Paginator } from "./paginator";
+import { PageInfo } from "../models/page-info";
+import { PaginationController } from "./pagination-controller";
 
-export class DefaultPaginator implements Paginator {
+export class DefaultPaginationController implements PaginationController {
 
     public currentPage: number = 0;
 
