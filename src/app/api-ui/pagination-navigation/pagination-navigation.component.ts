@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 
 @Component({
-  selector: 'pagination-root-navigation',
+  selector: 'pagination-navigation',
   templateUrl: './pagination-navigation.component.html',
   styleUrls: ['./pagination-navigation.component.sass']
 })

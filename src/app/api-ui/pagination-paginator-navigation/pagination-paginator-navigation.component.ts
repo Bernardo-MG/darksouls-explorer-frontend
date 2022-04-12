@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { PaginationController } from '../../api/pagination/pagination-controller';
 
 @Component({
-  selector: 'pagination-paginator-navigation',
+  selector: 'pagination-controller-navigation',
   templateUrl: './pagination-paginator-navigation.component.html',
   styleUrls: ['./pagination-paginator-navigation.component.sass']
 })

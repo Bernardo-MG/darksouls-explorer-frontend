@@ -17,4 +17,4 @@ import { PaginationPaginatorNavigationComponent } from './pagination-paginator-n
     PaginationPaginatorNavigationComponent
   ]
 })
-export class PaginationModule { }
+export class ApiUiModule { }

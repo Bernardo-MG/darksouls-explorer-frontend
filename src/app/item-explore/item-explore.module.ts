@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ApiUiModule } from '@app/api-ui/api-ui.module';
 import { ItemGraphModule } from '@app/item-graph/item-graph.module';
-import { PaginationModule } from '@app/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ItemInfoComponent } from './components/item-info/item-info.component';
 import { ItemListComponent } from './components/item-list/item-list.component';
@@ -23,7 +23,7 @@ import { ItemListViewComponent } from './views/item-list-view/item-list-view.com
   imports: [
     ItemExploreRoutingModule,
     CommonModule,
-    PaginationModule,
+    ApiUiModule,
     FormsModule,
     ReactiveFormsModule,
     ItemGraphModule,
