@@ -1,6 +1,10 @@
+import { Injectable } from "@angular/core";
 import { RouteApiActuator } from "../actuator/route-api-actuator";
 import { OrderController } from "./order-controller";
 
+@Injectable({
+    providedIn: 'root'
+})
 export class RouteOrderController extends OrderController {
 
     constructor(
@@ -10,5 +14,5 @@ export class RouteOrderController extends OrderController {
 
         this.sort.subscribe(s => apiActuator.setOrder(s));
     }
-    
+
 }

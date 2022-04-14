@@ -9,7 +9,7 @@ import { PaginationController } from '../../api/pagination/pagination-controller
 export class PaginationPaginatorNavigationComponent {
 
   @Input() paginator: PaginationController = new PaginationController();
-  
+
   constructor() { }
 
   public moveToPage(page: number) {

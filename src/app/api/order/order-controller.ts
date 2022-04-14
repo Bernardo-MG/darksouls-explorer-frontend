@@ -7,6 +7,11 @@ export class OrderController {
 
     private sortValue: Sort<any> | undefined;
 
+    public setSort(value: Sort<any>){
+        this.sortValue = value;
+        this.sort.next(value);
+    }
+
     public sortAscending() {
         if (this.sortValue) {
             this.sortValue.order = "asc";
