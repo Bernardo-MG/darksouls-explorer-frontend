@@ -1,5 +1,6 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Graph } from '@app/graph/models/graph';
 import { ItemService } from '@app/item-explore/services/item.service';
 import { ArmorProgression } from '@app/models/armorProgression';
@@ -28,8 +29,8 @@ export class ItemInfoViewComponent implements OnInit {
 
   constructor(
     private service: ItemService,
-    private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -57,7 +58,7 @@ export class ItemInfoViewComponent implements OnInit {
   }
 
   return() {
-    this.router.navigate(["/items"]);
+    this.location.back();
   }
 
 }
