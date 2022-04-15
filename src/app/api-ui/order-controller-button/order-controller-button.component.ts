@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { RouteOrderController } from '@app/api/order/route-order-controller';
 
 @Component({
@@ -8,14 +8,16 @@ import { RouteOrderController } from '@app/api/order/route-order-controller';
 })
 export class OrderControllerButtonComponent {
 
+  @Input() property: any;
+
   constructor(private orderController: RouteOrderController) { }
 
   public sortAscending() {
-    this.orderController.sortAscending();
+    this.orderController.sortAscending(this.property);
   }
 
   public sortDescending() {
-    this.orderController.sortDescending();
+    this.orderController.sortDescending(this.property);
   }
 
 }

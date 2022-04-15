@@ -4,6 +4,7 @@ import { RouteDatasource } from '@app/api/datasource/route-datasource';
 import { ApiRequest } from "@app/api/models/api-request";
 import { ApiResponse } from '@app/api/models/api-response';
 import { PageInfo } from '@app/api/models/page-info';
+import { Sort } from '@app/api/models/sort';
 import { GetOperations } from '@app/api/request/get-operations';
 import { RequestClient } from '@app/api/request/request-client';
 import { Graph } from '@app/graph/models/graph';
@@ -92,7 +93,14 @@ export class ItemService {
       }
     }
 
-    return clt.page(request.pagination).sort({ property: 'name', order: 'asc' }).fetch();
+    let sort: Sort<Item>;
+    if(request.sort) {
+      sort = request.sort;
+    } else {
+      sort = { property: 'name', order: 'asc' };
+    }
+
+    return clt.page(request.pagination).sort(sort).fetch();
   }
 
 }
