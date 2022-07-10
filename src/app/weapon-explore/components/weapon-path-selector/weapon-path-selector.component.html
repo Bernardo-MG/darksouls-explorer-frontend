@@ -1,5 +1,5 @@
 <div class="btn-group">
-    <ng-template ngFor let-p [ngForOf]="stats.paths">
+    <ng-template ngFor let-p [ngForOf]="paths">
         <a (click)="loadPath(p)" class="btn btn-primary" [ngClass]="{ 'active': p.path === selected }">{{ p.path }}</a>
     </ng-template>
 </div>

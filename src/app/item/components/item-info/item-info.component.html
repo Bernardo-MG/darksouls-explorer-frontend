@@ -33,9 +33,6 @@
     </table>
     <item-source-graph [graph]="sourcesGraph"></item-source-graph>
 </ng-template>
-<ng-template [ngIf]="weaponProgression && weaponProgression.paths && weaponProgression.paths.length > 0">
-    <weapon-paths [stats]="weaponProgression"></weapon-paths>
-</ng-template>
 <ng-template [ngIf]="armorProgression && armorProgression.levels && armorProgression.levels.length > 0">
     <app-armor-stats [stats]="armorProgression"></app-armor-stats>
 </ng-template>

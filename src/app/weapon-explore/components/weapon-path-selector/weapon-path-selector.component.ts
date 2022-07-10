@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { WeaponProgression } from '@app/item/models/weaponProgression';
 import { WeaponProgressionPath } from '@app/item/models/weaponProgressionPath';
 
 @Component({
@@ -9,7 +8,7 @@ import { WeaponProgressionPath } from '@app/item/models/weaponProgressionPath';
 })
 export class WeaponPathSelectorComponent {
 
-  @Input() stats: WeaponProgression = new WeaponProgression();
+  @Input() paths: WeaponProgressionPath[] = [];
 
   @Output() selectPath = new EventEmitter<WeaponProgressionPath>();
 
