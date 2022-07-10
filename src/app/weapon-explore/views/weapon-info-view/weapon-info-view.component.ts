@@ -39,7 +39,7 @@ export class WeaponInfoViewComponent implements OnInit {
   private loadItem(id: string | null): void {
     if (id) {
       const identifier: number = Number(id);
-      this.service.getItem(identifier)
+      this.service.getWeapon(identifier)
         .subscribe(item => {
           if (item) {
             this.data = item
@@ -48,8 +48,8 @@ export class WeaponInfoViewComponent implements OnInit {
           }
         });
       this.service.getWeaponStats(identifier).subscribe(data => this.weaponProgression = data);
-      this.service.getItemSources(identifier).subscribe(response => this.sources = response);
-      this.service.getItemSourcesGraph(identifier).subscribe(graph => this.sourcesGraph = graph);
+      this.service.getWeaponSources(identifier).subscribe(response => this.sources = response);
+      this.service.getWeaponSourcesGraph(identifier).subscribe(graph => this.sourcesGraph = graph);
     }
   }
 

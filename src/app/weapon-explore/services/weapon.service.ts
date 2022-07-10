@@ -27,31 +27,31 @@ export class WeaponService {
     private client: RequestClient,
     route: ActivatedRoute
   ) {
-    this.datasource = new RouteDatasource<Summary>(route, (request: ApiRequest<Summary>) => this.requestItems(request));
+    this.datasource = new RouteDatasource<Summary>(route, (request: ApiRequest<Summary>) => this.requestWeapons(request));
   }
 
-  public getItems(): Observable<Summary[]> {
+  public getWeapons(): Observable<Summary[]> {
     return this.datasource.data;
   }
 
-  public getItemsPageInfo(): Observable<PageInfo> {
+  public getWeaponsPageInfo(): Observable<PageInfo> {
     return this.datasource.pageInfo;
   }
 
-  public searchItems(search: ItemSearch | undefined) {
+  public searchWeapons(search: ItemSearch | undefined) {
     this.datasource.fetch(search);
   }
 
-  public getItem(id: number): Observable<Weapon> {
+  public getWeapon(id: number): Observable<Weapon> {
     return this.client.get<Weapon>(this.itemUrl + `/${id}`).fetchOneUnwrapped();
   }
 
-  public getItemSources(itemId: number): Observable<ItemSource[]> {
+  public getWeaponSources(itemId: number): Observable<ItemSource[]> {
     return this.client.get<ItemSource[]>(this.itemUrl + "/" + itemId + "/sources").fetchOneUnwrapped();
   }
 
-  public getItemSourcesGraph(itemId: number): Observable<Graph> {
-    return this.getItemSources(itemId).pipe(map((sources) => {
+  public getWeaponSourcesGraph(itemId: number): Observable<Graph> {
+    return this.getWeaponSources(itemId).pipe(map((sources) => {
       const itemNodes = sources.map((s) => { return { id: s.itemId.toString(), name: s.item, label: s.item, category: 0 } })
       const sourceNodes = sources.map((s) => { return { id: s.sourceId.toString(), name: s.source, label: s.source, category: 1 } })
       const locationNodes = sources.map((s) => { return { id: s.locationId.toString(), name: s.location, label: s.location, category: 2 } })
@@ -69,7 +69,7 @@ export class WeaponService {
     return this.client.get<WeaponProgression>(this.itemUrl + "/" + itemId + "/progression").fetchOneUnwrapped();
   }
 
-  private requestItems(request: ApiRequest<Summary>): Observable<ApiResponse<Summary[]>> {
+  private requestWeapons(request: ApiRequest<Summary>): Observable<ApiResponse<Summary[]>> {
     const selectors = [];
     const clt: GetOperations<Summary> = this.client.get(this.itemUrl);
 

@@ -23,8 +23,8 @@ export class WeaponListViewComponent {
     private route: ActivatedRoute,
     public paginationController: RoutePaginationController
   ) {
-    this.service.getItems().subscribe(d => this.data = d);
-    this.service.getItemsPageInfo().subscribe(p => paginationController.setPagination(p));
+    this.service.getWeapons().subscribe(d => this.data = d);
+    this.service.getWeaponsPageInfo().subscribe(p => paginationController.setPagination(p));
   }
 
   selectItem(data: Summary) {
@@ -36,7 +36,7 @@ export class WeaponListViewComponent {
   }
 
   applySearch(search: ItemSearch) {
-    this.service.searchItems(search);
+    this.service.searchWeapons(search);
     this.searchActive = false;
   }
 
