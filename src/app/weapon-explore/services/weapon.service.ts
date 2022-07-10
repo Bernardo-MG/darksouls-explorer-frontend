@@ -8,11 +8,11 @@ import { Sort } from '@app/api/models/sort';
 import { GetOperations } from '@app/api/request/get-operations';
 import { RequestClient } from '@app/api/request/request-client';
 import { Graph } from '@app/graph/models/graph';
-import { ArmorProgression } from '@app/models/armorProgression';
-import { Item } from '@app/models/item';
-import { ItemSearch } from '@app/models/itemSearch';
-import { ItemSource } from '@app/models/itemSource';
-import { WeaponProgression } from '@app/models/weaponProgression';
+import { ItemSearch } from '@app/item/models/itemSearch';
+import { ItemSource } from '@app/item/models/itemSource';
+import { Summary } from '@app/item/models/summary';
+import { Weapon } from '@app/item/models/weapon';
+import { WeaponProgression } from '@app/item/models/weaponProgression';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 
@@ -21,16 +21,16 @@ export class WeaponService {
 
   private itemUrl = environment.apiUrl + "/weapons";
 
-  datasource: RouteDatasource<Item>;
+  datasource: RouteDatasource<Summary>;
 
   constructor(
     private client: RequestClient,
     route: ActivatedRoute
   ) {
-    this.datasource = new RouteDatasource<Item>(route, (request: ApiRequest<Item>) => this.requestItems(request));
+    this.datasource = new RouteDatasource<Summary>(route, (request: ApiRequest<Summary>) => this.requestItems(request));
   }
 
-  public getItems(): Observable<Item[]> {
+  public getItems(): Observable<Summary[]> {
     return this.datasource.data;
   }
 
@@ -42,8 +42,8 @@ export class WeaponService {
     this.datasource.fetch(search);
   }
 
-  public getItem(id: number): Observable<Item> {
-    return this.client.get<Item>(this.itemUrl + `/${id}`).fetchOneUnwrapped();
+  public getItem(id: number): Observable<Weapon> {
+    return this.client.get<Weapon>(this.itemUrl + `/${id}`).fetchOneUnwrapped();
   }
 
   public getItemSources(itemId: number): Observable<ItemSource[]> {
@@ -69,9 +69,9 @@ export class WeaponService {
     return this.client.get<WeaponProgression>(this.itemUrl + "/" + itemId + "/progression").fetchOneUnwrapped();
   }
 
-  private requestItems(request: ApiRequest<Item>): Observable<ApiResponse<Item[]>> {
+  private requestItems(request: ApiRequest<Summary>): Observable<ApiResponse<Summary[]>> {
     const selectors = [];
-    const clt: GetOperations<Item> = this.client.get(this.itemUrl);
+    const clt: GetOperations<Summary> = this.client.get(this.itemUrl);
 
     if (request.search) {
       if (request.search.name) {
@@ -89,7 +89,7 @@ export class WeaponService {
       }
     }
 
-    let sort: Sort<Item>;
+    let sort: Sort<Summary>;
     if(request.sort) {
       sort = request.sort;
     } else {

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { ItemSearch } from '@app/models/itemSearch';
+import { ItemSearch } from '@app/item/models/itemSearch';
 
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { WeaponProgression } from '@app/models/weaponProgression';
-import { WeaponProgressionPath } from '@app/models/weaponProgressionPath';
-import { WeaponProgressionPathLevel } from '@app/models/weaponProgressionPathLevel';
+import { WeaponProgression } from '@app/item/models/weaponProgression';
+import { WeaponProgressionPath } from '@app/item/models/weaponProgressionPath';
+import { WeaponProgressionLevel } from '@app/item/models/weaponProgressionLevel';
 import { LineSelection } from '../models/line-selector';
 
 @Component({
@@ -49,10 +49,10 @@ export class WeaponPathsComponent implements OnChanges {
   private getDamageSelectors(): LineSelection[] {
     const selects: LineSelection[] = [];
 
-    selects.push({ name: 'Fire', selector: (level: WeaponProgressionPathLevel) => level.fireDamage });
-    selects.push({ name: 'Lightning', selector: (level: WeaponProgressionPathLevel) => level.lightningDamage });
-    selects.push({ name: 'Magic', selector: (level: WeaponProgressionPathLevel) => level.magicDamage });
-    selects.push({ name: 'Physical', selector: (level: WeaponProgressionPathLevel) => level.physicalDamage });
+    selects.push({ name: 'Fire', selector: (level: WeaponProgressionLevel) => level.damage.fire });
+    selects.push({ name: 'Lightning', selector: (level: WeaponProgressionLevel) => level.damage.lightning });
+    selects.push({ name: 'Magic', selector: (level: WeaponProgressionLevel) => level.damage.magic });
+    selects.push({ name: 'Physical', selector: (level: WeaponProgressionLevel) => level.damage.physical });
 
     return selects;
   }
@@ -60,10 +60,10 @@ export class WeaponPathsComponent implements OnChanges {
   private getDefenseSelectors(): LineSelection[] {
     const selects: LineSelection[] = [];
     
-    selects.push({ name: 'Fire', selector: (level: WeaponProgressionPathLevel) => level.fireReduction });
-    selects.push({ name: 'Lightning', selector: (level: WeaponProgressionPathLevel) => level.lightningReduction });
-    selects.push({ name: 'Magic', selector: (level: WeaponProgressionPathLevel) => level.magicReduction });
-    selects.push({ name: 'Physical', selector: (level: WeaponProgressionPathLevel) => level.physicalReduction });
+    selects.push({ name: 'Fire', selector: (level: WeaponProgressionLevel) => level.damageReduction.fire });
+    selects.push({ name: 'Lightning', selector: (level: WeaponProgressionLevel) => level.damageReduction.lightning });
+    selects.push({ name: 'Magic', selector: (level: WeaponProgressionLevel) => level.damageReduction.magic });
+    selects.push({ name: 'Physical', selector: (level: WeaponProgressionLevel) => level.damageReduction.physical });
 
     return selects;
   }

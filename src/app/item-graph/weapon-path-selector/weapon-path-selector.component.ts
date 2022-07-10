@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { WeaponProgression } from '@app/models/weaponProgression';
-import { WeaponProgressionPath } from '@app/models/weaponProgressionPath';
+import { WeaponProgression } from '@app/item/models/weaponProgression';
+import { WeaponProgressionPath } from '@app/item/models/weaponProgressionPath';
 
 @Component({
   selector: 'weapon-path-selector',

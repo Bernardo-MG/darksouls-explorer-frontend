@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Line } from '@app/graph/models/line';
-import { ArmorLevel } from '@app/models/armorLevel';
-import { ArmorProgression } from '@app/models/armorProgression';
+import { ArmorLevel } from '@app/item/models/armorLevel';
+import { ArmorProgression } from '@app/item/models/armorProgression';
 
 @Component({
   selector: 'app-armor-stats',

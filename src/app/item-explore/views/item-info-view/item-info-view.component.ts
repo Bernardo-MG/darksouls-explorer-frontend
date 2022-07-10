@@ -3,10 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Graph } from '@app/graph/models/graph';
 import { ItemService } from '@app/item-explore/services/item.service';
-import { ArmorProgression } from '@app/models/armorProgression';
+import { ArmorProgression } from '@app/item/models/armorProgression';
+import { ItemSource } from '@app/item/models/itemSource';
+import { WeaponProgression } from '@app/item/models/weaponProgression';
 import { Item } from '@app/models/item';
-import { ItemSource } from '@app/models/itemSource';
-import { WeaponProgression } from '@app/models/weaponProgression';
 
 @Component({
   selector: 'app-item-info-view',

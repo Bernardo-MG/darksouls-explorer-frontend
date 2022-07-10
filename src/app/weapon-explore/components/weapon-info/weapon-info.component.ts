@@ -1,23 +1,20 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Graph } from '@app/graph/models/graph';
-import { ArmorProgression } from '@app/item/models/armorProgression';
 import { ItemSource } from '@app/item/models/itemSource';
+import { Weapon } from '@app/item/models/weapon';
 import { WeaponProgression } from '@app/item/models/weaponProgression';
-import { Item } from '@app/models/item';
 import { faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'item-info',
-  templateUrl: './item-info.component.html',
-  styleUrls: ['./item-info.component.sass']
+  selector: 'weapon-info',
+  templateUrl: './weapon-info.component.html',
+  styleUrls: ['./weapon-info.component.sass']
 })
-export class ItemInfoComponent {
+export class WeaponInfoComponent {
 
-  @Input() data: Item = { id: -1, name: '', description: [], tags: [] };
+  @Input() data: Weapon = new Weapon();
 
-  @Input() weaponProgression: WeaponProgression = { weapon: '', paths: [] };
-
-  @Input() armorProgression: ArmorProgression = { armor: '', levels: [] };
+  @Input() weaponProgression: WeaponProgression = new WeaponProgression();
 
   @Output() back = new EventEmitter<void>();
 

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RoutePaginationController } from '@app/api/pagination/route-pagination-controller';
+import { ItemSearch } from '@app/item/models/itemSearch';
+import { Summary } from '@app/item/models/summary';
 import { Item } from '@app/models/item';
-import { ItemSearch } from '@app/models/itemSearch';
 import { WeaponService } from '@app/weapon-explore/services/weapon.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class WeaponListViewComponent {
 
   searchActive: boolean = false;
 
-  data: Item[] = [];
+  data: Summary[] = [];
 
   constructor(
     private service: WeaponService,
@@ -26,7 +27,7 @@ export class WeaponListViewComponent {
     this.service.getItemsPageInfo().subscribe(p => paginationController.setPagination(p));
   }
 
-  selectItem(data: Item) {
+  selectItem(data: Summary) {
     this.router.navigate([data.id], { relativeTo: this.route });
   }
 

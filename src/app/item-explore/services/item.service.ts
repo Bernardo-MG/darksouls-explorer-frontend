@@ -8,11 +8,12 @@ import { Sort } from '@app/api/models/sort';
 import { GetOperations } from '@app/api/request/get-operations';
 import { RequestClient } from '@app/api/request/request-client';
 import { Graph } from '@app/graph/models/graph';
-import { ArmorProgression } from '@app/models/armorProgression';
+import { ArmorProgression } from '@app/item/models/armorProgression';
+import { ItemSearch } from '@app/item/models/itemSearch';
+import { ItemSource } from '@app/item/models/itemSource';
+import { Summary } from '@app/item/models/summary';
+import { WeaponProgression } from '@app/item/models/weaponProgression';
 import { Item } from '@app/models/item';
-import { ItemSearch } from '@app/models/itemSearch';
-import { ItemSource } from '@app/models/itemSource';
-import { WeaponProgression } from '@app/models/weaponProgression';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 
@@ -21,16 +22,16 @@ export class ItemService {
 
   private itemUrl = environment.apiUrl + "/items";
 
-  datasource: RouteDatasource<Item>;
+  datasource: RouteDatasource<Summary>;
 
   constructor(
     private client: RequestClient,
     route: ActivatedRoute
   ) {
-    this.datasource = new RouteDatasource<Item>(route, (request: ApiRequest<Item>) => this.requestItems(request));
+    this.datasource = new RouteDatasource<Summary>(route, (request: ApiRequest<Summary>) => this.requestItems(request));
   }
 
-  public getItems(): Observable<Item[]> {
+  public getItems(): Observable<Summary[]> {
     return this.datasource.data;
   }
 
@@ -73,9 +74,9 @@ export class ItemService {
     return this.client.get<WeaponProgression>(this.itemUrl + "/" + itemId + "/levels/weapons").fetchOneUnwrapped();
   }
 
-  private requestItems(request: ApiRequest<Item>): Observable<ApiResponse<Item[]>> {
+  private requestItems(request: ApiRequest<Summary>): Observable<ApiResponse<Summary[]>> {
     const selectors = [];
-    const clt: GetOperations<Item> = this.client.get(this.itemUrl);
+    const clt: GetOperations<Summary> = this.client.get(this.itemUrl);
 
     if (request.search) {
       if (request.search.name) {
@@ -93,7 +94,7 @@ export class ItemService {
       }
     }
 
-    let sort: Sort<Item>;
+    let sort: Sort<Summary>;
     if(request.sort) {
       sort = request.sort;
     } else {

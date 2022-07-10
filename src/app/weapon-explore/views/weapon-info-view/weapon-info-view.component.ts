@@ -2,10 +2,9 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Graph } from '@app/graph/models/graph';
-import { ArmorProgression } from '@app/models/armorProgression';
-import { Item } from '@app/models/item';
-import { ItemSource } from '@app/models/itemSource';
-import { WeaponProgression } from '@app/models/weaponProgression';
+import { ItemSource } from '@app/item/models/itemSource';
+import { Weapon } from '@app/item/models/weapon';
+import { WeaponProgression } from '@app/item/models/weaponProgression';
 import { WeaponService } from '@app/weapon-explore/services/weapon.service';
 
 @Component({
@@ -15,13 +14,11 @@ import { WeaponService } from '@app/weapon-explore/services/weapon.service';
 })
 export class WeaponInfoViewComponent implements OnInit {
 
-  items: Item[] = [];
+  items: Weapon[] = [];
 
-  data: Item = { id: -1, name: '', description: [], tags: [] };
+  data: Weapon = new Weapon();
 
-  weaponProgression: WeaponProgression = { weapon: "", paths: [] };
-
-  armorProgression: ArmorProgression = { armor: "", levels: [] };
+  weaponProgression: WeaponProgression = new WeaponProgression();
 
   sources: ItemSource[] = [];
 
@@ -47,7 +44,7 @@ export class WeaponInfoViewComponent implements OnInit {
           if (item) {
             this.data = item
           } else {
-            this.data = { id: -1, name: '', description: [], tags: [] };
+            this.data = new Weapon();
           }
         });
       this.service.getWeaponStats(identifier).subscribe(data => this.weaponProgression = data);

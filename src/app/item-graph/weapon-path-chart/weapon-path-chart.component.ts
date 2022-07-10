@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Line } from '@app/graph/models/line';
-import { WeaponProgressionPath } from '@app/models/weaponProgressionPath';
-import { WeaponProgressionPathLevel } from '@app/models/weaponProgressionPathLevel';
+import { WeaponProgressionPath } from '@app/item/models/weaponProgressionPath';
+import { WeaponProgressionLevel } from '@app/item/models/weaponProgressionLevel';
 import { LineSelection } from '../models/line-selector';
 
 @Component({
@@ -44,7 +44,7 @@ export class WeaponPathComponent implements OnChanges {
     return levels;
   }
 
-  private buildLine(levels: WeaponProgressionPathLevel[], name: string, selector: (arg: WeaponProgressionPathLevel) => number): Line {
+  private buildLine(levels: WeaponProgressionLevel[], name: string, selector: (arg: WeaponProgressionLevel) => number): Line {
     let padding: (number | null)[];
     const values: (number | null)[] = levels.map(level => selector(level)).map(this.removeZeros);
 
