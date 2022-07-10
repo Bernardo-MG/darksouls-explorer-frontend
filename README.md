@@ -4,7 +4,7 @@ Frontend for the Dark Souls Explorer web service.
 
 ## Features
 
-- d3
+- echarts
 
 ## Usage
 

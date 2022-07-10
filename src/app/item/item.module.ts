@@ -3,21 +3,18 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApiUiModule } from '@app/api-ui/api-ui.module';
 import { ItemGraphModule } from '@app/item-graph/item-graph.module';
-import { ItemModule } from '@app/item/item.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { ItemExploreRoutingModule } from './item-explore-routing.module';
-import { ItemService } from './services/item.service';
-import { ItemInfoViewComponent } from './views/item-info-view/item-info-view.component';
-import { ItemListViewComponent } from './views/item-list-view/item-list-view.component';
+import { ItemInfoComponent } from './components/item-info/item-info.component';
+import { ItemListComponent } from './components/item-list/item-list.component';
+import { ItemSearchComponent } from './components/item-search/item-search.component';
 
 @NgModule({
   declarations: [
-    ItemListViewComponent,
-    ItemInfoViewComponent
+    ItemInfoComponent,
+    ItemListComponent,
+    ItemSearchComponent
   ],
   imports: [
-    ItemExploreRoutingModule,
-    ItemModule,
     CommonModule,
     ApiUiModule,
     FormsModule,
@@ -25,8 +22,10 @@ import { ItemListViewComponent } from './views/item-list-view/item-list-view.com
     ItemGraphModule,
     FontAwesomeModule
   ],
-  providers: [
-    ItemService
+  exports: [
+    ItemInfoComponent,
+    ItemListComponent,
+    ItemSearchComponent
   ]
 })
-export class ItemExploreModule { }
+export class ItemModule { }
