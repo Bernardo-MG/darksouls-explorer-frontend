@@ -9,7 +9,7 @@ import { WeaponProgressionPath } from '@app/item/models/weaponProgressionPath';
 })
 export class WeaponPathSelectorComponent {
 
-  @Input() stats: WeaponProgression = { weapon: '', paths: [] };
+  @Input() stats: WeaponProgression = new WeaponProgression();
 
   @Output() selectPath = new EventEmitter<WeaponProgressionPath>();
 

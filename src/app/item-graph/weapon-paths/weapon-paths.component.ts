@@ -11,12 +11,12 @@ import { LineSelection } from '../models/line-selector';
 })
 export class WeaponPathsComponent implements OnChanges {
 
-  @Input() stats: WeaponProgression = { weapon: '', paths: [] };
+  @Input() stats: WeaponProgression = new WeaponProgression();
 
   selectedDamage: Boolean = false;
   selectedDefense: Boolean = false;
 
-  selectedPath: WeaponProgressionPath = { path: '', levels: [] };
+  selectedPath: WeaponProgressionPath = new WeaponProgressionPath();
 
   selectors: LineSelection[] = [];
 

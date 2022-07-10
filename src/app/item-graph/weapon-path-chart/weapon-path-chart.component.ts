@@ -13,7 +13,7 @@ export class WeaponPathComponent implements OnChanges {
 
   @Input() selectors: LineSelection[] = [];
 
-  @Input() path: WeaponProgressionPath = { path: '', levels: [] };
+  @Input() path: WeaponProgressionPath = new WeaponProgressionPath();
 
   @Input() maxLevel: number = 0;
 
