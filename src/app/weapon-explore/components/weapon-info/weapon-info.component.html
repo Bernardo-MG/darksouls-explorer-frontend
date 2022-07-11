@@ -6,7 +6,7 @@
     </div>
 </div>
 <h1>{{data.name}}</h1>
-<ng-template ngFor let-desc [ngForOf]="data.description">
+<ng-template ngFor let-desc [ngForOf]="data.description.split('\\n')">
     <p>{{desc}}
 </ng-template>
 <ng-template [ngIf]="sources && sources.length > 0">
