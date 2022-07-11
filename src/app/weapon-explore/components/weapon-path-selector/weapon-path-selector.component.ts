@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Line } from '@app/graph/models/line';
 import { LineSelection } from '@app/item-graph/models/line-selector';
 import { WeaponProgressionLevel } from '@app/item/models/weaponProgressionLevel';
@@ -10,7 +10,7 @@ import { WeaponPathsService } from '@app/weapon-explore/services/weapon-paths.se
   templateUrl: './weapon-path-selector.component.html',
   styleUrls: ['./weapon-path-selector.component.sass']
 })
-export class WeaponPathSelectorComponent {
+export class WeaponPathSelectorComponent implements OnChanges {
 
   @Input() paths: WeaponProgressionPath[] = [];
 
@@ -18,12 +18,15 @@ export class WeaponPathSelectorComponent {
 
   selector: (levels: WeaponProgressionLevel[]) => Line[] = this.service.buildDamageLine;
 
-  selected: string = '';
+  defaultPath: WeaponProgressionPath = new WeaponProgressionPath();
 
-  selectedDamage: Boolean = false;
-  selectedDefense: Boolean = false;
+  selected: WeaponProgressionPath = new WeaponProgressionPath();
+
+  selectedGroup: String = '';
 
   selectors: LineSelection[] = [];
+
+  maxLevel: number = 0;
 
   constructor(
     private service: WeaponPathsService
@@ -31,27 +34,38 @@ export class WeaponPathSelectorComponent {
     this.loadDamageSelectors();
   }
 
-  select(path: WeaponProgressionPath): void {
-    this.selected = path.path;
+  ngOnChanges(changes: SimpleChanges): void {
+    const found = this.paths.find(path => path.levels[0].pathLevel == 0);
+    if (found) {
+      this.defaultPath = found;
+    } else {
+      this.defaultPath = new WeaponProgressionPath();
+    }
 
-    const maxLevel = this.service.getMaxLevel(this.paths);
+    this.select(this.defaultPath);
+
+    this.maxLevel = this.service.getMaxLevel(this.paths);
+  }
+
+  select(path: WeaponProgressionPath): void {
+    this.selected = path;
 
     const lines = this.selector(path.levels);
 
-    const levels = this.service.getLevels(maxLevel);
+    const levels = this.service.getLevels(this.maxLevel);
     this.selectPath.emit({ lines, levels });
   }
 
   loadDamageSelectors() {
     this.selector = (lines) => this.service.buildDamageLine(lines);
-    this.selectedDamage = true;
-    this.selectedDefense = false;
+    this.selectedGroup = 'damage';
+    this.select(this.selected);
   }
 
   loadDefenseSelectors() {
     this.selector = (lines) => this.service.buildDefenseLine(lines);
-    this.selectedDamage = false;
-    this.selectedDefense = true;
+    this.selectedGroup = 'defense';
+    this.select(this.selected);
   }
 
 }
