@@ -9,28 +9,6 @@ export class WeaponPathsService {
 
   constructor() { }
 
-  public getDamageSelectors(): LineSelection[] {
-    const selects: LineSelection[] = [];
-
-    selects.push({ name: 'Fire', selector: (level: WeaponProgressionLevel) => level.damage.fire });
-    selects.push({ name: 'Lightning', selector: (level: WeaponProgressionLevel) => level.damage.lightning });
-    selects.push({ name: 'Magic', selector: (level: WeaponProgressionLevel) => level.damage.magic });
-    selects.push({ name: 'Physical', selector: (level: WeaponProgressionLevel) => level.damage.physical });
-
-    return selects;
-  }
-
-  public getDefenseSelectors(): LineSelection[] {
-    const selects: LineSelection[] = [];
-
-    selects.push({ name: 'Fire', selector: (level: WeaponProgressionLevel) => level.damageReduction.fire });
-    selects.push({ name: 'Lightning', selector: (level: WeaponProgressionLevel) => level.damageReduction.lightning });
-    selects.push({ name: 'Magic', selector: (level: WeaponProgressionLevel) => level.damageReduction.magic });
-    selects.push({ name: 'Physical', selector: (level: WeaponProgressionLevel) => level.damageReduction.physical });
-
-    return selects;
-  }
-
   public getMaxLevel(paths: WeaponProgressionPath[]): number {
     let maxLevel = 0;
     for (let i = 0; i < paths.length; i++) {
@@ -52,8 +30,38 @@ export class WeaponPathsService {
 
     return levels;
   }
+  
+  public buildDamageLine(levels: WeaponProgressionLevel[]): Line[] {
+    return this.getDamageSelectors().map(s => this.buildLine(levels, s.name, s.selector));
+  }
+  
+  public buildDefenseLine(levels: WeaponProgressionLevel[]): Line[] {
+    return this.getDefenseSelectors().map(s => this.buildLine(levels, s.name, s.selector));
+  }
 
-  public buildLine(levels: WeaponProgressionLevel[], name: string, selector: (arg: WeaponProgressionLevel) => number): Line {
+  private getDamageSelectors(): LineSelection[] {
+    const selects: LineSelection[] = [];
+
+    selects.push({ name: 'Fire', selector: (level: WeaponProgressionLevel) => level.damage.fire });
+    selects.push({ name: 'Lightning', selector: (level: WeaponProgressionLevel) => level.damage.lightning });
+    selects.push({ name: 'Magic', selector: (level: WeaponProgressionLevel) => level.damage.magic });
+    selects.push({ name: 'Physical', selector: (level: WeaponProgressionLevel) => level.damage.physical });
+
+    return selects;
+  }
+
+  private getDefenseSelectors(): LineSelection[] {
+    const selects: LineSelection[] = [];
+
+    selects.push({ name: 'Fire', selector: (level: WeaponProgressionLevel) => level.damageReduction.fire });
+    selects.push({ name: 'Lightning', selector: (level: WeaponProgressionLevel) => level.damageReduction.lightning });
+    selects.push({ name: 'Magic', selector: (level: WeaponProgressionLevel) => level.damageReduction.magic });
+    selects.push({ name: 'Physical', selector: (level: WeaponProgressionLevel) => level.damageReduction.physical });
+
+    return selects;
+  }
+
+  private buildLine(levels: WeaponProgressionLevel[], name: string, selector: (arg: WeaponProgressionLevel) => number): Line {
     let padding: (number | null)[];
     const values: (number | null)[] = levels.map(level => selector(level)).map(this.removeZeros);
 
