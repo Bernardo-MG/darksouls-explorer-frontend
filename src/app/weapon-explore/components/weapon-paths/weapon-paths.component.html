@@ -1,10 +1,2 @@
 <chart-stacked [scale]="levels" [lines]="lines"></chart-stacked>
-<div class="row">
-    <div class="btn-group">
-        <a (click)="loadDamageSelectors()" class="btn btn-primary" [ngClass]="{ 'active': selectedDamage}">Damage</a>
-        <a (click)="loadDefenseSelectors()" class="btn btn-primary" [ngClass]="{ 'active': selectedDefense}">Defense</a>
-    </div>
-</div>
-<div class="row">
-    <weapon-path-selector [paths]="stats.paths" (selectPath)="selectPath($event)"></weapon-path-selector>
-</div>
+<weapon-path-selector [paths]="stats.paths" (selectPath)="selectPath($event)"></weapon-path-selector>

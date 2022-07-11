@@ -1,5 +1,14 @@
-<div class="btn-group">
-    <ng-template ngFor let-p [ngForOf]="paths">
-        <a (click)="loadPath(p)" class="btn btn-primary" [ngClass]="{ 'active': p.path === selected }">{{ p.path }}</a>
-    </ng-template>
+<div class="row">
+    <div class="btn-group">
+        <a (click)="loadDamageSelectors()" class="btn btn-primary" [ngClass]="{ 'active': selectedDamage}">Damage</a>
+        <a (click)="loadDefenseSelectors()" class="btn btn-primary" [ngClass]="{ 'active': selectedDefense}">Defense</a>
+    </div>
+</div>
+<div class="row">
+    <div class="btn-group">
+        <ng-template ngFor let-p [ngForOf]="paths">
+            <a (click)="select(p)" class="btn btn-primary" [ngClass]="{ 'active': p.path === selected }">{{ p.path
+                }}</a>
+        </ng-template>
+    </div>
 </div>
