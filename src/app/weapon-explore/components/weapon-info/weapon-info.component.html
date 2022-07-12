@@ -5,10 +5,136 @@
         </button>
     </div>
 </div>
-<h1>{{data.name}}</h1>
-<ng-template ngFor let-desc [ngForOf]="data.description.split('\\n')">
-    <p>{{desc}}
-</ng-template>
-<ng-template [ngIf]="weaponProgression && weaponProgression.paths && weaponProgression.paths.length > 0">
-    <weapon-paths [stats]="weaponProgression"></weapon-paths>
-</ng-template>
+<div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+    <div class="col-md-6 px-0">
+        <h1 class="display-4 fst-italic">{{data.name}}</h1>
+        <ng-template ngFor let-desc [ngForOf]="data.description.split('\\n')">
+            <p class="lead my-3">{{desc}}
+        </ng-template>
+    </div>
+</div>
+<div class="row g-5">
+    <div class="col-md-8">
+        <ng-template [ngIf]="weaponProgression && weaponProgression.paths && weaponProgression.paths.length > 0">
+            <weapon-paths [stats]="weaponProgression"></weapon-paths>
+        </ng-template>
+    </div>
+    <div class="col-md-4">
+        <table class="table">
+            <thead>
+                <th scope="col">
+                    Damage
+                </th>
+                <th scope="col">
+                    Value
+                </th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Physical</td>
+                    <td>{{data.damage.physical}}</td>
+                </tr>
+                <tr>
+                    <td>Magic</td>
+                    <td>{{data.damage.magic}}</td>
+                </tr>
+                <tr>
+                    <td>Fire</td>
+                    <td>{{data.damage.fire}}</td>
+                </tr>
+                <tr>
+                    <td>Lightning</td>
+                    <td>{{data.damage.lightning}}</td>
+                </tr>
+                <tr>
+                    <td>Critical</td>
+                    <td>{{data.damage.critical}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table">
+            <thead>
+                <th scope="col">
+                    Defense
+                </th>
+                <th scope="col">
+                    Value
+                </th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Physical</td>
+                    <td>{{data.damageReduction.physical}}</td>
+                </tr>
+                <tr>
+                    <td>Magic</td>
+                    <td>{{data.damageReduction.magic}}</td>
+                </tr>
+                <tr>
+                    <td>Fire</td>
+                    <td>{{data.damageReduction.fire}}</td>
+                </tr>
+                <tr>
+                    <td>Lightning</td>
+                    <td>{{data.damageReduction.lightning}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table">
+            <thead>
+                <th scope="col">
+                    Stat
+                </th>
+                <th scope="col">
+                    Value
+                </th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Strength</td>
+                    <td>{{data.requirements.strength}}</td>
+                </tr>
+                <tr>
+                    <td>Dexterity</td>
+                    <td>{{data.requirements.dexterity}}</td>
+                </tr>
+                <tr>
+                    <td>Intelligence</td>
+                    <td>{{data.requirements.intelligence}}</td>
+                </tr>
+                <tr>
+                    <td>Faith</td>
+                    <td>{{data.requirements.faith}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table">
+            <thead>
+                <th scope="col">
+                    Stat
+                </th>
+                <th scope="col">
+                    Rank
+                </th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Strength</td>
+                    <td>{{data.bonus.strength}}</td>
+                </tr>
+                <tr>
+                    <td>Dexterity</td>
+                    <td>{{data.bonus.dexterity}}</td>
+                </tr>
+                <tr>
+                    <td>Intelligence</td>
+                    <td>{{data.bonus.intelligence}}</td>
+                </tr>
+                <tr>
+                    <td>Faith</td>
+                    <td>{{data.bonus.faith}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
