@@ -20,10 +20,6 @@ export class WeaponInfoViewComponent implements OnInit {
 
   weaponProgression: WeaponProgression = new WeaponProgression();
 
-  sources: ItemSource[] = [];
-
-  sourcesGraph: Graph = { nodes: [], links: [], categories: [] };
-
   constructor(
     private service: WeaponService,
     private route: ActivatedRoute,
@@ -48,8 +44,6 @@ export class WeaponInfoViewComponent implements OnInit {
           }
         });
       this.service.getWeaponStats(identifier).subscribe(data => this.weaponProgression = data);
-      this.service.getWeaponSources(identifier).subscribe(response => this.sources = response);
-      this.service.getWeaponSourcesGraph(identifier).subscribe(graph => this.sourcesGraph = graph);
     }
   }
 

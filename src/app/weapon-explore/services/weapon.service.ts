@@ -46,25 +46,6 @@ export class WeaponService {
     return this.client.get<Weapon>(this.itemUrl + `/${id}`).fetchOneUnwrapped();
   }
 
-  public getWeaponSources(itemId: number): Observable<ItemSource[]> {
-    return this.client.get<ItemSource[]>(this.itemUrl + "/" + itemId + "/sources").fetchOneUnwrapped();
-  }
-
-  public getWeaponSourcesGraph(itemId: number): Observable<Graph> {
-    return this.getWeaponSources(itemId).pipe(map((sources) => {
-      const itemNodes = sources.map((s) => { return { id: s.itemId.toString(), name: s.item, label: s.item, category: 0 } })
-      const sourceNodes = sources.map((s) => { return { id: s.sourceId.toString(), name: s.source, label: s.source, category: 1 } })
-      const locationNodes = sources.map((s) => { return { id: s.locationId.toString(), name: s.location, label: s.location, category: 2 } })
-      var nodes = [...itemNodes, ...locationNodes, ...sourceNodes];
-      nodes = Array.from(nodes.reduce((m, t) => m.set(t.name, t), new Map()).values());
-
-      const itemSources = sources.map((s) => { return { source: s.itemId.toString(), target: s.sourceId.toString() } })
-      const sourceLocations = sources.map((s) => { return { source: s.sourceId.toString(), target: s.locationId.toString() } })
-
-      return { nodes: nodes, links: [...itemSources, ...sourceLocations], categories: [{ name: 'Item' }, { name: 'Source' }, { name: 'Location' }] }
-    }));
-  }
-
   public getWeaponStats(itemId: Number): Observable<WeaponProgression> {
     return this.client.get<WeaponProgression>(this.itemUrl + "/" + itemId + "/progression").fetchOneUnwrapped();
   }

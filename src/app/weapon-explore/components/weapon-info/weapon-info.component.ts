@@ -18,10 +18,6 @@ export class WeaponInfoComponent {
 
   @Output() back = new EventEmitter<void>();
 
-  @Input() sources: ItemSource[] = [];
-
-  @Input() sourcesGraph: Graph = { nodes: [], links: [], categories: [] };
-
   sourcesTitle: string = "Item sources";
   
   public backIcon = faArrowLeftLong;
