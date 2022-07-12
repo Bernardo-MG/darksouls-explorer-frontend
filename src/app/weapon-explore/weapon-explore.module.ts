@@ -8,7 +8,6 @@ import { ItemGraphModule } from '@app/item-graph/item-graph.module';
 import { ItemModule } from '@app/item/item.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { WeaponInfoComponent } from './components/weapon-info/weapon-info.component';
-import { WeaponPathSelectorComponent } from './components/weapon-path-selector/weapon-path-selector.component';
 import { WeaponPathsComponent } from './components/weapon-paths/weapon-paths.component';
 import { WeaponPathsService } from './services/weapon-paths.service';
 import { WeaponService } from './services/weapon.service';
@@ -21,7 +20,6 @@ import { WeaponExploreRoutingModule } from './weapon-explore-routing.module';
     WeaponInfoComponent,
     WeaponListViewComponent,
     WeaponInfoViewComponent,
-    WeaponPathSelectorComponent,
     WeaponPathsComponent
   ],
   imports: [

@@ -1,2 +1,15 @@
 <chart-stacked [scale]="levels" [lines]="lines"></chart-stacked>
-<weapon-path-selector [paths]="stats.paths" (selectPath)="selectPath($event)"></weapon-path-selector>
+<div class="row">
+    <div class="btn-group">
+        <a (click)="loadGroup('damage')" class="btn btn-primary" [ngClass]="{ 'active': selectedGroup === 'damage'}">Damage</a>
+        <a (click)="loadGroup('defense')" class="btn btn-primary" [ngClass]="{ 'active': selectedGroup === 'defense'}">Defense</a>
+    </div>
+</div>
+<div class="row">
+    <div class="btn-group">
+        <ng-template ngFor let-p [ngForOf]="stats.paths">
+            <a (click)="select(p)" class="btn btn-primary" [ngClass]="{ 'active': p.path === selected.path }">{{ p.path
+                }}</a>
+        </ng-template>
+    </div>
+</div>
