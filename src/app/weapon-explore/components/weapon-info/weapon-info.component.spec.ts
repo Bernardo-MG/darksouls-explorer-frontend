@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ItemService } from '../../services/item.service';
 
 import { WeaponInfoComponent } from './weapon-info.component';
 
@@ -17,9 +16,6 @@ describe('WeaponInfoComponent', () => {
       ],
       declarations: [
         WeaponInfoComponent
-      ],
-      providers: [
-        ItemService
       ]
     })
     .compileComponents();

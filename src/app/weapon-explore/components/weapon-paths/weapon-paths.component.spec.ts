@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { WeaponPathsService } from '@app/weapon-explore/services/weapon-paths.service';
 
 import { WeaponPathsComponent } from './weapon-paths.component';
 
@@ -8,7 +9,12 @@ describe('WeaponPathsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WeaponPathsComponent ]
+      declarations: [ 
+        WeaponPathsComponent 
+      ],
+      providers: [
+        WeaponPathsService
+      ]
     })
     .compileComponents();
   });
