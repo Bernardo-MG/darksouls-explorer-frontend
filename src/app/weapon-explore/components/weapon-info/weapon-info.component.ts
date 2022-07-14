@@ -1,6 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Graph } from '@app/graph/models/graph';
-import { ItemSource } from '@app/item/models/itemSource';
 import { Weapon } from '@app/item/models/weapon';
 import { WeaponProgression } from '@app/item/models/weaponProgression';
 import { faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
