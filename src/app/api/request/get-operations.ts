@@ -43,7 +43,7 @@ export class GetOperations<T> {
 
     prms = this.getHttpParams();
 
-    prms = prms.append('sort', `${sort.property},${sort.order}`);
+    prms = prms.append('sort', `${String(sort.property)},${sort.order}`);
 
     this.params = { params: prms };
 
