@@ -1,11 +1,10 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Graph } from '@app/graph/models/graph';
-import { ItemSource } from '@app/item/models/itemSource';
 import { Weapon } from '@app/item/models/weapon';
 import { WeaponProgression } from '@app/item/models/weaponProgression';
 import { WeaponService } from '@app/weapon-explore/services/weapon.service';
+import { faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-weapon-info-view',
@@ -19,6 +18,8 @@ export class WeaponInfoViewComponent implements OnInit {
   data: Weapon = new Weapon();
 
   weaponProgression: WeaponProgression = new WeaponProgression();
+  
+  public backIcon = faArrowLeftLong;
 
   constructor(
     private service: WeaponService,

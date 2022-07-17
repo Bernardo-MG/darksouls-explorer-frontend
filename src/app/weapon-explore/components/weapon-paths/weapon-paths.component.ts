@@ -35,13 +35,14 @@ export class WeaponPathsComponent {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const found = this.stats.paths.find(path => path.levels[0].pathLevel == 0);
-    if (found) {
-      this.defaultPath = found;
+    const foundDefault = this.stats.paths.find(path => path.levels[0].pathLevel == 0);
+    if (foundDefault) {
+      this.defaultPath = foundDefault;
     } else {
       this.defaultPath = new WeaponProgressionPath();
     }
     this.maxLevel = this.service.getMaxLevel(this.stats.paths);
+    this.levels = this.service.getLevels(this.maxLevel);
 
     this.select(this.defaultPath);
   }
@@ -59,8 +60,6 @@ export class WeaponPathsComponent {
         break;
       }
     }
-
-    this.levels = this.service.getLevels(this.maxLevel);
   }
 
   loadGroup(group: string) {

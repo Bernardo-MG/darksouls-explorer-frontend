@@ -7,8 +7,8 @@ import { ItemExploreModule } from '@app/item-explore/item-explore.module';
 import { ItemGraphModule } from '@app/item-graph/item-graph.module';
 import { ItemModule } from '@app/item/item.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { WeaponInfoComponent } from './components/weapon-info/weapon-info.component';
 import { WeaponPathsComponent } from './components/weapon-paths/weapon-paths.component';
+import { WeaponStatsComponent } from './components/weapon-stats/weapon-stats.component';
 import { WeaponPathsService } from './services/weapon-paths.service';
 import { WeaponService } from './services/weapon.service';
 import { WeaponInfoViewComponent } from './views/weapon-info-view/weapon-info-view.component';
@@ -17,10 +17,10 @@ import { WeaponExploreRoutingModule } from './weapon-explore-routing.module';
 
 @NgModule({
   declarations: [
-    WeaponInfoComponent,
     WeaponListViewComponent,
     WeaponInfoViewComponent,
-    WeaponPathsComponent
+    WeaponPathsComponent,
+    WeaponStatsComponent
   ],
   imports: [
     WeaponExploreRoutingModule,

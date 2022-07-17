@@ -1,2 +1,25 @@
-<weapon-info [data]="data" [weaponProgression]="weaponProgression" (back)="return()">
-</weapon-info>
+<div class="col-1">
+    <div class="btn-group" role="group">
+        <button (click)="return()" type="button" class="btn btn-default">
+            <fa-icon [icon]="backIcon"></fa-icon>
+        </button>
+    </div>
+</div>
+<div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+    <div class="col-md-6 px-0">
+        <h1 class="display-4 fst-italic">{{data.name}}</h1>
+        <ng-template ngFor let-desc [ngForOf]="data.description.split('\\n')">
+            <p class="lead my-3">{{desc}}
+        </ng-template>
+    </div>
+</div>
+<div class="row g-5">
+    <div class="col-md-8">
+        <ng-template [ngIf]="weaponProgression && weaponProgression.paths && weaponProgression.paths.length > 0">
+            <weapon-paths [stats]="weaponProgression"></weapon-paths>
+        </ng-template>
+    </div>
+    <div class="col-md-4">
+        <weapon-stats [data]="data"></weapon-stats>
+    </div>
+</div>
