@@ -19,6 +19,10 @@ export class WeaponPathsComponent {
 
   defenseLines: Line[] = [];
 
+  pathDamageLines: { [key: string]: Line[] } = {};
+
+  pathDefenseLines: { [key: string]: Line[] } = {};
+
   selected: string = '';
 
   constructor(
@@ -27,19 +31,28 @@ export class WeaponPathsComponent {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.levels = this.service.getLevels(this.stats.paths);
+    //this.pathDamageLines = this.stats.paths.map(p => this.service.buildDamageLines(p.levels));
+    for (let path of this.stats.paths) {
+      const damLines = this.service.buildDamageLines(path.levels);
+      const defLines = this.service.buildDefenseLines(path.levels);
+      this.pathDamageLines[path.path] = damLines;
+      this.pathDefenseLines[path.path] = defLines;
+    }
 
-    const defaultPath = this.findDefaultPath();
-    this.select(defaultPath);
+    const defaultPath = this.findDefaultPath(this.stats.paths);
+    this.select(defaultPath.path);
   }
 
-  select(path: WeaponProgressionPath): void {
-    this.selected = path.path;
-    this.damageLines = this.service.buildDamageLines(path.levels);
-    this.defenseLines = this.service.buildDefenseLines(path.levels);
+  select(path: string): void {
+    this.selected = path;
+    this.damageLines = this.pathDamageLines[path];
+    this.defenseLines = this.pathDefenseLines[path];
   }
 
-  private findDefaultPath(): WeaponProgressionPath {
-    const foundDefault = this.stats.paths.find(path => path.levels[0].pathLevel == 0);
+  private findDefaultPath(paths: WeaponProgressionPath[]): WeaponProgressionPath {
+    const foundDefault = paths
+      .filter(p => p.levels.length)
+      .find(p => p.levels[0].pathLevel == 0);
     let defaultPath: WeaponProgressionPath;
     if (foundDefault) {
       defaultPath = foundDefault;
