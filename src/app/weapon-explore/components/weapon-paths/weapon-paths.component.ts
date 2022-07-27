@@ -10,7 +10,7 @@ import { WeaponProgressionPath } from '@app/item/models/weaponProgressionPath';
 })
 export class WeaponPathsComponent implements OnChanges {
 
-  @Input() stats: WeaponProgression = new WeaponProgression();
+  @Input() paths: WeaponProgressionPath[] = [];
 
   @Input() levels: string[] = [];
 
@@ -27,7 +27,7 @@ export class WeaponPathsComponent implements OnChanges {
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const defaultPath = this.findDefaultPath(this.stats.paths);
+    const defaultPath = this.findDefaultPath(this.paths);
     this.select(defaultPath.path);
   }
 

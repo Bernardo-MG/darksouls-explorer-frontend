@@ -16,7 +16,7 @@
 <div class="row g-5">
     <div class="col-md-8">
         <ng-template [ngIf]="weaponProgression && weaponProgression.paths && weaponProgression.paths.length > 0">
-            <weapon-paths [stats]="weaponProgression" [levels]="levels" [pathDamageLines]="pathDamageLines" [pathDefenseLines]="pathDefenseLines"></weapon-paths>
+            <weapon-paths [paths]="weaponProgression.paths" [levels]="levels" [pathDamageLines]="pathDamageLines" [pathDefenseLines]="pathDefenseLines"></weapon-paths>
         </ng-template>
     </div>
     <div class="col-md-4">
