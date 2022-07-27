@@ -19,11 +19,11 @@ export class WeaponPathsService {
     return levels;
   }
 
-  public buildDamageLine(levels: WeaponProgressionLevel[]): Line[] {
+  public buildDamageLines(levels: WeaponProgressionLevel[]): Line[] {
     return this.getDamageSelectors().map(s => this.buildLine(levels, s.name, s.selector));
   }
 
-  public buildDefenseLine(levels: WeaponProgressionLevel[]): Line[] {
+  public buildDefenseLines(levels: WeaponProgressionLevel[]): Line[] {
     return this.getDefenseSelectors().map(s => this.buildLine(levels, s.name, s.selector));
   }
 

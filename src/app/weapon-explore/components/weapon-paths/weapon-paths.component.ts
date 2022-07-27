@@ -1,6 +1,5 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { Line } from '@app/graph/models/line';
-import { LineSelection } from '@app/item-graph/models/line-selector';
 import { WeaponProgression } from '@app/item/models/weaponProgression';
 import { WeaponProgressionPath } from '@app/item/models/weaponProgressionPath';
 import { WeaponPathsService } from '@app/weapon-explore/services/weapon-paths.service';
@@ -16,53 +15,39 @@ export class WeaponPathsComponent {
 
   levels: string[] = [];
 
-  lines: Line[] = [];
+  damageLines: Line[] = [];
 
-  defaultPath: WeaponProgressionPath = new WeaponProgressionPath();
+  defenseLines: Line[] = [];
 
-  selected: WeaponProgressionPath = new WeaponProgressionPath();
-
-  selectedGroup: String = '';
-
-  selectors: LineSelection[] = [];
+  selected: string = '';
 
   constructor(
     private service: WeaponPathsService
-  ) {
-    this.loadGroup('damage');
-  }
+  ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const foundDefault = this.stats.paths.find(path => path.levels[0].pathLevel == 0);
-    if (foundDefault) {
-      this.defaultPath = foundDefault;
-    } else {
-      this.defaultPath = new WeaponProgressionPath();
-    }
     this.levels = this.service.getLevels(this.stats.paths);
 
-    this.select(this.defaultPath);
+    const defaultPath = this.findDefaultPath();
+    this.select(defaultPath);
   }
 
   select(path: WeaponProgressionPath): void {
-    this.selected = path;
-
-    switch (this.selectedGroup) {
-      case 'damage': {
-        this.lines = this.service.buildDamageLine(path.levels);
-        break;
-      }
-      default: {
-        this.lines = this.service.buildDefenseLine(path.levels);
-        break;
-      }
-    }
+    this.selected = path.path;
+    this.damageLines = this.service.buildDamageLines(path.levels);
+    this.defenseLines = this.service.buildDefenseLines(path.levels);
   }
 
-  loadGroup(group: string) {
-    this.selectedGroup = group;
-    // Forces reload of the path for this group
-    this.select(this.selected);
+  private findDefaultPath(): WeaponProgressionPath {
+    const foundDefault = this.stats.paths.find(path => path.levels[0].pathLevel == 0);
+    let defaultPath: WeaponProgressionPath;
+    if (foundDefault) {
+      defaultPath = foundDefault;
+    } else {
+      defaultPath = new WeaponProgressionPath();
+    }
+
+    return defaultPath;
   }
 
 }
