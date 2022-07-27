@@ -26,8 +26,6 @@ export class WeaponPathsComponent {
 
   selectors: LineSelection[] = [];
 
-  maxLevel: number = 0;
-
   constructor(
     private service: WeaponPathsService
   ) {
@@ -41,8 +39,7 @@ export class WeaponPathsComponent {
     } else {
       this.defaultPath = new WeaponProgressionPath();
     }
-    this.maxLevel = this.service.getMaxLevel(this.stats.paths);
-    this.levels = this.service.getLevels(this.maxLevel);
+    this.levels = this.service.getLevels(this.stats.paths);
 
     this.select(this.defaultPath);
   }

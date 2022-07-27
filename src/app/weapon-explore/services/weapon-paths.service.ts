@@ -9,20 +9,8 @@ export class WeaponPathsService {
 
   constructor() { }
 
-  public getMaxLevel(paths: WeaponProgressionPath[]): number {
-    let maxLevel = 0;
-    for (let i = 0; i < paths.length; i++) {
-      let path = paths[i];
-      let pathMax = path.levels[path.levels.length - 1].pathLevel;
-      if (pathMax > maxLevel) {
-        maxLevel = pathMax;
-      }
-    }
-
-    return maxLevel;
-  }
-
-  public getLevels(maxLevel: number): string[] {
+  public getLevels(paths: WeaponProgressionPath[]): string[] {
+    const maxLevel = this.getMaxLevel(paths);
     const levels = [];
     for (let i = 0; i < maxLevel; i++) {
       levels.push(i.toString());
@@ -30,13 +18,22 @@ export class WeaponPathsService {
 
     return levels;
   }
-  
+
   public buildDamageLine(levels: WeaponProgressionLevel[]): Line[] {
     return this.getDamageSelectors().map(s => this.buildLine(levels, s.name, s.selector));
   }
-  
+
   public buildDefenseLine(levels: WeaponProgressionLevel[]): Line[] {
     return this.getDefenseSelectors().map(s => this.buildLine(levels, s.name, s.selector));
+  }
+
+  private getMaxLevel(paths: WeaponProgressionPath[]): number {
+    // Takes all the level values
+    const levels = paths
+      .flatMap(p => p.levels)
+      .map(l => l.level);
+    // Finds the max level
+    return Math.max(...levels);
   }
 
   private getDamageSelectors(): LineSelection[] {
@@ -62,21 +59,29 @@ export class WeaponPathsService {
   }
 
   private buildLine(levels: WeaponProgressionLevel[], name: string, selector: (arg: WeaponProgressionLevel) => number): Line {
-    let padding: (number | null)[];
-    const values: (number | null)[] = levels.map(level => selector(level)).map(this.removeZeros);
+    let data: (number | null)[];
 
     if (levels.length) {
-      padding = this.linePadding(levels[0].pathLevel);
+      // Maps levels to values
+      const values = levels
+        .map(level => selector(level))
+        .map(this.removeZeros);
+      // Adds padding
+      data = this.addPadding(levels[0].pathLevel, values);
     } else {
-      padding = [];
+      data = [];
     }
-
-    const data = padding.concat(values);
 
     return {
       name,
       data
     }
+  }
+
+  private addPadding(level: number, values: (number | null)[]): (number | null)[] {
+    let padding = this.linePadding(level);
+
+    return padding.concat(values);
   }
 
   private linePadding(index: number): (number | null)[] {
