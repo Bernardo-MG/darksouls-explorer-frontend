@@ -1,8 +1,10 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Line } from '@app/graph/models/line';
 import { Weapon } from '@app/item/models/weapon';
 import { WeaponProgression } from '@app/item/models/weaponProgression';
+import { WeaponPathsService } from '@app/weapon-explore/services/weapon-paths.service';
 import { WeaponService } from '@app/weapon-explore/services/weapon.service';
 import { faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
 
@@ -11,18 +13,23 @@ import { faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './weapon-info-view.component.html',
   styleUrls: ['./weapon-info-view.component.sass']
 })
-export class WeaponInfoViewComponent implements OnInit {
-
-  items: Weapon[] = [];
+export class WeaponInfoViewComponent implements OnInit, OnChanges {
 
   data: Weapon = new Weapon();
 
   weaponProgression: WeaponProgression = new WeaponProgression();
-  
+
+  pathDamageLines: { [key: string]: Line[] } = {};
+
+  pathDefenseLines: { [key: string]: Line[] } = {};
+
+  levels: string[] = [];
+
   public backIcon = faArrowLeftLong;
 
   constructor(
     private service: WeaponService,
+    private pathsService: WeaponPathsService,
     private route: ActivatedRoute,
     private location: Location
   ) { }
@@ -33,9 +40,13 @@ export class WeaponInfoViewComponent implements OnInit {
     });
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+  }
+
   private loadItem(id: string | null): void {
     if (id) {
       const identifier: number = Number(id);
+      // Request weapon
       this.service.getWeapon(identifier)
         .subscribe(item => {
           if (item) {
@@ -44,12 +55,20 @@ export class WeaponInfoViewComponent implements OnInit {
             this.data = new Weapon();
           }
         });
-      this.service.getWeaponStats(identifier).subscribe(data => this.weaponProgression = data);
+      // Request weapon stats
+      this.service.getWeaponStats(identifier).subscribe(data => this.loadWeaponProgression(data));
     }
   }
 
   return() {
     this.location.back();
+  }
+
+  private loadWeaponProgression(data: WeaponProgression) {
+    this.weaponProgression = data;
+    this.levels = this.pathsService.getLevels(this.weaponProgression.paths);
+    this.pathDamageLines = this.pathsService.getDamageLines(this.weaponProgression.paths);
+    this.pathDefenseLines = this.pathsService.getDefenseLines(this.weaponProgression.paths);
   }
 
 }

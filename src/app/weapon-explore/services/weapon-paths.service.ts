@@ -19,11 +19,33 @@ export class WeaponPathsService {
     return levels;
   }
 
-  public buildDamageLines(levels: WeaponProgressionLevel[]): Line[] {
+  public getDamageLines(paths: WeaponProgressionPath[]): { [key: string]: Line[] } {
+    const lines: { [key: string]: Line[] } = {};
+
+    for (let path of paths) {
+      const damLines = this.getPathDamageLines(path.levels);
+      lines[path.path] = damLines;
+    }
+
+    return lines;
+  }
+
+  public getDefenseLines(paths: WeaponProgressionPath[]): { [key: string]: Line[] } {
+    const lines: { [key: string]: Line[] } = {};
+
+    for (let path of paths) {
+      const damLines = this.getPathDefenseLines(path.levels);
+      lines[path.path] = damLines;
+    }
+
+    return lines;
+  }
+
+  private getPathDamageLines(levels: WeaponProgressionLevel[]): Line[] {
     return this.getDamageSelectors().map(s => this.buildLine(levels, s.name, s.selector));
   }
 
-  public buildDefenseLines(levels: WeaponProgressionLevel[]): Line[] {
+  private getPathDefenseLines(levels: WeaponProgressionLevel[]): Line[] {
     return this.getDefenseSelectors().map(s => this.buildLine(levels, s.name, s.selector));
   }
 

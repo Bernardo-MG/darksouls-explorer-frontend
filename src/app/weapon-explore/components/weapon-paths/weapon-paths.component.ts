@@ -1,44 +1,32 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Line } from '@app/graph/models/line';
 import { WeaponProgression } from '@app/item/models/weaponProgression';
 import { WeaponProgressionPath } from '@app/item/models/weaponProgressionPath';
-import { WeaponPathsService } from '@app/weapon-explore/services/weapon-paths.service';
 
 @Component({
   selector: 'weapon-paths',
   templateUrl: './weapon-paths.component.html',
   styleUrls: ['./weapon-paths.component.sass']
 })
-export class WeaponPathsComponent {
+export class WeaponPathsComponent implements OnChanges {
 
   @Input() stats: WeaponProgression = new WeaponProgression();
 
-  levels: string[] = [];
+  @Input() levels: string[] = [];
+
+  @Input() pathDamageLines: { [key: string]: Line[] } = {};
+
+  @Input() pathDefenseLines: { [key: string]: Line[] } = {};
 
   damageLines: Line[] = [];
 
   defenseLines: Line[] = [];
 
-  pathDamageLines: { [key: string]: Line[] } = {};
-
-  pathDefenseLines: { [key: string]: Line[] } = {};
-
   selected: string = '';
 
-  constructor(
-    private service: WeaponPathsService
-  ) { }
+  constructor() { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.levels = this.service.getLevels(this.stats.paths);
-    //this.pathDamageLines = this.stats.paths.map(p => this.service.buildDamageLines(p.levels));
-    for (let path of this.stats.paths) {
-      const damLines = this.service.buildDamageLines(path.levels);
-      const defLines = this.service.buildDefenseLines(path.levels);
-      this.pathDamageLines[path.path] = damLines;
-      this.pathDefenseLines[path.path] = defLines;
-    }
-
     const defaultPath = this.findDefaultPath(this.stats.paths);
     this.select(defaultPath.path);
   }
