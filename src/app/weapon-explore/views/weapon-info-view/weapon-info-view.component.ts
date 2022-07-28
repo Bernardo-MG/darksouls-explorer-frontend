@@ -13,7 +13,7 @@ import { faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './weapon-info-view.component.html',
   styleUrls: ['./weapon-info-view.component.sass']
 })
-export class WeaponInfoViewComponent implements OnInit, OnChanges {
+export class WeaponInfoViewComponent implements OnInit {
 
   data: Weapon = new Weapon();
 
@@ -38,9 +38,6 @@ export class WeaponInfoViewComponent implements OnInit, OnChanges {
     this.route.paramMap.subscribe(params => {
       this.loadItem(params.get('id'));
     });
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
   }
 
   private loadItem(id: string | null): void {
