@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Line } from '@app/graph/models/line';
 import { Weapon } from '@app/item/models/weapon';
