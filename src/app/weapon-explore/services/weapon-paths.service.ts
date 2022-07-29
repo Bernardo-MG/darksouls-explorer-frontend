@@ -12,7 +12,7 @@ export class WeaponPathsService {
   public getLevels(paths: WeaponProgressionPath[]): string[] {
     const maxLevel = this.getMaxLevel(paths);
     const levels = [];
-    for (let i = 0; i < maxLevel; i++) {
+    for (let i = 0; i <= maxLevel; i++) {
       levels.push(i.toString());
     }
 
