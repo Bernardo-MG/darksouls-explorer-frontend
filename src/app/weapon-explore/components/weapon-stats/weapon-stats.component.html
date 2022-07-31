@@ -21,18 +21,18 @@
     <tbody>
         <tr>
             <td>Damage</td>
-            <td>{{data.damage.physical}}</td>
-            <td>{{data.damage.magic}}</td>
-            <td>{{data.damage.fire}}</td>
-            <td>{{data.damage.lightning}}</td>
-            <td>{{data.damage.critical}}</td>
+            <td>{{level.damage.physical}}</td>
+            <td>{{level.damage.magic}}</td>
+            <td>{{level.damage.fire}}</td>
+            <td>{{level.damage.lightning}}</td>
+            <td>{{level.damage.critical}}</td>
         </tr>
         <tr>
             <td>Defense</td>
-            <td>{{data.damageReduction.physical}}</td>
-            <td>{{data.damageReduction.magic}}</td>
-            <td>{{data.damageReduction.fire}}</td>
-            <td>{{data.damageReduction.lightning}}</td>
+            <td>{{level.damageReduction.physical}}</td>
+            <td>{{level.damageReduction.magic}}</td>
+            <td>{{level.damageReduction.fire}}</td>
+            <td>{{level.damageReduction.lightning}}</td>
             <td></td>
         </tr>
     </tbody>
@@ -57,17 +57,17 @@
     <tbody>
         <tr>
             <td>Requirements</td>
-            <td>{{data.requirements.strength}}</td>
-            <td>{{data.requirements.dexterity}}</td>
-            <td>{{data.requirements.intelligence}}</td>
-            <td>{{data.requirements.faith}}</td>
+            <td>{{weapon.requirements.strength}}</td>
+            <td>{{weapon.requirements.dexterity}}</td>
+            <td>{{weapon.requirements.intelligence}}</td>
+            <td>{{weapon.requirements.faith}}</td>
         </tr>
         <tr>
             <td>Bonus</td>
-            <td>{{data.bonus.strength}}</td>
-            <td>{{data.bonus.dexterity}}</td>
-            <td>{{data.bonus.intelligence}}</td>
-            <td>{{data.bonus.faith}}</td>
+            <td>{{level.bonus.strength}}</td>
+            <td>{{level.bonus.dexterity}}</td>
+            <td>{{level.bonus.intelligence}}</td>
+            <td>{{level.bonus.faith}}</td>
         </tr>
     </tbody>
 </table>
@@ -85,9 +85,14 @@
     </thead>
     <tbody>
         <tr>
-            <td>{{data.durability}}</td>
-            <td>{{data.stability}}</td>
-            <td>{{data.weight}}</td>
+            <td>{{weapon.durability}}</td>
+            <td>{{weapon.stability}}</td>
+            <td>{{weapon.weight}}</td>
         </tr>
     </tbody>
 </table>
+<select class="form-select" aria-label="Level select" (change)="changeLevel($event)">
+    <ng-template ngFor let-l [ngForOf]="levels">
+        <option [selected]="selectedLevel === l">{{ l }}</option>
+    </ng-template>
+</select>

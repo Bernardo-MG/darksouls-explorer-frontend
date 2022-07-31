@@ -28,8 +28,7 @@
 <div class="row">
     <div class="btn-group">
         <ng-template ngFor let-p [ngForOf]="paths">
-            <a (click)="select(p.path)" class="btn btn-primary" [ngClass]="{ 'active': p.path === selected }">{{ p.path
-                }}</a>
+            <a (click)="select(p.path)" class="btn btn-primary" [ngClass]="{ 'active': p.path === selected }">{{ p.path }}</a>
         </ng-template>
     </div>
 </div>

@@ -1,6 +1,5 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Line } from '@app/graph/models/line';
-import { WeaponProgression } from '@app/item/models/weaponProgression';
 import { WeaponProgressionPath } from '@app/item/models/weaponProgressionPath';
 
 @Component({
@@ -17,6 +16,8 @@ export class WeaponPathsComponent implements OnChanges {
   @Input() pathDamageLines: { [key: string]: Line[] } = {};
 
   @Input() pathDefenseLines: { [key: string]: Line[] } = {};
+
+  @Output() selectPath = new EventEmitter<string>();
 
   damageLines: Line[] = [];
 
@@ -35,6 +36,7 @@ export class WeaponPathsComponent implements OnChanges {
     this.selected = path;
     this.damageLines = this.pathDamageLines[path];
     this.defenseLines = this.pathDefenseLines[path];
+    this.selectPath.emit(path);
   }
 
   private findDefaultPath(paths: WeaponProgressionPath[]): WeaponProgressionPath {

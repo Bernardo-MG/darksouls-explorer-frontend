@@ -7,14 +7,12 @@ import { PageInfo } from '@app/api/models/page-info';
 import { Sort } from '@app/api/models/sort';
 import { GetOperations } from '@app/api/request/get-operations';
 import { RequestClient } from '@app/api/request/request-client';
-import { Graph } from '@app/graph/models/graph';
 import { ItemSearch } from '@app/item/models/itemSearch';
-import { ItemSource } from '@app/item/models/itemSource';
 import { Summary } from '@app/item/models/summary';
 import { Weapon } from '@app/item/models/weapon';
 import { WeaponProgression } from '@app/item/models/weaponProgression';
 import { environment } from 'environments/environment';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class WeaponService {

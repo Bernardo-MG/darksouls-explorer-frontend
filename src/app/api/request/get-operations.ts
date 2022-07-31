@@ -35,6 +35,7 @@ export class GetOperations<T> {
   }
 
   public fetchOneUnwrapped(): Observable<T> {
+    // TODO: add unwrap operation to be used after fetch
     return this.fetchOne().pipe(map(r => r.content));
   }
 

@@ -19,6 +19,10 @@ export class WeaponPathsService {
     return levels;
   }
 
+  public getPathLevels(path: WeaponProgressionPath): number[] {
+    return path.levels.map(l => l.pathLevel);
+  }
+
   public getDamageLines(paths: WeaponProgressionPath[]): { [key: string]: Line[] } {
     const lines: { [key: string]: Line[] } = {};
 
