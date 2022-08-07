@@ -77,7 +77,6 @@ export class WeaponInfoViewComponent implements OnInit {
   private selectProgressionLevel() {
     const foundPath = this.weaponProgression.paths.find(p => p.path === this.pathName);
     if (foundPath && foundPath.levels.length > 0) {
-      const correction = foundPath.levels[0].pathLevel;
       const foundLevel = foundPath.levels.find(l => l.pathLevel === this.level);
       if (foundLevel) {
         this.progressionLevel = foundLevel;
